@@ -14,22 +14,22 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/login')
 def hello_world():
-    return "<h1>Login Page</h1>"
+    return render_template('pages/login.html')
 
 
 @app.route('/register')
 def login():
-    return "<h1>Registration</h1>"
+    return render_template('pages/registration.html')
 
 
 @app.route('/home')
 def listing():
-    return "<h1>Listing of Elements</h1>"
+    return render_template('pages/listing.html')
 
 
 @app.route('/profile')
 def profile():
-    return "<h1>User Profile</h1>"
+    return render_template('pages/profile.html')
 
 
 @app.route('/entry')
@@ -39,7 +39,7 @@ def entry():
 
 @app.route('/add')
 def new_entry():
-    return "<h1>New Entry</h1>"
+    return render_template('pages/new_entry.html')
 
 
 @app.route('/logout')

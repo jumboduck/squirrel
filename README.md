@@ -47,3 +47,4 @@ Reviews can be searched by review name, by tag, or by favorited.
 
 -   Inspiration for this project came from conversations with my friend Cameron.
 -   [Simen Daehlin](https://github.com/Eventyret) - [The Padwan Project](https://github.com/Eventyret/Padawan)
+-   [Start Bootstrap Resume Template](https://github.com/StartBootstrap/startbootstrap-resume)

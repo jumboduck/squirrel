@@ -34,12 +34,17 @@ def profile():
 
 @app.route('/entry')
 def entry():
-    return "<h1>Entry</h1>"
+    return render_template('pages/entry.html')
 
 
 @app.route('/add')
 def new_entry():
     return "<h1>New Entry</h1>"
+
+
+@app.route('/logout')
+def logout():
+    return "<h1>Logout</h1>"
 
 
 if __name__ == '__main__':

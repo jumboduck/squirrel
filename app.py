@@ -13,10 +13,16 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = SECRET_KEY
 
 
-@app.route('/')
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    if form.validate_on_submit():
+        if form.username.data == 'simon' and form.password.data == 'password':
+            flash('You are logged in', 'success')
+            return redirect(url_for('listing'))
+        else:
+            flash('Wrong username or password', 'danger')
+
     return render_template('pages/login.html', title="Login", form=form)
 
 
@@ -29,7 +35,7 @@ def register():
     return render_template('pages/registration.html', title="Registration", form=form)
 
 
-@app.route('/home')
+@app.route('/')
 def listing():
     return render_template('pages/listing.html',  title="Listing")
 

@@ -42,6 +42,11 @@ def new_entry():
     return render_template('pages/new_entry.html')
 
 
+@app.route('/search')
+def search():
+    return render_template('pages/search.html')
+
+
 @app.route('/logout')
 def logout():
     return "<h1>Logout</h1>"

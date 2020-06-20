@@ -34,6 +34,18 @@ a:hover {
     color: #997f62;
 }
 
+.btn-primary {
+    color: #a99279;
+    background-color: transparent;
+    border-color: #a99279;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #a99279;
+    border-color: #a99279;
+}
+
 /* Navigation */
 
 .logo {

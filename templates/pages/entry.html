@@ -2,11 +2,16 @@
 {% block content %}
 <div class="entry-container">
     <div class="entry">
-        <h3><span class="material-icons fav">
-                favorite
-            </span> Review Name</h3>
-
-
+        <div class="row">
+            <div class="col-sm-9">
+                <h3><span class="material-icons fav">
+                        favorite_border
+                    </span> Review Name</h3>
+            </div>
+            <div class="col-sm-3 text-sm-right align-middle">
+                <a href="#"><span class="material-icons delete-btn">delete</span>Delete this entry</a>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-md-6">
@@ -25,30 +30,7 @@
                         vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum
                         metus.
                     </p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui,
-                        finibus
-                        ut
-                        vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum
-                        metus.
-                    </p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui,
-                        finibus
-                        ut
-                        vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum
-                        metus.
-                    </p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui,
-                        finibus
-                        ut
-                        vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum
-                        metus.
-                    </p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui,
-                        finibus
-                        ut
-                        vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum
-                        metus.
-                    </p>
+
 
                     <p>Rating:
                         <span class="rating">
@@ -75,7 +57,8 @@
                         <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">drink</span></a>
                         <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">yogurt</span></a>
                     </p>
-                    <p class="card-text"><small class="text-muted">Last updated on 15/06/20</small></p>
+                    <p><small class="text-muted">Last updated on 15/06/20</small></p>
+
                 </div>
             </div>
         </div>

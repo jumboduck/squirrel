@@ -5,6 +5,7 @@
 body {
     font-family: "Raleway", sans-serif;
     font-size: 16px;
+    height: 100%;
 }
 
 h1,
@@ -54,7 +55,7 @@ a:hover {
 }
 
 .bg-primary {
-    background-color: #98afc7 !important;
+    background-color: #535f6b !important;
 }
 
 /* Review Cards  */
@@ -75,13 +76,13 @@ a:hover {
     color: #343a40;
 }
 
-.card .fav {
+.fav {
     color: #ff69b4;
     position: relative;
     top: 4px;
 }
 
-.card .rating {
+.rating {
     color: #ffaa1d;
     position: relative;
     top: 4px;
@@ -89,4 +90,21 @@ a:hover {
 
 .badge-primary {
     background-color: #a99279;
+}
+
+.entry-container {
+    margin-top: 2rem;
+}
+
+/* Media Queries */
+
+@media (min-width: 992px) {
+    .entry-container {
+        margin-top: 0;
+        padding: 5% 0;
+    }
+
+    .entry {
+        padding: 10% 0;
+    }
 }

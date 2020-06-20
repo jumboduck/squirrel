@@ -1,4 +1,86 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-<h2>Entry</h2>
+<div class="entry-container">
+    <div class="entry">
+        <h3><span class="material-icons fav">
+                favorite
+            </span> Review Name</h3>
+
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <img src="http://placeimg.com/640/480/any" class="card-img" alt="alt image">
+            </div>
+            <div class="col-md-6">
+                <div>
+                    <p>This is the full review for this item. It is a long text and it has plenty
+                        of
+                        nice
+                        things in store for all of us.</p>
+
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui,
+                        finibus
+                        ut
+                        vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum
+                        metus.
+                    </p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui,
+                        finibus
+                        ut
+                        vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum
+                        metus.
+                    </p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui,
+                        finibus
+                        ut
+                        vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum
+                        metus.
+                    </p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui,
+                        finibus
+                        ut
+                        vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum
+                        metus.
+                    </p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui,
+                        finibus
+                        ut
+                        vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum
+                        metus.
+                    </p>
+
+                    <p>Rating:
+                        <span class="rating">
+                            <span class="material-icons">
+                                star
+                            </span>
+                            <span class="material-icons">
+                                star
+                            </span>
+                            <span class="material-icons">
+                                star
+                            </span>
+                            <span class="material-icons">
+                                star_half
+                            </span>
+                            <span class="material-icons">
+                                star_outline
+                            </span>
+                        </span>
+                    </p>
+                    <p>
+                        <small>Tags: </small>
+                        <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">food</span></a>
+                        <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">drink</span></a>
+                        <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">yogurt</span></a>
+                    </p>
+                    <p class="card-text"><small class="text-muted">Last updated on 15/06/20</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 {% endblock %}

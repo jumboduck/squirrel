@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poiret+One&family=Raleway&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poiret+One&family=Raleway&display=swap");
 
 /* GENERAL */
 
@@ -27,11 +27,11 @@ h6,
 }
 
 a {
-    color: #C7B097;
+    color: #a99279;
 }
 
 a:hover {
-    color: #A99279;
+    color: #997f62;
 }
 
 /* Navigation */
@@ -42,10 +42,17 @@ a:hover {
 }
 
 .bg-primary {
-    background-color: #98AFC7 !important;
+    background-color: #98afc7 !important;
 }
 
 /* Review Cards  */
+
+.card-deck {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 0.5rem;
+}
+
 .card .delete-btn {
     position: absolute;
     right: 1rem;
@@ -57,17 +64,17 @@ a:hover {
 }
 
 .card .fav {
-    color: #FF69B4;
+    color: #ff69b4;
     position: relative;
     top: 4px;
 }
 
 .card .rating {
-    color: #FFAA1D;
+    color: #ffaa1d;
     position: relative;
     top: 4px;
 }
 
 .badge-primary {
-    background-color: #A99279;
+    background-color: #a99279;
 }

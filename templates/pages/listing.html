@@ -13,17 +13,37 @@
                     </span> <a href="{{url_for('entry')}}">Reviewed Item</a></h5>
                 <p class="card-text">This is the short version of the description but
                     there is a lot more to be seen in the view itself.</p>
+                <p class="card-text">Rating:
+                    <span class="rating">
+                        <span class="material-icons">
+                            star
+                        </span>
+                        <span class="material-icons">
+                            star
+                        </span>
+                        <span class="material-icons">
+                            star
+                        </span>
+                        <span class="material-icons">
+                            star_half
+                        </span>
+                        <span class="material-icons">
+                            star_outline
+                        </span>
+                    </span>
+                </p>
 
-                <p class="card-text">Tags: <a href="{{url_for('listing')}}"><span
+                <p class="card-text"><small>Tags: </small><a href="{{url_for('listing')}}"><span
                             class="badge badge-pill badge-primary">food</span></a>
                     <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">drink</span></a>
                     <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">yogurt</span></a></p>
 
-                <p class="card-text"><small class="text-muted">Last updated on 15/06/20</small></p>
+                <p class="card-text"><small class="text-muted">Last updated on 15/06/20</small> <span
+                        class="material-icons delete-btn">
+                        delete
+                    </span></p>
 
-                <span class="material-icons delete-btn">
-                    delete
-                </span>
+
 
 
             </div>

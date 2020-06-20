@@ -1,13 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poiret+One&family=Raleway&display=swap');
 
+/* GENERAL */
+
 body {
     font-family: "Raleway", sans-serif;
     font-size: 16px;
-}
-
-.logo {
-    font-family: "Poiret One", sans-serif;
-    font-size: 2.8rem;
 }
 
 h1,
@@ -29,11 +26,30 @@ h6,
     color: #343a40;
 }
 
+a {
+    color: #C7B097;
+}
 
+a:hover {
+    color: #A99279;
+}
+
+/* Navigation */
+
+.logo {
+    font-family: "Poiret One", sans-serif;
+    font-size: 2.8rem;
+}
+
+.bg-primary {
+    background-color: #98AFC7 !important;
+}
+
+/* Review Cards  */
 .card .delete-btn {
     position: absolute;
-    bottom: 1rem;
     right: 1rem;
+    cursor: pointer;
 }
 
 .card .delete-btn:hover {
@@ -44,4 +60,14 @@ h6,
     color: #FF69B4;
     position: relative;
     top: 4px;
+}
+
+.card .rating {
+    color: #FFAA1D;
+    position: relative;
+    top: 4px;
+}
+
+.badge-primary {
+    background-color: #A99279;
 }

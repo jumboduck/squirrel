@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poiret+One&family=Raleway&display=swap');
+
+body {
+    font-family: "Raleway", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    margin-bottom: 0.5rem;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #343a40;
+}
+
+
+.card .delete-btn {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.card .delete-btn:hover {
+    color: #343a40;
+}
+
+.card .fav {
+    color: #FF69B4;
+    position: relative;
+    top: 4px;
+}

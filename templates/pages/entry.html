@@ -6,10 +6,16 @@
             <div class="row">
 
                 <div class="col-sm-9">
-                    <input type="checkbox" id="favorite" />
-                    <label for="favorite" class="fav-label">
-                    </label>
-                    <h3 class="d-inline-block">Review Name</h3>
+                    <div class="favorite d-inline-block">
+                        <label for="favorite" class="fav-label">
+                            <input type="checkbox" id="favorite" />
+                            <span class="heart-icon"></span>
+                            <span class="sr-only">Add to favorites</span>
+                        </label>
+                    </div>
+                    <!--<input type="text" value="Review Name" id="review-name" maxlength="25"> -->
+                    <textarea class="form-control" data-expandable name="title" id="review-name" maxlength="30"
+                        cols="40" rows="1">REVIEW NAMEA</textarea>
                 </div>
                 <div class="col-sm-3 text-sm-right align-middle pt-sm-3 pl-2 pr-4 pb-2 delete-entry">
                     <a href="#"><span class="material-icons delete-btn">delete</span>Delete</a>

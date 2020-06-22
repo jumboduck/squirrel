@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poiret+One&family=Raleway&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poiret+One&family=Raleway&Material+Icons&display=swap");
 
 /* GENERAL */
 
@@ -105,6 +105,33 @@ a:hover {
 
 .fav {
     color: #ff69b4;
+}
+
+.entry .fav {
+    font-size: 2rem;
+    vertical-align: sub;
+    cursor: pointer;
+}
+
+.entry #favorite {
+    display: none;
+}
+
+#favorite + label::before {
+    font-weight: 400;
+    font-family: "Material Icons";
+    display: inline-block;
+    font-size: 2rem;
+    vertical-align: sub;
+    color: #ff69b4;
+}
+
+#favorite + label:before {
+    content: "favorite_border";
+}
+
+#favorite:checked + label:before {
+    content: "favorite";
 }
 
 .rating {

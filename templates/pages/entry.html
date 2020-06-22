@@ -2,79 +2,82 @@
 {% block content %}
 <div class="entry-container">
     <div class="entry">
-        <div class="row">
-            <div class="col-sm-9">
-                <h3><span class="material-icons fav">
-                        favorite_border
-                    </span> Review Name</h3>
-            </div>
-            <div class="col-sm-3 text-sm-right align-middle pt-sm-3 pl-2 pr-4 pb-2 delete-entry">
-                <a href="#"><span class="material-icons delete-btn">delete</span>Delete</a>
-            </div>
-        </div>
+        <form>
+            <div class="row">
 
-        <div class="row">
-            <div class="col-md-6">
-                <img src="http://placeimg.com/640/480/any" class="card-img" alt="alt image">
-            </div>
-            <div class="col-md-6">
-                <div>
-                    <p>This is the full review for this item. It is a long text and it has plenty
-                        of
-                        nice
-                        things in store for all of us.</p>
-
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui,
-                        finibus
-                        ut
-                        vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum
-                        metus.
-                    </p>
-
-
-                    <p>Rating:
-                        <span class="rating">
-                            <span class="material-icons">
-                                star
-                            </span>
-                            <span class="material-icons">
-                                star
-                            </span>
-                            <span class="material-icons">
-                                star
-                            </span>
-                            <span class="material-icons">
-                                star_half
-                            </span>
-                            <span class="material-icons">
-                                star_outline
-                            </span>
-                        </span>
-                    </p>
-                    <p>
-                        Tags:
-                        <span class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">food </a><a
-                                href="{{url_for('search')}}"> <span
-                                    class="material-icons delete-tag">cancel</span></a></span>
-                        <span class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">drink </a><a
-                                href="{{url_for('search')}}"> <span
-                                    class="material-icons delete-tag">cancel</span></a></span>
-                        <span class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">yogurt </a><a
-                                href="{{url_for('search')}}"> <span
-                                    class="material-icons delete-tag">cancel</span></a></span>
-
-
-                        <a href="{{url_for('search')}}"><span class="badge badge-pill badge-primary add-tag"><span
-                                    class="material-icons">control_point</span> new tag</span></a>
-
-                    </p>
-                    <p><small class="text-muted">Last updated on 15/06/20</small></p>
-
+                <div class="col-sm-9">
+                    <input type="checkbox" id="favorite" />
+                    <label for="favorite" class="fav-label">
+                    </label>
+                    <h3 class="d-inline-block">Review Name</h3>
+                </div>
+                <div class="col-sm-3 text-sm-right align-middle pt-sm-3 pl-2 pr-4 pb-2 delete-entry">
+                    <a href="#"><span class="material-icons delete-btn">delete</span>Delete</a>
                 </div>
             </div>
-        </div>
-    </div>
 
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="http://placeimg.com/640/480/any" class="card-img" alt="alt image">
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <p>This is the full review for this item. It is a long text and it has plenty
+                            of
+                            nice
+                            things in store for all of us.</p>
+
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui,
+                            finibus
+                            ut
+                            vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum
+                            metus.
+                        </p>
+
+
+                        <p>Rating:
+                            <span class="rating">
+                                <span class="material-icons">
+                                    star
+                                </span>
+                                <span class="material-icons">
+                                    star
+                                </span>
+                                <span class="material-icons">
+                                    star
+                                </span>
+                                <span class="material-icons">
+                                    star_half
+                                </span>
+                                <span class="material-icons">
+                                    star_outline
+                                </span>
+                            </span>
+                        </p>
+                        <p>
+                            Tags:
+                            <span class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">food
+                                </a><a href="{{url_for('search')}}"> <span
+                                        class="material-icons delete-tag">cancel</span></a></span>
+                            <span class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">drink
+                                </a><a href="{{url_for('search')}}"> <span
+                                        class="material-icons delete-tag">cancel</span></a></span>
+                            <span class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">yogurt
+                                </a><a href="{{url_for('search')}}"> <span
+                                        class="material-icons delete-tag">cancel</span></a></span>
+
+
+                            <a href="{{url_for('search')}}"><span class="badge badge-pill badge-primary add-tag"><span
+                                        class="material-icons">control_point</span> new tag</span></a>
+
+                        </p>
+                        <p><small class="text-muted">Last updated on 15/06/20</small></p>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
 {% endblock %}

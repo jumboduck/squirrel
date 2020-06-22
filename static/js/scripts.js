@@ -16,3 +16,12 @@ $(document).ready(function () {
 $(window).resize(function () {
     $("textarea[data-expandable]").each(expandTextArea);
 });
+
+// Prevent line breaks in entry names
+$(document).ready(function () {
+    $("#review-name").keypress(function (event) {
+        if (event.which == "13") {
+            return false;
+        }
+    });
+});

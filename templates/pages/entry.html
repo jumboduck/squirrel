@@ -6,7 +6,7 @@
             <div class="row">
 
                 <div class="col-sm-9">
-                    <div class="favorite d-inline-block">
+                    <div class="favorite-container">
                         <label for="favorite" class="fav-label">
                             <input type="checkbox" id="favorite" />
                             <span class="heart-icon"></span>
@@ -14,8 +14,8 @@
                         </label>
                     </div>
                     <!--<input type="text" value="Review Name" id="review-name" maxlength="25"> -->
-                    <textarea class="form-control" data-expandable name="title" id="review-name" maxlength="30"
-                        cols="40" rows="1">REVIEW NAMEA</textarea>
+                    <textarea class="form-control review-name" data-expandable name="title" id="review-name"
+                        maxlength="30" rows="1" spellcheck="false">Review Name</textarea>
                 </div>
                 <div class="col-sm-3 text-sm-right align-middle pt-sm-3 pl-2 pr-4 pb-2 delete-entry">
                     <a href="#"><span class="material-icons delete-btn">delete</span>Delete</a>
@@ -27,18 +27,11 @@
                     <img src="http://placeimg.com/640/480/any" class="card-img" alt="alt image">
                 </div>
                 <div class="col-md-6">
-                    <div>
-                        <p>This is the full review for this item. It is a long text and it has plenty
-                            of
-                            nice
-                            things in store for all of us.</p>
+                    <div><textarea class="form-control review-description" data-expandable name="description"
+                            id="review-description" maxlength="500" rows="1"
+                            spellcheck="false">This is the full review for this item. It is a long text and it has plenty of nice things in store for all of us.
 
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui,
-                            finibus
-                            ut
-                            vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum
-                            metus.
-                        </p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui, finibus ut vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum metus.</textarea>
 
 
                         <p>Rating:

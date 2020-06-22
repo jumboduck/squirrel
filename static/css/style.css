@@ -113,6 +113,12 @@ a:hover {
     cursor: pointer;
 }
 
+/* Entry Review Page */
+
+.favorite-container {
+    position: absolute;
+}
+
 .entry #favorite {
     position: absolute;
     top: 0;
@@ -141,17 +147,39 @@ a:hover {
     content: "favorite";
 }
 
-#review-name {
+.review-name {
     margin-bottom: 0.5rem;
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
     line-height: 1.2;
     color: #343a40;
     font-size: 2rem;
-    border: 0;
-    background: transparent;
     text-transform: uppercase;
-    width: 100%;
+    width: 90%;
+    margin-left: 2.2rem;
+}
+
+.review-description {
+    padding: 0;
+}
+
+.review-description,
+.review-name {
+    background: transparent;
+    border: 0;
+}
+
+.entry textarea[data-expandable] {
+    cursor: pointer;
+    resize: none;
+}
+
+.entry textarea[data-expandable]:hover {
+    color: #997f62;
+}
+
+.entry textarea[data-expandable]:focus {
+    cursor: text;
 }
 
 .rating {
@@ -170,8 +198,6 @@ a:hover {
 .entry-container {
     margin-top: 2rem;
 }
-
-/* Entries */
 
 .delete-entry {
     text-transform: uppercase;

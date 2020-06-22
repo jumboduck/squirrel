@@ -130,6 +130,11 @@ a:hover {
     text-transform: uppercase;
 }
 
+.entry .delete-btn {
+    font-size: 1.5rem;
+    padding-bottom: 0.2rem;
+}
+
 .entry .tag {
     font-size: 1rem;
     padding-right: 0.4rem;

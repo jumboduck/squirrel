@@ -34,7 +34,7 @@
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui, finibus ut vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum metus.</textarea>
 
 
-                        <p>Rating:
+                        <div class="mb-2"><strong>Rating:</strong>
                             <span class="rating">
                                 <span class="material-icons">
                                     star
@@ -52,9 +52,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui, finibus 
                                     star_outline
                                 </span>
                             </span>
-                        </p>
-                        <p>
-                            Tags:
+                        </div>
+                        <div class="mb-2">
+                            <strong>Tags:</strong>
                             <span class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">food
                                 </a><a href="{{url_for('search')}}"> <span
                                         class="material-icons delete-tag">cancel</span></a></span>
@@ -69,7 +69,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui, finibus 
                             <a href="{{url_for('search')}}"><span class="badge badge-pill badge-primary add-tag"><span
                                         class="material-icons">control_point</span> new tag</span></a>
 
-                        </p>
+                        </div>
                         <p><small class="text-muted">Last updated on 15/06/20</small></p>
 
                     </div>

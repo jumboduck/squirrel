@@ -50,6 +50,7 @@ a:hover {
 
 .material-icons {
     vertical-align: middle;
+    font-size: inherit;
 }
 
 /* Navigation */
@@ -108,10 +109,15 @@ a:hover {
 
 .rating {
     color: #ffaa1d;
+    font-size: 1.5rem;
 }
 
 .badge-primary {
     background-color: #a99279;
+}
+
+.badge-primary:hover {
+    background-color: #997f62;
 }
 
 .entry-container {
@@ -122,6 +128,34 @@ a:hover {
 
 .delete-entry {
     text-transform: uppercase;
+}
+
+.entry .tag {
+    font-size: 1rem;
+    padding-right: 0.4rem;
+    margin-right: 0.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.entry .tag a {
+    color: #fff;
+}
+.entry .tag a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.add-tag {
+    font-size: 1rem;
+    border: 1px solid #a99279;
+    background-color: transparent;
+    color: #a99279;
+}
+
+.add-tag:hover {
+    border: 1px solid #997f62;
+    color: #997f62;
+    background-color: transparent;
 }
 
 /* Media Queries */

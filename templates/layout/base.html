@@ -9,10 +9,13 @@
 <body id="page-top">
 	<!-- Navigation-->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-		<a class="navbar-brand js-scroll-trigger" href="{{url_for('listing')}}"><span
-				class="d-block logo">squirrel</span></a><button class="navbar-toggler" type="button"
-			data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-			aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+		<a class="navbar-brand js-scroll-trigger" href="{{url_for('listing')}}">
+			<div class="d-block logo"><img src="{{url_for('static', filename='img/acorn-logo.png')}}"
+					class="logo-img d-inline-block d-lg-block">
+				squirrel</div>
+		</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+				class="navbar-toggler-icon"></span></button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav">
 				<li class="nav-item"><a class="nav-link" href="{{url_for('listing')}}">Home</a></li>

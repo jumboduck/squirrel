@@ -49,3 +49,4 @@ Reviews can be searched by review name, by tag, or by favorited.
 -   [Simen Daehlin](https://github.com/Eventyret) - [The Padwan Project](https://github.com/Eventyret/Padawan)
 -   [Start Bootstrap Resume Template](https://github.com/StartBootstrap/startbootstrap-resume)
 -   [Corey Schaefer](https://www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g) for his python tutorials on youtube, especially regarding registration and login forms.
+-   Acorn logo from [Flaticon](https://www.flaticon.com/authors/freepik)

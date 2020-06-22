@@ -37,9 +37,11 @@
                 <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">food</span></a>
                 <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">drink</span></a>
                 <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">yogurt</span></a></p>
-            <p class="card-text"><small class="text-muted">Last updated on 15/06/20</small>
-                <span class="material-icons delete-btn">delete</span>
-            </p>
+            <div class="card-footer">
+                <p class="card-text"><small class="text-muted">Last updated on 15/06/20</small>
+                    <span class="material-icons delete-btn">delete</span>
+                </p>
+            </div>
         </div>
     </div>
 
@@ -48,9 +50,7 @@
                 alt="alt text"></a>
         <div class="card-body">
             <h5 class="card-title">
-                <span class="material-icons fav">
-                    favorite
-                </span> <a href="{{url_for('entry')}}">Reviewed Item</a></h5>
+                <a href="{{url_for('entry')}}">Reviewed Item Unfavorited</a></h5>
             <p class="card-text">This is the short version of the description but
                 there is a lot more to be seen in the view itself.</p>
             <p class="card-text">Rating:

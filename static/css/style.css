@@ -150,6 +150,7 @@ a:hover {
     border: 1px solid #a99279;
     background-color: transparent;
     color: #a99279;
+    padding-left: 0.4rem;
 }
 
 .add-tag:hover {

@@ -118,6 +118,12 @@ a:hover {
     margin-top: 2rem;
 }
 
+/* Entries */
+
+.delete-entry {
+    text-transform: uppercase;
+}
+
 /* Media Queries */
 
 @media (min-width: 992px) {

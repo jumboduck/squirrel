@@ -262,6 +262,11 @@ a:hover {
     color: #2e856e;
 }
 
+.badge-input {
+    border: 0;
+    width: 80px;
+}
+
 /* Star Rating, inspired by Adam Orchard https://codepen.io/orchard/pen/Jnwvb  */
 .rating-container {
     position: relative;

@@ -1,3 +1,5 @@
+let tagNum = 0;
+
 // Textarea expandable inspired by Vanderson https://codepen.io/Vanderson
 function expandTextArea() {
     this.style.removeProperty("height");
@@ -16,23 +18,35 @@ $(window).resize(function () {
 
 $("#edit-tags-btn").on("click", function () {
     $("#edit-tags").toggle();
-    $("#view-tags").toggle();
+    //$("#view-tags").toggle();
 });
 
 $("#save-tag-btn").on("click", function () {
     $("#edit-tags").toggle();
-    $("#view-tags").toggle();
+    //$("#view-tags").toggle();
 });
 
+//Delete tag from list
 function deleteTag() {
     $(this).click(function () {
         $(this).remove();
     });
 }
 
+function getNumberFromId(id) {
+    return id.match(/\d+/g)[0];
+}
+
+//Add a new tag to list and focus on it to edit
 function addNewTag() {
-    let newTag = `<span class="badge badge-pill badge-primary tag">hello</span>`;
-    $(this).before(newTag);
+    tagNum += 1;
+    let editTagId = "edit-tag-" + tagNum;
+    let viewTagId = "tag" + tagNum;
+    let newEditTag = `<input id="${editTagId}" type="text" placeholder="new tag" spellcheck="false" class="tag badge-pill badge-primary badge-input">`;
+    let newTag = `<span id="${viewTagId}"class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}"></a></span>`;
+    $(this).before(newEditTag);
+    $("#" + editTagId).focus();
+    $("#edit-tags-btn").before(newTag);
 }
 
 $(document).ready(function () {

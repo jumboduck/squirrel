@@ -13,8 +13,10 @@ $("body")
 //Copy content of new tag to tag list when created
 $("body").on("keydown input", ".badge-input", function () {
     let viewId = "#tag" + getNumberFromId($(this).attr("id"));
+    let widthId = "#width" + getNumberFromId($(this).attr("id"));
     $(viewId + " a").text($(this).val());
-    $(this).width($(viewId).width());
+    $(widthId).text($(this).val());
+    $(this).width($(widthId).width());
 });
 
 $(window).resize(function () {
@@ -67,11 +69,14 @@ function deleteTag() {
 function addNewTag() {
     let editTagId = "edit-tag-" + tagNum;
     let viewTagId = "tag" + tagNum;
+    let widthMachineId = "width" + tagNum;
     let newEditTag = `<input id="${editTagId}" type="text" placeholder="new tag" spellcheck="false" class="tag badge-pill badge-primary badge-input" />`;
     let newTag = createTag(viewTagId, "tag name");
+    let newWidthMachine = `<span aria-hidden="true" id="${widthMachineId}"class="badge badge-pill badge-primary tag width-machine">invisible</span>`;
     $(this).before(newEditTag);
     $("#" + editTagId).focus();
     $("#view-tags").append(newTag);
+    $(".entry").append(newWidthMachine);
     tagNum += 1;
 }
 

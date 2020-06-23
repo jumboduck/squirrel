@@ -267,6 +267,10 @@ a:hover {
     width: 80px;
 }
 
+.width-machine {
+    opacity: 0;
+}
+
 /* Star Rating, inspired by Adam Orchard https://codepen.io/orchard/pen/Jnwvb  */
 .rating-container {
     position: relative;

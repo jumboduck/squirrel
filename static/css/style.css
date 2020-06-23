@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poiret+One&family=Raleway:wght@300,400,500,600&Material+Icons&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poiret+One&family=Raleway&Material+Icons&display=swap");
 
 /* GENERAL */
 
@@ -97,6 +97,7 @@ a:hover {
     position: absolute;
     right: 1rem;
     cursor: pointer;
+    font-size: 1.5rem;
 }
 
 .card .delete-btn:hover {
@@ -235,6 +236,54 @@ a:hover {
     border: 1px solid #997f62;
     color: #997f62;
     background-color: transparent;
+}
+
+/* Star Rating, inspired by Adam Orchard https://codepen.io/orchard/pen/Jnwvb  */
+
+.star-rating {
+    font-family: "Material Icons";
+    display: inline-block;
+}
+
+.star-rating label {
+    margin-bottom: 0;
+}
+
+.star-rating > fieldset {
+    border: none;
+    display: inline-block;
+}
+.star-rating > fieldset:not(:checked) > input {
+    position: absolute;
+    top: -9999px;
+    clip: rect(0, 0, 0, 0);
+}
+.star-rating > fieldset:not(:checked) > label {
+    float: right;
+    width: 1em;
+    padding: 0 0.05em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 200%;
+    color: #ffaa1d;
+}
+.star-rating > fieldset:not(:checked) > label:before {
+    content: "star_outline  ";
+}
+.star-rating > fieldset:not(:checked) > label:hover,
+.star-rating > fieldset:not(:checked) > label:hover ~ label {
+    color: #ffaa1d;
+}
+.star-rating > fieldset:not(:checked) > label:hover:before,
+.star-rating > fieldset:not(:checked) > label:hover ~ label:before {
+    content: "star  ";
+}
+.star-rating > fieldset > input:checked ~ label:before {
+    content: "star  ";
+}
+.star-rating > fieldset > label:active {
+    transform: scale(1.2);
 }
 
 /* Media Queries */

@@ -50,3 +50,4 @@ Reviews can be searched by review name, by tag, or by favorited.
 -   [Start Bootstrap Resume Template](https://github.com/StartBootstrap/startbootstrap-resume)
 -   [Corey Schaefer](https://www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g) for his python tutorials on youtube, especially regarding registration and login forms.
 -   Acorn logo from [Flaticon](https://www.flaticon.com/authors/freepik)
+-   [Adam Orchard](https://codepen.io/orchard/pen/Jnwvb) for the 5 star rating code.

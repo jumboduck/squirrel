@@ -27,56 +27,54 @@
                     <img src="http://placeimg.com/640/480/any" class="card-img" alt="alt image">
                 </div>
                 <div class="col-md-6">
-                    <div><textarea class="form-control review-description" data-expandable name="description"
+                    <div>
+                        <textarea class="form-control review-description" data-expandable name="description"
                             id="review-description" maxlength="500" rows="1"
-                            spellcheck="false">This is the full review for this item. It is a long text and it has plenty of nice things in store for all of us.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui, finibus ut vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum metus.</textarea>
-
-
-                        <div class="mb-2"><strong>Rating:</strong>
-                            <span class="rating">
-                                <span class="material-icons">
-                                    star
-                                </span>
-                                <span class="material-icons">
-                                    star
-                                </span>
-                                <span class="material-icons">
-                                    star
-                                </span>
-                                <span class="material-icons">
-                                    star_half
-                                </span>
-                                <span class="material-icons">
-                                    star_outline
-                                </span>
-                            </span>
+                            spellcheck="false">This is the full review for this item. It is a long text and it has plenty of nice things in store for all of us. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui, finibus ut vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui, finibus ut vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum metus.</textarea>
+                    </div>
+                    <div>
+                        <div class="d-inline-block"><span class="entry-subtitle">Rating:</span></div>
+                        <div class="star-rating d-inline-block">
+                            <fieldset class="form-check form-check-inline">
+                                <input type="radio" id="star5" name="rating" value="5" /><label for="star5"
+                                    title="Outstanding">5 stars</label>
+                                <input type="radio" id="star4" name="rating" value="4" /><label for="star4"
+                                    title="Very Good">4 stars</label>
+                                <input type="radio" id="star3" name="rating" value="3" /><label for="star3"
+                                    title="Good">3 stars</label>
+                                <input type="radio" id="star2" name="rating" value="2" /><label for="star2"
+                                    title="Poor">2 stars</label>
+                                <input type="radio" id="star1" name="rating" value="1" /><label for="star1"
+                                    title="Very Poor">1 star</label>
+                            </fieldset>
                         </div>
-                        <div class="mb-2">
-                            <strong>Tags:</strong>
-                            <span class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">food
-                                </a><a href="{{url_for('search')}}"> <span
-                                        class="material-icons delete-tag">cancel</span></a></span>
-                            <span class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">drink
-                                </a><a href="{{url_for('search')}}"> <span
-                                        class="material-icons delete-tag">cancel</span></a></span>
-                            <span class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">yogurt
-                                </a><a href="{{url_for('search')}}"> <span
-                                        class="material-icons delete-tag">cancel</span></a></span>
+                    </div>
 
 
-                            <a href="{{url_for('search')}}"><span class="badge badge-pill badge-primary add-tag"><span
-                                        class="material-icons">control_point</span> new tag</span></a>
+                    <div class="mb-2">
+                        <span class="entry-subtitle">Tags:</span>
+                        <span class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">food
+                            </a><a href="{{url_for('search')}}"> <span
+                                    class="material-icons delete-tag">cancel</span></a></span>
+                        <span class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">drink
+                            </a><a href="{{url_for('search')}}"> <span
+                                    class="material-icons delete-tag">cancel</span></a></span>
+                        <span class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">yogurt
+                            </a><a href="{{url_for('search')}}"> <span
+                                    class="material-icons delete-tag">cancel</span></a></span>
 
-                        </div>
-                        <p><small class="text-muted">Last updated on 15/06/20</small></p>
+
+                        <a href="{{url_for('search')}}"><span class="badge badge-pill badge-primary add-tag"><span
+                                    class="material-icons">control_point</span> new tag</span></a>
 
                     </div>
+                    <p><small class="text-muted">Last updated on 15/06/20</small></p>
+
                 </div>
             </div>
-        </form>
     </div>
+    </form>
+</div>
 </div>
 
 {% endblock %}

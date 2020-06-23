@@ -36,7 +36,7 @@ function createDeleteTag(id, word) {
 
 $("#edit-tags-btn").on("click", function () {
     $("#edit-tags").toggle();
-    $("#view-tags").toggle();
+    $("#view-tags-container").toggle();
 });
 
 $(document).on("click", "#save-tag-btn", function () {
@@ -44,9 +44,10 @@ $(document).on("click", "#save-tag-btn", function () {
     $(".badge-input").each(function () {
         let newDeleteTag = createDeleteTag($(this).attr("id"), $(this).val());
         $("#new-tag").before(newDeleteTag);
+        $(".delete-tag").each(deleteTag);
         $(this).remove();
     });
-    $("#view-tags").toggle();
+    $("#view-tags-container").toggle();
 });
 
 function getNumberFromId(id) {
@@ -87,9 +88,6 @@ $(document).ready(function () {
 
     // Hide the edit tags section on load
     $("#edit-tags").hide();
-
-    // Make delete tags deleteable
-    $(".delete-tag").each(deleteTag);
 
     // Add a new tag
     $(".add-tag").on("click", addNewTag);

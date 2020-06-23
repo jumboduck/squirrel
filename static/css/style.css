@@ -138,14 +138,15 @@ a:hover {
     vertical-align: sub;
     color: #ff69b4;
     cursor: pointer;
-}
-
-#favorite + .heart-icon::before {
     content: "favorite_border";
 }
 
 #favorite:checked + .heart-icon::before {
     content: "favorite";
+}
+
+#favorite + .heart-icon:active::before {
+    transform: scale(1.2);
 }
 
 .review-name {
@@ -269,7 +270,7 @@ a:hover {
     color: #ffaa1d;
 }
 .star-rating > fieldset:not(:checked) > label:before {
-    content: "star_outline  ";
+    content: "star_outline";
 }
 .star-rating > fieldset:not(:checked) > label:hover,
 .star-rating > fieldset:not(:checked) > label:hover ~ label {
@@ -277,10 +278,10 @@ a:hover {
 }
 .star-rating > fieldset:not(:checked) > label:hover:before,
 .star-rating > fieldset:not(:checked) > label:hover ~ label:before {
-    content: "star  ";
+    content: "star";
 }
 .star-rating > fieldset > input:checked ~ label:before {
-    content: "star  ";
+    content: "star";
 }
 .star-rating > fieldset > label:active {
     transform: scale(1.2);

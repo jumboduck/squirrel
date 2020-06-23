@@ -29,6 +29,11 @@ function createTag(id, word) {
     return `<span id="${id}"class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">${word}</a></span>`;
 }
 
+function createDeleteTag(id, word) {
+    return `<span id="${id}" class="badge badge-pill badge-primary tag delete-tag">${word}
+    <span class="material-icons">cancel</span></span>`;
+}
+
 $("#edit-tags-btn").on("click", function () {
     $("#edit-tags").toggle();
     //$("#view-tags").toggle();
@@ -59,7 +64,7 @@ function addNewTag() {
     let newTag = createTag(viewTagId, "tag name");
     $(this).before(newEditTag);
     $("#" + editTagId).focus();
-    $("#edit-tags-btn").before(newTag);
+    $("#view-tags").append(newTag);
 }
 
 $(document).ready(function () {
@@ -83,7 +88,9 @@ $(document).ready(function () {
     $(".add-tag").on("click", addNewTag);
 
     for (let i = 0; i < tagList.length; i++) {
-        let tag = createTag(tagNum, tagList[i]);
+        let tag = createTag("tag" + tagNum, tagList[i]);
+        let deleteTag = createDeleteTag("edit-tag-" + tagNum, tagList[i]);
         $("#view-tags").append(tag);
+        $("#new-tag").before(deleteTag);
     }
 });

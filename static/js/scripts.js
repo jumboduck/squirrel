@@ -36,12 +36,17 @@ function createDeleteTag(id, word) {
 
 $("#edit-tags-btn").on("click", function () {
     $("#edit-tags").toggle();
-    //$("#view-tags").toggle();
+    $("#view-tags").toggle();
 });
 
-$("#save-tag-btn").on("click", function () {
+$(document).on("click", "#save-tag-btn", function () {
     $("#edit-tags").toggle();
-    //$("#view-tags").toggle();
+    $(".badge-input").each(function () {
+        let newDeleteTag = createDeleteTag($(this).attr("id"), $(this).val());
+        $("#new-tag").before(newDeleteTag);
+        $(this).remove();
+    });
+    $("#view-tags").toggle();
 });
 
 function getNumberFromId(id) {

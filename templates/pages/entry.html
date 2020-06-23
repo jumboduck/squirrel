@@ -32,7 +32,7 @@
                             id="review-description" maxlength="500" rows="1"
                             spellcheck="false">This is the full review for this item. It is a long text and it has plenty of nice things in store for all of us. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui, finibus ut vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui, finibus ut vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum metus.</textarea>
                     </div>
-                    <div>
+                    <div class="rating-container">
                         <div class="d-inline-block"><span class="entry-subtitle">Rating:</span></div>
                         <div class="star-rating d-inline-block">
                             <fieldset class="form-check form-check-inline">
@@ -50,24 +50,33 @@
                         </div>
                     </div>
 
-
-                    <div class="mb-2">
+                    <div class="view-tags mb-2">
                         <span class="entry-subtitle">Tags:</span>
-                        <span class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">food
-                            </a><a href="{{url_for('search')}}"> <span
-                                    class="material-icons delete-tag">cancel</span></a></span>
+                        <span class="badge badge-pill badge-primary tag"><a
+                                href="{{url_for('listing')}}">food</a></span>
                         <span class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">drink
-                            </a><a href="{{url_for('search')}}"> <span
-                                    class="material-icons delete-tag">cancel</span></a></span>
+                            </a></span>
                         <span class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">yogurt
-                            </a><a href="{{url_for('search')}}"> <span
-                                    class="material-icons delete-tag">cancel</span></a></span>
-
-
-                        <a href="{{url_for('search')}}"><span class="badge badge-pill badge-primary add-tag"><span
-                                    class="material-icons">control_point</span> new tag</span></a>
-
+                            </a></span>
+                        <span class="badge badge-pill badge-primary light-tag"><a href="{{url_for('search')}}">edit
+                                tags</a></span>
                     </div>
+
+                    <div class="edit-tags mb-2">
+                        <span class="entry-subtitle">Tags:</span>
+                        <span class="badge badge-pill badge-primary tag delete-tag"><a href="{{url_for('search')}}">food
+                                <span class="material-icons">cancel</span></a></span>
+                        <span class="badge badge-pill badge-primary tag delete-tag"><a
+                                href="{{url_for('search')}}">drink
+                                <span class="material-icons">cancel</span></a></span>
+                        <span class="badge badge-pill badge-primary tag delete-tag"><a
+                                href="{{url_for('search')}}">yogurt
+                                <span class="material-icons">cancel</span></a></span>
+                        <span class="badge badge-pill badge-primary light-tag add-tag"><a
+                                href="{{url_for('search')}}"><span class="material-icons">control_point</span> new
+                                tag</a></span>
+                    </div>
+
                     <p><small class="text-muted">Last updated on 15/06/20</small></p>
 
                 </div>

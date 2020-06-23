@@ -212,9 +212,12 @@ a:hover {
 
 .entry .tag {
     font-size: 1rem;
-    padding-right: 0.4rem;
     margin-right: 0.2rem;
     margin-bottom: 0.5rem;
+}
+
+.entry .delete-tag {
+    padding-right: 0.4rem;
 }
 
 .entry .tag a {
@@ -225,34 +228,42 @@ a:hover {
     text-decoration: none;
 }
 
-.add-tag {
+.light-tag {
     font-size: 1rem;
     border: 1px solid #a99279;
     background-color: transparent;
     color: #a99279;
-    padding-left: 0.4rem;
 }
 
-.add-tag:hover {
+.light-tag:hover {
     border: 1px solid #997f62;
     color: #997f62;
     background-color: transparent;
 }
 
+.light-tag a:hover {
+    text-decoration: none;
+}
+
+.add-tag {
+    padding-left: 0.4rem;
+}
+
 /* Star Rating, inspired by Adam Orchard https://codepen.io/orchard/pen/Jnwvb  */
+.rating-container {
+    position: relative;
+    top: -1rem;
+}
 
 .star-rating {
     font-family: "Material Icons";
     display: inline-block;
 }
 
-.star-rating label {
-    margin-bottom: 0;
-}
-
 .star-rating > fieldset {
     border: none;
     display: inline-block;
+    position: relative;
 }
 .star-rating > fieldset:not(:checked) > input {
     position: absolute;
@@ -272,6 +283,9 @@ a:hover {
     cursor: pointer;
     font-size: 200%;
     color: #ffaa1d;
+    position: relative;
+    top: 1rem;
+    margin-bottom: 0;
 }
 .star-rating > fieldset:not(:checked) > label:before {
     content: "star_outline";

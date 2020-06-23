@@ -6,6 +6,13 @@ function expandTextArea() {
     this.style.height = this.scrollHeight + 2 + "px";
 }
 
+function copyNewIdContent() {
+    let viewId = "#tag" + getNumberFromId($(this).attr("id"));
+    $(this).on("keydown", function () {
+        $(viewId + " a").text() = $(this).val();
+    });
+}
+
 $("body")
     .on("keydown input", "textarea[data-expandable]", expandTextArea)
     .on("mousedown focus", "textarea[data-expandable]", expandTextArea);
@@ -15,6 +22,12 @@ $(window).resize(function () {
 });
 
 //Create/Edit/Delete tags in entries
+
+let tagList = ["food", "drink", "yogurt"];
+
+function createTag(id, word) {
+    return `<span id="${id}"class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">${word}</a></span>`;
+}
 
 $("#edit-tags-btn").on("click", function () {
     $("#edit-tags").toggle();
@@ -42,8 +55,8 @@ function addNewTag() {
     tagNum += 1;
     let editTagId = "edit-tag-" + tagNum;
     let viewTagId = "tag" + tagNum;
-    let newEditTag = `<input id="${editTagId}" type="text" placeholder="new tag" spellcheck="false" class="tag badge-pill badge-primary badge-input">`;
-    let newTag = `<span id="${viewTagId}"class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}"></a></span>`;
+    let newEditTag = `<input id="${editTagId}" type="text" placeholder="new tag" spellcheck="false" class="tag badge-pill badge-primary badge-input" />`;
+    let newTag = createTag(viewTagId, "tag name");
     $(this).before(newEditTag);
     $("#" + editTagId).focus();
     $("#edit-tags-btn").before(newTag);
@@ -68,4 +81,9 @@ $(document).ready(function () {
 
     //Add a new tag
     $(".add-tag").on("click", addNewTag);
+
+    for (let i = 0; i < tagList.length; i++) {
+        let tag = createTag(tagNum, tagList[i]);
+        $("#view-tags").append(tag);
+    }
 });

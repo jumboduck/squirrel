@@ -214,6 +214,7 @@ a:hover {
     font-size: 1rem;
     margin-right: 0.2rem;
     margin-bottom: 0.5rem;
+    cursor: pointer;
 }
 
 .entry .delete-tag {
@@ -233,6 +234,7 @@ a:hover {
     border: 1px solid #a99279;
     background-color: transparent;
     color: #a99279;
+    margin-bottom: 0.5rem;
 }
 
 .light-tag:hover {
@@ -247,6 +249,16 @@ a:hover {
 
 .add-tag {
     padding-left: 0.4rem;
+}
+
+.save-tag {
+    padding-left: 0.4rem;
+    border: 1px solid #8abaae;
+    color: #8abaae;
+}
+.save-tag:hover {
+    border-color: #2e856e;
+    color: #2e856e;
 }
 
 /* Star Rating, inspired by Adam Orchard https://codepen.io/orchard/pen/Jnwvb  */

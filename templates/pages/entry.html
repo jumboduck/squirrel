@@ -49,32 +49,34 @@
                             </fieldset>
                         </div>
                     </div>
+                    <div> <span class="entry-subtitle">Tags:</span>
+                        <div class="mb-2" id="view-tags">
 
-                    <div class="view-tags mb-2">
-                        <span class="entry-subtitle">Tags:</span>
-                        <span class="badge badge-pill badge-primary tag"><a
-                                href="{{url_for('listing')}}">food</a></span>
-                        <span class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">drink
-                            </a></span>
-                        <span class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">yogurt
-                            </a></span>
-                        <span class="badge badge-pill badge-primary light-tag"><a href="{{url_for('search')}}">edit
-                                tags</a></span>
-                    </div>
+                            <span class="badge badge-pill badge-primary tag"><a
+                                    href="{{url_for('listing')}}">food</a></span>
+                            <span class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">drink
+                                </a></span>
+                            <span class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">yogurt
+                                </a></span>
+                            <span class="badge badge-pill badge-primary tag light-tag" id="edit-tags-btn">edit
+                                tags</span>
+                        </div>
 
-                    <div class="edit-tags mb-2">
-                        <span class="entry-subtitle">Tags:</span>
-                        <span class="badge badge-pill badge-primary tag delete-tag"><a href="{{url_for('search')}}">food
-                                <span class="material-icons">cancel</span></a></span>
-                        <span class="badge badge-pill badge-primary tag delete-tag"><a
-                                href="{{url_for('search')}}">drink
-                                <span class="material-icons">cancel</span></a></span>
-                        <span class="badge badge-pill badge-primary tag delete-tag"><a
-                                href="{{url_for('search')}}">yogurt
-                                <span class="material-icons">cancel</span></a></span>
-                        <span class="badge badge-pill badge-primary light-tag add-tag"><a
-                                href="{{url_for('search')}}"><span class="material-icons">control_point</span> new
-                                tag</a></span>
+                        <div class="mb-2" id="edit-tags">
+                            <span class="badge badge-pill badge-primary tag delete-tag">food
+                                <span class="material-icons">cancel</span></span>
+                            <span class="badge badge-pill badge-primary tag delete-tag">drink
+                                <span class="material-icons">cancel</span></span>
+                            <span class="badge badge-pill badge-primary tag delete-tag">yogurt
+                                <span class="material-icons">cancel</span></span>
+                            <span class="badge badge-pill badge-primary light-tag add-tag"><span
+                                    class="material-icons">control_point</span> new
+                                tag</span>
+                            <div>
+                                <span id="save-tag-btn"
+                                    class="badge badge-pill badge-primary tag light-tag save-tag"><span
+                                        class="material-icons">save</span> save changes</span></div>
+                        </div>
                     </div>
 
                     <p><small class="text-muted">Last updated on 15/06/20</small></p>

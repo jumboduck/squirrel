@@ -30,6 +30,11 @@ function deleteTag() {
     });
 }
 
+function addNewTag() {
+    let newTag = `<span class="badge badge-pill badge-primary tag">hello</span>`;
+    $(this).before(newTag);
+}
+
 $(document).ready(function () {
     //Expand all textareas when document is ready
     $("textarea[data-expandable]").each(expandTextArea);
@@ -46,4 +51,7 @@ $(document).ready(function () {
 
     //Make delete tags deleteable
     $(".delete-tag").each(deleteTag);
+
+    //Add a new tag
+    $(".add-tag").on("click", addNewTag);
 });

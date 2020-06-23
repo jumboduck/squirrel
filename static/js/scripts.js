@@ -19,6 +19,15 @@ $("body").on("keydown input", ".badge-input", function () {
     $(this).width($(widthId).width());
 });
 
+// Prevents line breaks in Review Name and tags.
+// Pressing enter will instead send focus to the next element.
+$("body").on("keypress", "#review-name, .badge-input", function (event) {
+    if (event.keyCode === 13) {
+        $(this).blur();
+        return false;
+    }
+});
+
 $(window).resize(function () {
     $("textarea[data-expandable]").each(expandTextArea);
 });
@@ -27,26 +36,33 @@ $(window).resize(function () {
 
 let tagList = ["food", "drink", "yogurt", "aerosol"];
 
+// Creating a new HTML Tag
 function createTag(id, word) {
     return `<span id="${id}"class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">${word}</a></span>`;
 }
 
+// Creating a new HTML Delete Tag
 function createDeleteTag(id, word) {
     return `<span id="${id}" class="badge badge-pill badge-primary tag delete-tag">${word}
     <span class="material-icons">cancel</span></span>`;
 }
 
+// Turning on Tag Edit mode
 $("#edit-tags-btn").on("click", function () {
     $("#edit-tags").toggle();
     $("#view-tags-container").toggle();
 });
 
+// Saving changes to tags
 $(document).on("click", "#save-tag-btn", function () {
     $("#edit-tags").toggle();
     $(".badge-input").each(function () {
         let newDeleteTag = createDeleteTag($(this).attr("id"), $(this).val());
         $("#new-tag").before(newDeleteTag);
         $(".delete-tag").each(deleteTag);
+        $(this).remove();
+    });
+    $(".width-machine").each(function () {
         $(this).remove();
     });
     $("#view-tags-container").toggle();
@@ -85,11 +101,11 @@ $(document).ready(function () {
     $("textarea[data-expandable]").each(expandTextArea);
 
     // Prevent line breaks in entry names
-    $("#review-name").keypress(function (event) {
-        if (event.which == "13") {
+    /*$("#review-name").keypress(function (event) {
+        if (event.which === 13) {
             return false;
         }
-    });
+    });*/
 
     // Hide the edit tags section on load
     $("#edit-tags").hide();

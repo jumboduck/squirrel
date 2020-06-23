@@ -267,6 +267,10 @@ a:hover {
     width: 80px;
 }
 
+.badge-input::placeholder {
+    color: #ccc;
+}
+
 .width-machine {
     opacity: 0;
 }

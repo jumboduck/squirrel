@@ -238,7 +238,7 @@ a:hover {
 
 .overlay-text {
     color: white;
-    font-size: 20px;
+    font-size: 1.5rem;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -246,6 +246,11 @@ a:hover {
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     text-align: center;
+    width: 90%;
+}
+
+.new-image-icon {
+    font-size: 200%;
 }
 
 #image-selector {

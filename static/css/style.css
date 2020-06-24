@@ -134,6 +134,11 @@ a:hover {
 .entry .delete-btn {
     font-size: 1.5rem;
     padding-bottom: 0.2rem;
+    transition: all 0.3s;
+}
+
+.delete-entry a:hover .delete-btn {
+    transform: scale(1.2);
 }
 
 /* Favorite */

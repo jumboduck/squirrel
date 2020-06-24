@@ -62,7 +62,7 @@ a:hover {
     margin-bottom: 0.5rem;
 }
 
-.logo-img {
+.logo-image {
     margin: 0 auto;
     height: 2.5rem;
     filter: invert(1);
@@ -87,7 +87,7 @@ a:hover {
 
 .card-deck .card {
     margin-bottom: 1rem;
-    transition: all 0.3s;
+    transition: 0.3s;
 }
 
 .card:hover {
@@ -108,7 +108,7 @@ a:hover {
     right: 1rem;
     cursor: pointer;
     font-size: 1.5rem;
-    transition: all 0.3s;
+    transition: 0.3s;
 }
 
 .card .delete-btn:hover {
@@ -139,7 +139,7 @@ a:hover {
 .entry .delete-btn {
     font-size: 1.5rem;
     padding-bottom: 0.2rem;
-    transition: all 0.3s;
+    transition: 0.3s;
 }
 
 .delete-entry a:hover .delete-btn {
@@ -223,7 +223,7 @@ a:hover {
     width: 100%;
 }
 
-.card-img {
+.entry-image {
     display: block;
     width: 100%;
     height: auto;
@@ -254,8 +254,6 @@ a:hover {
     position: absolute;
     top: 50%;
     left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     text-align: center;
     width: 90%;
@@ -265,7 +263,7 @@ a:hover {
     font-size: 200%;
 }
 
-#image-selector {
+.image-input {
     position: absolute;
     top: 0;
     right: 0;
@@ -278,7 +276,7 @@ a:hover {
 /* Tags */
 
 .badge {
-    transition: all 0.3s;
+    transition: 0.3s;
 }
 
 .badge:hover {

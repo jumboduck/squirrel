@@ -6,6 +6,7 @@
             <div class="row">
 
                 <div class="col-sm-9">
+                    <!-- Favorite checkbox -->
                     <div class="favorite-container">
                         <label for="favorite" class="fav-label">
                             <input type="checkbox" id="favorite" />
@@ -13,25 +14,29 @@
                             <span class="sr-only">Add to favorites</span>
                         </label>
                     </div>
-
+                    <!-- Review Name -->
                     <textarea class="form-control review-name" data-expandable name="title" id="review-name"
                         maxlength="30" rows="1" spellcheck="false">Review Name</textarea>
                 </div>
+                <!-- Delete Review -->
                 <div class="col-sm-3 text-sm-right align-middle pt-sm-3 pl-2 pr-4 pb-2 delete-entry">
                     <a href="#"><span class="material-icons delete-btn">delete</span>Delete</a>
                 </div>
             </div>
 
             <div class="row">
+                <!-- Review Image -->
                 <div class="col-md-6">
                     <img src="http://placeimg.com/640/480/any" class="card-img" alt="alt image">
                 </div>
                 <div class="col-md-6">
                     <div>
+                        <!-- Review Description -->
                         <textarea class="form-control review-description" data-expandable name="description"
                             id="review-description" maxlength="500" rows="1"
                             spellcheck="false">This is the full review for this item. It is a long text and it has plenty of nice things in store for all of us. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui, finibus ut vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui, finibus ut vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum metus.</textarea>
                     </div>
+                    <!-- Rating -->
                     <div class="rating-container">
                         <div class="d-inline-block"><span class="entry-subtitle">Rating:</span></div>
                         <div class="star-rating d-inline-block">
@@ -49,6 +54,7 @@
                             </fieldset>
                         </div>
                     </div>
+                    <!-- Tags -->
                     <div> <span class="entry-subtitle">Tags:</span>
                         <div class="mb-2" id="view-tags-container">
                             <div id="view-tags" class="d-inline-block">
@@ -68,9 +74,8 @@
                             </div>
                         </div>
                     </div>
-
+                    <!-- Creation / Update Time -->
                     <p><small class="text-muted">Last updated on 15/06/20</small></p>
-
                 </div>
             </div>
     </div>

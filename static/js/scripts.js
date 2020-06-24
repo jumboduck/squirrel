@@ -57,6 +57,7 @@ $("#edit-tags-btn").on("click", function () {
 $(document).on("click", "#save-tag-btn", function () {
     $("#edit-tags").toggle();
     $(".badge-input").each(function () {
+        // If nothing has been inputed the new tag is deleted
         if (!$(this).val()) {
             $(this).remove();
             $("#tag" + getNumberFromId($(this).attr("id"))).remove();
@@ -73,6 +74,7 @@ $(document).on("click", "#save-tag-btn", function () {
     $(".width-machine").each(function () {
         $(this).remove();
     });
+    // Return to normal tag view
     $("#view-tags-container").toggle();
 });
 
@@ -107,13 +109,6 @@ function addNewTag() {
 $(document).ready(function () {
     //Expand all textareas when document is ready
     $("textarea[data-expandable]").each(expandTextArea);
-
-    // Prevent line breaks in entry names
-    /*$("#review-name").keypress(function (event) {
-        if (event.which === 13) {
-            return false;
-        }
-    });*/
 
     // Hide the edit tags section on load
     $("#edit-tags").hide();

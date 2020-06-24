@@ -57,10 +57,18 @@ $("#edit-tags-btn").on("click", function () {
 $(document).on("click", "#save-tag-btn", function () {
     $("#edit-tags").toggle();
     $(".badge-input").each(function () {
-        let newDeleteTag = createDeleteTag($(this).attr("id"), $(this).val());
-        $("#new-tag").before(newDeleteTag);
-        $(".delete-tag").each(deleteTag);
-        $(this).remove();
+        if (!$(this).val()) {
+            $(this).remove();
+            $("#tag" + getNumberFromId($(this).attr("id"))).remove();
+        } else {
+            let newDeleteTag = createDeleteTag(
+                $(this).attr("id"),
+                $(this).val()
+            );
+            $("#new-tag").before(newDeleteTag);
+            $(".delete-tag").each(deleteTag);
+            $(this).remove();
+        }
     });
     $(".width-machine").each(function () {
         $(this).remove();

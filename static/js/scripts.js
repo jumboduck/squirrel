@@ -94,7 +94,7 @@ function addNewTag() {
     let editTagId = "edit-tag-" + tagNum;
     let viewTagId = "tag" + tagNum;
     let widthMachineId = "width" + tagNum;
-    let newEditTag = `<input id="${editTagId}" type="text" placeholder="new tag" spellcheck="false" class="tag badge-pill badge-primary badge-input" />`;
+    let newEditTag = `<input id="${editTagId}" type="text" maxlength="20" placeholder="new tag" spellcheck="false" class="tag badge-pill badge-primary badge-input" />`;
     let newTag = createTag(viewTagId, "tag name");
     let newWidthMachine = `<span aria-hidden="true" id="${widthMachineId}"class="badge badge-pill badge-primary tag width-machine">invisible</span>`;
     $(this).before(newEditTag);

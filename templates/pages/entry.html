@@ -27,7 +27,16 @@
             <div class="row">
                 <!-- Review Image -->
                 <div class="col-md-6">
-                    <img src="http://placeimg.com/640/480/any" class="card-img" alt="alt image">
+                    <label class="image-selector" for="image-selector">
+                        <div class="overlay-container">
+                            <img src="http://placeimg.com/640/480/any" class="card-img" alt="alt image">
+                            <div class="image-overlay">
+                                <div class="overlay-text">Choose a New Image</div>
+                            </div>
+                        </div>
+                        <input type="file" capture id="image-selector" name="new-image" accept="image/*">
+
+                    </label>
                 </div>
                 <div class="col-md-6">
                     <div>

@@ -72,7 +72,12 @@ a:hover {
     background-color: #535f6b !important;
 }
 
-/* Review Cards  */
+/* Review Cards in listing  */
+
+.rating {
+    color: #ffaa1d;
+    font-size: 1.5rem;
+}
 
 .card-deck {
     display: grid;
@@ -116,6 +121,20 @@ a:hover {
 
 /* Entry Review Page */
 
+.entry-container {
+    margin-top: 2rem;
+}
+
+.delete-entry {
+    text-transform: uppercase;
+}
+
+.entry .delete-btn {
+    font-size: 1.5rem;
+    padding-bottom: 0.2rem;
+}
+
+/* Favorite */
 .favorite-container {
     position: absolute;
 }
@@ -149,6 +168,7 @@ a:hover {
     transform: scale(1.2);
 }
 
+/* Review Text */
 .review-name {
     margin-bottom: 0.5rem;
     font-family: "Montserrat", sans-serif;
@@ -184,30 +204,67 @@ a:hover {
     cursor: text;
 }
 
-.rating {
-    color: #ffaa1d;
-    font-size: 1.5rem;
+/* Image and image selector */
+
+.overlay-container {
+    position: relative;
+    width: 100%;
 }
 
+.card-img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: 0.5s ease;
+    background-color: #000;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.overlay-container:hover .image-overlay {
+    opacity: 0.5;
+}
+
+.overlay-text {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+#image-selector {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    opacity: 0;
+    z-index: 1;
+}
+
+/* Tags */
 .badge-primary {
     background-color: #a99279;
 }
 
 .badge-primary:hover {
     background-color: #997f62;
-}
-
-.entry-container {
-    margin-top: 2rem;
-}
-
-.delete-entry {
-    text-transform: uppercase;
-}
-
-.entry .delete-btn {
-    font-size: 1.5rem;
-    padding-bottom: 0.2rem;
 }
 
 .entry .tag {

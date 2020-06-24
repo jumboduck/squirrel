@@ -1,6 +1,6 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-<h3>Listing</h3>
+<h3>Listing hope this works</h3>
 
 <div class="card-deck">
     <div class="card">
@@ -13,7 +13,7 @@
                 </span> <a href="{{url_for('entry')}}">Reviewed Item</a></h5>
             <p class="card-text">This is the short version of the description but
                 there is a lot more to be seen in the view itself.</p>
-            <p class="card-text">Rating:
+            <p class="card-text" aria-hidden="true">Rating:
                 <span class="rating">
                     <span class="material-icons">
                         star
@@ -32,17 +32,20 @@
                     </span>
                 </span>
             </p>
+            <span class="sr-only">Rating: 4/5</span>
             <p class="card-text">
                 <small>Tags: </small>
                 <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">food</span></a>
                 <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">drink</span></a>
                 <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">yogurt</span></a></p>
-
-            <p class="card-text"><small class="text-muted">Last updated on 15/06/20</small>
-                <span class="material-icons delete-btn">delete</span>
-            </p>
+        </div>
+        <div class="card-footer">
+            Last updated on 15/06/20
+            <span class="material-icons delete-btn">delete</span>
 
         </div>
+
+
     </div>
 
     <div class="card">
@@ -77,10 +80,13 @@
                 <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">food</span></a>
                 <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">drink</span></a>
                 <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">yogurt</span></a></p>
-            <p class="card-text"><small class="text-muted">Last updated on 15/06/20</small>
-                <span class="material-icons delete-btn">delete</span>
-            </p>
         </div>
+        <div class="card-footer">
+            Last updated on 15/06/20
+            <span class="material-icons delete-btn">delete</span>
+
+        </div>
+
     </div>
 
 

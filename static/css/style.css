@@ -62,7 +62,7 @@ a:hover {
     margin-bottom: 0.5rem;
 }
 
-.logo-img {
+.logo-image {
     margin: 0 auto;
     height: 2.5rem;
     filter: invert(1);
@@ -72,7 +72,12 @@ a:hover {
     background-color: #535f6b !important;
 }
 
-/* Review Cards  */
+/* Review Cards in listing  */
+
+.rating {
+    color: #ffaa1d;
+    font-size: 1.5rem;
+}
 
 .card-deck {
     display: grid;
@@ -82,7 +87,7 @@ a:hover {
 
 .card-deck .card {
     margin-bottom: 1rem;
-    transition: all 0.3s;
+    transition: 0.3s;
 }
 
 .card:hover {
@@ -93,15 +98,22 @@ a:hover {
     z-index: 2;
 }
 
+.card-footer {
+    font-size: 0.8rem;
+    background-color: #fff;
+}
+
 .card .delete-btn {
     position: absolute;
     right: 1rem;
     cursor: pointer;
     font-size: 1.5rem;
+    transition: 0.3s;
 }
 
 .card .delete-btn:hover {
     color: #343a40;
+    transform: scale(1.2);
 }
 
 .fav {
@@ -116,6 +128,25 @@ a:hover {
 
 /* Entry Review Page */
 
+.entry-container {
+    margin-top: 2rem;
+}
+
+.delete-entry {
+    text-transform: uppercase;
+}
+
+.entry .delete-btn {
+    font-size: 1.5rem;
+    padding-bottom: 0.2rem;
+    transition: 0.3s;
+}
+
+.delete-entry a:hover .delete-btn {
+    transform: scale(1.2);
+}
+
+/* Favorite */
 .favorite-container {
     position: absolute;
 }
@@ -149,6 +180,7 @@ a:hover {
     transform: scale(1.2);
 }
 
+/* Review Text */
 .review-name {
     margin-bottom: 0.5rem;
     font-family: "Montserrat", sans-serif;
@@ -184,9 +216,71 @@ a:hover {
     cursor: text;
 }
 
-.rating {
-    color: #ffaa1d;
+/* Image and image selector */
+
+.overlay-container {
+    position: relative;
+    width: 100%;
+}
+
+.entry-image {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: 0.5s ease;
+    background-color: #000;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.overlay-container:hover .image-overlay {
+    opacity: 0.5;
+}
+
+.overlay-text {
+    color: white;
     font-size: 1.5rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 90%;
+}
+
+.new-image-icon {
+    font-size: 200%;
+}
+
+.image-input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    opacity: 0;
+    z-index: 1;
+}
+
+/* Tags */
+
+.badge {
+    transition: 0.3s;
+}
+
+.badge:hover {
+    transform: scale(1.1);
 }
 
 .badge-primary {
@@ -197,28 +291,20 @@ a:hover {
     background-color: #997f62;
 }
 
-.entry-container {
-    margin-top: 2rem;
-}
-
-.delete-entry {
-    text-transform: uppercase;
-}
-
-.entry .delete-btn {
-    font-size: 1.5rem;
-    padding-bottom: 0.2rem;
-}
-
 .entry .tag {
     font-size: 1rem;
-    margin-right: 0.2rem;
+    margin-right: 0.5rem;
     margin-bottom: 0.5rem;
     cursor: pointer;
 }
 
 .entry .delete-tag {
     padding-right: 0.4rem;
+    border: 0;
+}
+
+.view-tag {
+    border: 0;
 }
 
 .entry .tag a {

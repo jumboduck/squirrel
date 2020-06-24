@@ -38,13 +38,13 @@ let tagList = ["food", "drink", "yogurt", "aerosol"];
 
 // Creating a new HTML Tag
 function createTag(id, word) {
-    return `<span id="${id}"class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">${word}</a></span>`;
+    return `<button type="button" id="${id}"class="badge badge-pill badge-primary tag view-tag"><a href="{{url_for('listing')}}">${word}</a></button>`;
 }
 
 // Creating a new HTML Delete Tag
 function createDeleteTag(id, word) {
-    return `<span id="${id}" class="badge badge-pill badge-primary tag delete-tag">${word}
-    <span class="material-icons">cancel</span></span>`;
+    return `<button type="button" id="${id}" class="badge badge-pill badge-primary tag delete-tag">${word}
+    <span class="material-icons">cancel</span></button>`;
 }
 
 // Turning on Tag Edit mode

@@ -219,6 +219,11 @@ a:hover {
 
 .entry .delete-tag {
     padding-right: 0.4rem;
+    border: 0;
+}
+
+.view-tag {
+    border: 0;
 }
 
 .entry .tag a {

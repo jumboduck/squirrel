@@ -100,7 +100,13 @@
                         </div>
                     </div>
                     <!-- Creation / Update Time -->
-                    <p><small class="text-muted">Last updated on 15/06/20</small></p>
+                    <p><small class="text-muted">{% if entry.updated_on %}
+                            Last updated on {{ entry.updated_on }}
+                            {% else %}
+                            Created on {{ entry.created_on }}
+                            {% endif %}
+                        </small>
+                    </p>
 
                 </div>
             </div>

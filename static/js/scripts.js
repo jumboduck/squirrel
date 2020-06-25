@@ -1,4 +1,4 @@
-let tagNum = 0;
+let tagNum = $(".view-tag").length + 1;
 
 // Textarea expandable inspired by Vanderson https://codepen.io/Vanderson
 function expandTextArea() {
@@ -93,7 +93,7 @@ function deleteTag() {
 
 // Add a new tag to list and focus on it to edit
 function addNewTag() {
-    let editTagId = "edit-tag-" + tagNum;
+    let editTagId = "new-edit-tag-" + tagNum;
     let viewTagId = "tag" + tagNum;
     let widthMachineId = "width" + tagNum;
     let newEditTag = `<input id="${editTagId}" type="text" maxlength="20" placeholder="new tag" spellcheck="false" class="tag badge-pill badge-primary badge-input" />`;
@@ -117,13 +117,13 @@ $(document).ready(function () {
     $(".add-tag").on("click", addNewTag);
 
     // Generate tag lists
-    for (let i = 0; i < tagList.length; i++) {
+    /*for (let i = 0; i < tagList.length; i++) {
         let tag = createTag("tag" + tagNum, tagList[i]);
         let deleteTag = createDeleteTag("edit-tag-" + tagNum, tagList[i]);
         $("#view-tags").append(tag);
         $("#new-tag").before(deleteTag);
         tagNum++;
-    }
+    }*/
     // Make delete tags deleteable
     $(".delete-tag").each(deleteTag);
 });

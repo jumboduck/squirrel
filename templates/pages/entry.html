@@ -75,13 +75,20 @@
                     <div> <span class="entry-subtitle">Tags:</span>
                         <div class="mb-2" id="view-tags-container">
                             <div id="view-tags" class="d-inline-block">
-
+                                {% for tag in entry.tags %}
+                                <span id="tag{{loop.index}}" class="view-tag badge badge-pill badge-primary tag"><a
+                                        href="{{url_for('listing')}}">{{tag}}</a></span>
+                                {% endfor %}
                             </div>
                             <span class="badge badge-pill badge-primary tag light-tag" id="edit-tags-btn">edit
                                 tags</span>
                         </div>
 
                         <div class="mb-2" id="edit-tags">
+                            {% for tag in entry.tags %}
+                            <span id="edit-tag-{{loop.index}}"
+                                class="badge badge-pill badge-primary tag delete-tag">{{tag}}
+                                <span class="material-icons">cancel</span></span>{% endfor %}
                             <span id="new-tag" class="badge badge-pill badge-primary light-tag add-tag"><span
                                     class="material-icons">control_point</span> new
                                 tag</span>

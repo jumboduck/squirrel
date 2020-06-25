@@ -38,7 +38,7 @@ let tagList = ["food", "drink", "yogurt", "aerosol"];
 
 // Creating a new HTML Tag
 function createTag(id, word) {
-    return `<span id="${id}"class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">${word}</a></span>`;
+    return `<span id="${id}"class="view-tag badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">${word}</a></span>`;
 }
 
 // Creating a new HTML Delete Tag
@@ -93,7 +93,7 @@ function deleteTag() {
 
 // Add a new tag to list and focus on it to edit
 function addNewTag() {
-    let editTagId = "new-edit-tag-" + tagNum;
+    let editTagId = "edit-tag-" + tagNum;
     let viewTagId = "tag" + tagNum;
     let widthMachineId = "width" + tagNum;
     let newEditTag = `<input id="${editTagId}" type="text" maxlength="20" placeholder="new tag" spellcheck="false" class="tag badge-pill badge-primary badge-input" />`;

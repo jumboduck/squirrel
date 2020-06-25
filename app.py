@@ -39,6 +39,7 @@ def register():
 
 
 @app.route('/')
+@app.route('/listing')
 def listing():
     return render_template('pages/listing.html',  title="Listing", entries=mongo.db.entries.find())
 

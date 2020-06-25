@@ -6,7 +6,9 @@
 
     {% for entry in entries %}
     <div class="card">
+        {% if entry.image %}
         <a href="{{url_for('entry')}}"><img src="{{ entry.image }}" class="card-img-top" alt="alt text"></a>
+        {% endif %}
         <div class="card-body">
             <h5 class="card-title">
                 {% if entry.is_fav %}

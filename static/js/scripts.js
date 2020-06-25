@@ -116,14 +116,6 @@ $(document).ready(function () {
     // Add a new tag
     $(".add-tag").on("click", addNewTag);
 
-    // Generate tag lists
-    /*for (let i = 0; i < tagList.length; i++) {
-        let tag = createTag("tag" + tagNum, tagList[i]);
-        let deleteTag = createDeleteTag("edit-tag-" + tagNum, tagList[i]);
-        $("#view-tags").append(tag);
-        $("#new-tag").before(deleteTag);
-        tagNum++;
-    }*/
     // Make delete tags deleteable
     $(".delete-tag").each(deleteTag);
 });

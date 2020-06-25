@@ -7,7 +7,8 @@
     {% for entry in entries %}
     <div class="card">
         {% if entry.image %}
-        <a href="{{url_for('entry')}}"><img src="{{ entry.image }}" class="card-img-top" alt="alt text"></a>
+        <a href="{{url_for('entry', entry_id = entry._id)}}"><img src="{{ entry.image }}" class="card-img-top"
+                alt="alt text"></a>
         {% endif %}
         <div class="card-body">
             <h5 class="card-title">
@@ -17,7 +18,7 @@
                 </span>
                 {% endif %}
 
-                <a href="{{url_for('entry')}}">{{ entry.name }}</a>
+                <a href="{{url_for('entry', entry_id = entry._id)}}">{{ entry.name }}</a>
             </h5>
             <p class="card-text">{{ entry.description[:75] }}...</p>
             <p class="card-text" aria-hidden="true">Rating:

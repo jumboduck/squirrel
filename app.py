@@ -49,9 +49,10 @@ def profile():
     return render_template('pages/profile.html',  title="Profile")
 
 
-@app.route('/entry')
-def entry():
-    return render_template('pages/entry.html',  title="Entry")
+@app.route('/entry/<entry_id>')
+def entry(entry_id):
+    the_entry = mongo.db.entries.find_one({"_id": ObjectId(entry_id)})
+    return render_template('pages/entry.html',  title="Entry" , entry=the_entry)
 
 
 @app.route('/add')

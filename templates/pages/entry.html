@@ -9,14 +9,14 @@
                     <!-- Favorite checkbox -->
                     <div class="favorite-container">
                         <label for="favorite" class="fav-label">
-                            <input type="checkbox" id="favorite" />
+                            <input type="checkbox" id="favorite" {% if entry.is_fav %} checked {% endif %} />
                             <span class="heart-icon"></span>
                             <span class="sr-only">Add to favorites</span>
                         </label>
                     </div>
                     <!-- Review Name -->
                     <textarea class="form-control review-name" data-expandable name="title" id="review-name"
-                        maxlength="30" rows="1" spellcheck="false">Review Name</textarea>
+                        maxlength="30" rows="1" spellcheck="false">{{entry.name}}</textarea>
                 </div>
                 <!-- Delete Review -->
                 <div class="col-sm-3 text-sm-right align-middle pt-sm-3 pl-2 pr-4 pb-2 delete-entry">
@@ -29,7 +29,7 @@
                 <div class="col-md-6">
                     <label class="image-selector" for="image-selector">
                         <div class="overlay-container">
-                            <img src="http://placeimg.com/640/480/any" class="entry-image" alt="placeholder image">
+                            <img src="{{entry.image}}" class="entry-image" alt="{{entry.name}}">
                             <div class="image-overlay">
                                 <div class="overlay-text"><span class="material-icons new-image-icon">
                                         wallpaper
@@ -46,23 +46,27 @@
                         <!-- Review Description -->
                         <textarea class="form-control review-description" data-expandable name="description"
                             id="review-description" maxlength="500" rows="1"
-                            spellcheck="false">This is the full review for this item. It is a long text and it has plenty of nice things in store for all of us. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui, finibus ut vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elit dui, finibus ut vulputate vehicula, laoreet in mi. Nunc posuere sem bibendum, bibendum erat ac, condimentum metus.</textarea>
+                            spellcheck="false">{{entry.description}}</textarea>
                     </div>
                     <!-- Rating -->
                     <div class="rating-container">
                         <div class="d-inline-block"><span class="entry-subtitle">Rating:</span></div>
                         <div class="star-rating d-inline-block">
                             <fieldset class="form-check form-check-inline">
-                                <input type="radio" id="star5" name="rating" value="5" /><label for="star5"
+                                <input type="radio" id="star5" name="rating" value="5"
+                                    {% if entry.rating == 5 %}checked{% endif %} /><label for="star5"
                                     title="Outstanding">5 stars</label>
-                                <input type="radio" id="star4" name="rating" value="4" /><label for="star4"
+                                <input type="radio" id="star4" name="rating" value="4"
+                                    {% if entry.rating == 4 %}checked{% endif %} /><label for="star4"
                                     title="Very Good">4 stars</label>
-                                <input type="radio" id="star3" name="rating" value="3" checked /><label for="star3"
-                                    title="Good">3 stars</label>
-                                <input type="radio" id="star2" name="rating" value="2" /><label for="star2"
-                                    title="Poor">2
+                                <input type="radio" id="star3" name="rating" value="3"
+                                    {% if entry.rating == 3 %}checked{% endif %} /><label for="star3" title="Good">3
                                     stars</label>
-                                <input type="radio" id="star1" name="rating" value="1" /><label for="star1"
+                                <input type="radio" id="star2" name="rating" value="2"
+                                    {% if entry.rating == 2 %}checked{% endif %} /><label for="star2" title="Poor">2
+                                    stars</label>
+                                <input type="radio" id="star1" name="rating" value="1"
+                                    {% if entry.rating == 1 %}checked{% endif %} /><label for="star1"
                                     title="Very Poor">1 star</label>
                             </fieldset>
                         </div>
@@ -71,6 +75,7 @@
                     <div> <span class="entry-subtitle">Tags:</span>
                         <div class="mb-2" id="view-tags-container">
                             <div id="view-tags" class="d-inline-block">
+
                             </div>
                             <span class="badge badge-pill badge-primary tag light-tag" id="edit-tags-btn">edit
                                 tags</span>

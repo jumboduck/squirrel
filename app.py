@@ -7,13 +7,14 @@ from forms import RegistrationForm, LoginForm
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
-MONGO_DBNAME = os.environ.get('MONGO_DBNAME')
-MONGO_URI = os.environ.get('MONGO_URI')
+
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = SECRET_KEY
+app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY')
+app.config["MONGO_DBNAME"] = os.environ.get('MONGO_DBNAME')
+app.config["MONGO_URI"] = os.environ.get('MONGO_URI')
 
+mongo = PyMongo(app)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -39,7 +40,7 @@ def register():
 
 @app.route('/')
 def listing():
-    return render_template('pages/listing.html',  title="Listing")
+    return render_template('pages/listing.html',  title="Listing", entries=mongo.db.entries.find())
 
 
 @app.route('/profile')

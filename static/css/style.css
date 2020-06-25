@@ -267,7 +267,7 @@ a:hover {
     font-size: 200%;
 }
 
-.image-input {
+#image-input {
     position: absolute;
     top: 0;
     right: 0;

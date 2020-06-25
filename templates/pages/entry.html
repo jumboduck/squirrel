@@ -27,7 +27,7 @@
             <div class="row">
                 <!-- Review Image -->
                 <div class="col-md-6">
-                    <label class="image-selector" for="image-selector">
+                    <label class="image-selector" for="image-input">
                         <div class="overlay-container">
                             <img src="{{entry.image}}" class="entry-image" alt="{{entry.name}}">
                             <div class="image-overlay">
@@ -37,7 +37,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="file" capture class="image-input" name="new-image" accept="image/*">
+                        <input type="file" capture id="image-input" name="new-image" accept="image/*">
 
                     </label>
                 </div>

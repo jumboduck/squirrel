@@ -73,6 +73,10 @@ a:hover {
 }
 
 /* Review Cards in listing  */
+.card-img-top {
+    max-height: 15rem;
+    object-fit: cover;
+}
 
 .rating {
     color: #ffaa1d;

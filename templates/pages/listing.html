@@ -1,6 +1,6 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-<h3>Listing</h3>
+<h1 class="page-title">Listing</h1>
 
 <div class="card-deck">
 
@@ -11,7 +11,7 @@
                 alt="alt text"></a>
         {% endif %}
         <div class="card-body">
-            <h5 class="card-title">
+            <h2 class="card-title">
                 {% if entry.is_fav %}
                 <span class="material-icons fav">
                     favorite
@@ -19,7 +19,7 @@
                 {% endif %}
 
                 <a href="{{url_for('entry', entry_id = entry._id)}}">{{ entry.name }}</a>
-            </h5>
+            </h2>
             {% if entry.image %}
             <p class="card-text">{{ entry.description|truncate(75, end='...') }}</p>
             {% else %}
@@ -43,9 +43,9 @@
             </p>
             <span class="sr-only">Rating: {{ entry.rating }}/5</span>
             <p class="card-text">
-                <small>Tags: </small>
+                <span class="small-title">Tags: </span>
                 {% for tag in entry.tags %}
-                <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">{{tag}}</span></a>
+                <a href="{{url_for('listing')}}" class="badge badge-pill badge-primary">{{tag}}</a>
                 {% endfor %}</p>
         </div>
         <div class="card-footer">

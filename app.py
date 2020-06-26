@@ -6,7 +6,9 @@ from flask import Flask, render_template, url_for, flash, redirect
 from forms import RegistrationForm, LoginForm
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_bcrypt import Bcrypt
 
 
 app = Flask(__name__)
@@ -14,7 +16,11 @@ app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY')
 app.config["MONGO_DBNAME"] = os.environ.get('MONGO_DBNAME')
 app.config["MONGO_URI"] = os.environ.get('MONGO_URI')
 
+
 mongo = PyMongo(app)
+bcrypt = Bcrypt(app)
+
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -32,9 +38,24 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
+    users = mongo.db.users
     if form.validate_on_submit():
-        flash(f'Account created for {form.username.data}.', 'success')
-        return redirect(url_for('listing'))
+        existing_user = users.find_one({'username' : form.username.data})
+        existing_email = users.find_one({'email': form.email.data})
+        if existing_user is None and existing_email is None:
+            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+            users.insert({
+                "username": form.username.data,
+                "email": form.email.data,
+                "password": hashed_password,
+            })
+            flash(f'Account created for {form.username.data}.', 'success')
+            return redirect(url_for('listing'))
+        elif existing_user:
+            flash(f'Username {form.username.data} is already in use.', 'alert')
+        elif existing_email:
+            flash(f'An account already exists for {form.email.data}.', 'alert')
+
     return render_template('pages/registration.html', title="Registration", form=form)
 
 

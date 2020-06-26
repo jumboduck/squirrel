@@ -35,7 +35,7 @@ def login():
         login_user = users.find_one({'username' : form.username.data})
         if login_user and bcrypt.check_password_hash(login_user['password'], form.password.data.encode('utf-8')):
             session["username"] = form.username.data
-            flash(f'Welcome, {form.username.data}.', 'success')
+            flash(f'Welcome to squirrel, {form.username.data}.', 'success')
             return redirect(url_for('listing'))
         else:
             flash('Wrong username or password.', 'danger')
@@ -72,7 +72,14 @@ def register():
 
 @app.route('/logout')
 def logout():
-    return "<h1>Logout</h1>"
+    session.pop('username', None)
+    flash(f'Sucessfully logged out.', 'success')
+    return redirect(url_for('login'))
+
+
+"""
+Pages
+"""
 
 @app.route('/')
 @app.route('/listing')

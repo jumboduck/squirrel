@@ -32,10 +32,11 @@ def login():
     form = LoginForm()
     users = mongo.db.users
     if form.validate_on_submit():
-        login_user = users.find_one({'username' : form.username.data})
+        login_user = users.find_one({'email' : form.email.data})
         if login_user and bcrypt.check_password_hash(login_user['password'], form.password.data.encode('utf-8')):
-            session["username"] = form.username.data
-            flash(f'Welcome to squirrel, {form.username.data}.', 'success')
+            username = login_user['username']
+            session["user"] = form.email.data
+            flash(f'Welcome to squirrel, {username}.', 'success')
             return redirect(url_for('listing'))
         else:
             flash('Wrong username or password.', 'danger')
@@ -64,7 +65,7 @@ def register():
         elif existing_user:
             flash(f'Username {form.username.data} is already in use.', 'danger')
         elif existing_email:
-            flash(f'An account already exists for {form.email.data}.', 'danger')
+            flash(f'Something went wrong with the information provided.', 'danger')
 
     return render_template('pages/registration.html', title="Registration", form=form)
 
@@ -72,7 +73,7 @@ def register():
 
 @app.route('/logout')
 def logout():
-    session.pop('username', None)
+    session.pop('user', None)
     flash(f'Sucessfully logged out.', 'success')
     return redirect(url_for('login'))
 

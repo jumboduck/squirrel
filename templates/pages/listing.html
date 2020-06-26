@@ -1,218 +1,63 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-<h3>Listing hope this works</h3>
+<h3>Listing</h3>
 
 <div class="card-deck">
+
+    {% for entry in entries %}
     <div class="card">
-        <a href="{{url_for('entry')}}"><img src=" http://placeimg.com/640/480/any" class="card-img-top"
+        {% if entry.image %}
+        <a href="{{url_for('entry', entry_id = entry._id)}}"><img src="{{ entry.image }}" class="card-img-top"
                 alt="alt text"></a>
+        {% endif %}
         <div class="card-body">
             <h5 class="card-title">
+                {% if entry.is_fav %}
                 <span class="material-icons fav">
                     favorite
-                </span> <a href="{{url_for('entry')}}">Reviewed Item</a></h5>
-            <p class="card-text">This is the short version of the description but
-                there is a lot more to be seen in the view itself.</p>
+                </span>
+                {% endif %}
+
+                <a href="{{url_for('entry', entry_id = entry._id)}}">{{ entry.name }}</a>
+            </h5>
+            {% if entry.image %}
+            <p class="card-text">{{ entry.description|truncate(75, end='...') }}</p>
+            {% else %}
+            <p class="card-text">{{ entry.description|truncate(150, end='...') }}</p>
+            {% endif %}
+
             <p class="card-text" aria-hidden="true">Rating:
                 <span class="rating">
+                    {% for i in range(5) %}
+                    {% if loop.index <=  entry.rating %}
                     <span class="material-icons">
                         star
                     </span>
-                    <span class="material-icons">
-                        star
-                    </span>
-                    <span class="material-icons">
-                        star
-                    </span>
-                    <span class="material-icons">
-                        star_half
-                    </span>
+                    {% else %}
                     <span class="material-icons">
                         star_outline
                     </span>
+                    {% endif %}
+                    {% endfor %}
                 </span>
             </p>
-            <span class="sr-only">Rating: 4/5</span>
+            <span class="sr-only">Rating: {{ entry.rating }}/5</span>
             <p class="card-text">
                 <small>Tags: </small>
-                <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">food</span></a>
-                <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">drink</span></a>
-                <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">yogurt</span></a></p>
+                {% for tag in entry.tags %}
+                <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">{{tag}}</span></a>
+                {% endfor %}</p>
         </div>
         <div class="card-footer">
-            Last updated on 15/06/20
+            {% if entry.updated_on %}
+            Last updated on {{ entry.updated_on }}
+            {% else %}
+            Created on {{ entry.created_on }}
+            {% endif %}
             <span class="material-icons delete-btn">delete</span>
-
-        </div>
-
-
-    </div>
-
-    <div class="card">
-        <a href="{{url_for('entry')}}"><img src=" http://placeimg.com/640/480/any" class="card-img-top"
-                alt="alt text"></a>
-        <div class="card-body">
-            <h5 class="card-title">
-                <a href="{{url_for('entry')}}">Reviewed Item Unfavorited</a></h5>
-            <p class="card-text">This is the short version of the description but
-                there is a lot more to be seen in the view itself.</p>
-            <p class="card-text">Rating:
-                <span class="rating">
-                    <span class="material-icons">
-                        star
-                    </span>
-                    <span class="material-icons">
-                        star
-                    </span>
-                    <span class="material-icons">
-                        star
-                    </span>
-                    <span class="material-icons">
-                        star_half
-                    </span>
-                    <span class="material-icons">
-                        star_outline
-                    </span>
-                </span>
-            </p>
-            <p class="card-text">
-                <small>Tags: </small>
-                <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">food</span></a>
-                <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">drink</span></a>
-                <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">yogurt</span></a></p>
-        </div>
-        <div class="card-footer">
-            Last updated on 15/06/20
-            <span class="material-icons delete-btn">delete</span>
-
-        </div>
-
-    </div>
-
-
-    <div class="card">
-        <a href="{{url_for('entry')}}"><img src=" http://placeimg.com/640/480/any" class="card-img-top"
-                alt="alt text"></a>
-        <div class="card-body">
-            <h5 class="card-title">
-                <span class="material-icons fav">
-                    favorite
-                </span> <a href="{{url_for('entry')}}">Reviewed Item</a></h5>
-            <p class="card-text">This is the short version of the description but
-                there is a lot more to be seen in the view itself.</p>
-            <p class="card-text">Rating:
-                <span class="rating">
-                    <span class="material-icons">
-                        star
-                    </span>
-                    <span class="material-icons">
-                        star
-                    </span>
-                    <span class="material-icons">
-                        star
-                    </span>
-                    <span class="material-icons">
-                        star_half
-                    </span>
-                    <span class="material-icons">
-                        star_outline
-                    </span>
-                </span>
-            </p>
-            <p class="card-text">
-                <small>Tags: </small>
-                <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">food</span></a>
-                <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">drink</span></a>
-                <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">yogurt</span></a></p>
-            <p class="card-text"><small class="text-muted">Last updated on 15/06/20</small>
-                <span class="material-icons delete-btn">delete</span>
-            </p>
         </div>
     </div>
-
-
-    <div class="card">
-        <a href="{{url_for('entry')}}"><img src=" http://placeimg.com/640/480/any" class="card-img-top"
-                alt="alt text"></a>
-        <div class="card-body">
-            <h5 class="card-title">
-                <span class="material-icons fav">
-                    favorite
-                </span> <a href="{{url_for('entry')}}">Reviewed Item</a></h5>
-            <p class="card-text">This is the short version of the description but
-                there is a lot more to be seen in the view itself.</p>
-            <p class="card-text">Rating:
-                <span class="rating">
-                    <span class="material-icons">
-                        star
-                    </span>
-                    <span class="material-icons">
-                        star
-                    </span>
-                    <span class="material-icons">
-                        star
-                    </span>
-                    <span class="material-icons">
-                        star_half
-                    </span>
-                    <span class="material-icons">
-                        star_outline
-                    </span>
-                </span>
-            </p>
-            <p class="card-text">
-                <small>Tags: </small>
-                <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">food</span></a>
-                <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">drink</span></a>
-                <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">yogurt</span></a></p>
-            <p class="card-text"><small class="text-muted">Last updated on 15/06/20</small>
-                <span class="material-icons delete-btn">delete</span>
-            </p>
-        </div>
-    </div>
-
-
-    <div class="card">
-        <a href="{{url_for('entry')}}"><img src=" http://placeimg.com/640/480/any" class="card-img-top"
-                alt="alt text"></a>
-        <div class="card-body">
-            <h5 class="card-title">
-                <span class="material-icons fav">
-                    favorite
-                </span> <a href="{{url_for('entry')}}">Reviewed Item</a></h5>
-            <p class="card-text">This is the short version of the description but
-                there is a lot more to be seen in the view itself.</p>
-            <p class="card-text">Rating:
-                <span class="rating">
-                    <span class="material-icons">
-                        star
-                    </span>
-                    <span class="material-icons">
-                        star
-                    </span>
-                    <span class="material-icons">
-                        star
-                    </span>
-                    <span class="material-icons">
-                        star_half
-                    </span>
-                    <span class="material-icons">
-                        star_outline
-                    </span>
-                </span>
-            </p>
-            <p class="card-text">
-                <small>Tags: </small>
-                <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">food</span></a>
-                <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">drink</span></a>
-                <a href="{{url_for('listing')}}"><span class="badge badge-pill badge-primary">yogurt</span></a></p>
-            <p class="card-text"><small class="text-muted">Last updated on 15/06/20</small>
-                <span class="material-icons delete-btn">delete</span>
-            </p>
-        </div>
-    </div>
-
-
+    {% endfor %}
 </div>
 
 {% endblock %}

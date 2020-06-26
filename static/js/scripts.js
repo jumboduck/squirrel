@@ -1,4 +1,4 @@
-let tagNum = 0;
+let tagNum = $(".view-tag").length + 1;
 
 // Textarea expandable inspired by Vanderson https://codepen.io/Vanderson
 function expandTextArea() {
@@ -38,7 +38,7 @@ let tagList = ["food", "drink", "yogurt", "aerosol"];
 
 // Creating a new HTML Tag
 function createTag(id, word) {
-    return `<span id="${id}"class="badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">${word}</a></span>`;
+    return `<span id="${id}"class="view-tag badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">${word}</a></span>`;
 }
 
 // Creating a new HTML Delete Tag
@@ -116,14 +116,6 @@ $(document).ready(function () {
     // Add a new tag
     $(".add-tag").on("click", addNewTag);
 
-    // Generate tag lists
-    for (let i = 0; i < tagList.length; i++) {
-        let tag = createTag("tag" + tagNum, tagList[i]);
-        let deleteTag = createDeleteTag("edit-tag-" + tagNum, tagList[i]);
-        $("#view-tags").append(tag);
-        $("#new-tag").before(deleteTag);
-        tagNum++;
-    }
     // Make delete tags deleteable
     $(".delete-tag").each(deleteTag);
 });

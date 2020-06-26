@@ -73,6 +73,10 @@ a:hover {
 }
 
 /* Review Cards in listing  */
+.card-img-top {
+    max-height: 15rem;
+    object-fit: cover;
+}
 
 .rating {
     color: #ffaa1d;
@@ -263,7 +267,7 @@ a:hover {
     font-size: 200%;
 }
 
-.image-input {
+#image-input {
     position: absolute;
     top: 0;
     right: 0;

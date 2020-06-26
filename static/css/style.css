@@ -28,6 +28,18 @@ h6,
     color: #343a40;
 }
 
+h1.page-title {
+    font-size: 2rem;
+}
+
+h2.card-title {
+    font-size: 1.25rem;
+}
+
+.small-title {
+    font-size: 80%;
+}
+
 a {
     color: #a99279;
 }
@@ -291,7 +303,7 @@ a:hover {
     background-color: #a99279;
 }
 
-.badge-primary:hover {
+a.badge-primary:hover {
     background-color: #997f62;
 }
 

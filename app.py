@@ -2,11 +2,13 @@ import os
 from os import path
 if path.exists("env.py"):
     import env
-from flask import Flask, render_template, url_for, flash, redirect
+from flask import Flask, render_template, url_for, flash, redirect, session
 from forms import RegistrationForm, LoginForm
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_bcrypt import Bcrypt
 
 
 app = Flask(__name__)
@@ -14,29 +16,71 @@ app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY')
 app.config["MONGO_DBNAME"] = os.environ.get('MONGO_DBNAME')
 app.config["MONGO_URI"] = os.environ.get('MONGO_URI')
 
+
 mongo = PyMongo(app)
+bcrypt = Bcrypt(app)
+
+
+"""
+USER MANAGEMENT
+"""
+
+# Login
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    users = mongo.db.users
     if form.validate_on_submit():
-        if form.username.data == 'simon' and form.password.data == 'password':
-            flash('You are logged in', 'success')
+        login_user = users.find_one({'email' : form.email.data})
+        if login_user and bcrypt.check_password_hash(login_user['password'], form.password.data.encode('utf-8')):
+            username = login_user['username']
+            session["user"] = form.email.data
+            flash(f'Welcome to squirrel, {username}.', 'success')
             return redirect(url_for('listing'))
         else:
-            flash('Wrong username or password', 'danger')
+            flash('Wrong username or password.', 'danger')
 
     return render_template('pages/login.html', title="Login", form=form)
 
 
+# Registration
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
+    users = mongo.db.users
     if form.validate_on_submit():
-        flash(f'Account created for {form.username.data}.', 'success')
-        return redirect(url_for('listing'))
+        existing_user = users.find_one({'username' : form.username.data})
+        existing_email = users.find_one({'email': form.email.data})
+        if existing_user is None and existing_email is None:
+            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+            users.insert({
+                "username": form.username.data,
+                "email": form.email.data,
+                "password": hashed_password,
+            })
+            flash(f'Account created for {form.username.data}.', 'success')
+            return redirect(url_for('login'))
+        elif existing_user:
+            flash(f'Username {form.username.data} is already in use.', 'danger')
+        elif existing_email:
+            flash(f'Something went wrong with the information provided.', 'danger')
+
     return render_template('pages/registration.html', title="Registration", form=form)
 
+# Logout
+
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    flash(f'Sucessfully logged out.', 'success')
+    return redirect(url_for('login'))
+
+
+"""
+Pages
+"""
 
 @app.route('/')
 @app.route('/listing')
@@ -63,11 +107,6 @@ def new_entry():
 @app.route('/search')
 def search():
     return render_template('pages/search.html',  title="Search")
-
-
-@app.route('/logout')
-def logout():
-    return "<h1>Logout</h1>"
 
 
 if __name__ == '__main__':

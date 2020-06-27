@@ -6,9 +6,9 @@ from flask import Flask, render_template, url_for, flash, redirect, session
 from forms import RegistrationForm, LoginForm
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bcrypt import Bcrypt
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 
 app = Flask(__name__)
@@ -19,6 +19,10 @@ app.config["MONGO_URI"] = os.environ.get('MONGO_URI')
 
 mongo = PyMongo(app)
 bcrypt = Bcrypt(app)
+login_manager = LoginManager(app)
+
+login_manager.init_app(app)
+
 
 
 """

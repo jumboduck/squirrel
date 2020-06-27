@@ -18,11 +18,16 @@
 				class="navbar-toggler-icon"></span></button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav">
+				{% if current_user.is_authenticated %}
 				<li class="nav-item"><a class="nav-link" href="{{url_for('listing')}}">Home</a></li>
 				<li class="nav-item"><a class="nav-link" href="{{url_for('new_entry')}}">New Review</a></li>
 				<li class="nav-item"><a class="nav-link" href="{{url_for('search')}}">Search</a></li>
 				<li class="nav-item"><a class="nav-link" href="{{url_for('profile')}}">Profile</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Log Out</a></li>
+				<li class="nav-item"><a class="nav-link" href="{{url_for('logout')}}">Log Out</a></li>
+				{% else %}
+				<li class="nav-item"><a class="nav-link" href="{{url_for('login')}}">Log In</a></li>
+				<li class="nav-item"><a class="nav-link" href="{{url_for('register')}}">Create an Account</a></li>
+				{% endif %}
 			</ul>
 		</div>
 	</nav>

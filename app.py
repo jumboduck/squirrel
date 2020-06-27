@@ -48,6 +48,8 @@ def load_user(user_id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('listing'))
     form = LoginForm()
     users = mongo.db.users
     if form.validate_on_submit():
@@ -67,6 +69,8 @@ def login():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('listing'))
     form = RegistrationForm()
     users = mongo.db.users
     if form.validate_on_submit():
@@ -92,7 +96,7 @@ def register():
 
 @app.route('/logout')
 def logout():
-    session.pop('user', None)
+    logout_user()
     flash(f'Sucessfully logged out.', 'success')
     return redirect(url_for('login'))
 

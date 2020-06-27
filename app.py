@@ -9,6 +9,8 @@ from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from is_safe_url import is_safe_url
+import socket
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY')
@@ -62,7 +64,10 @@ def login():
             login_user(User(user), remember = form.remember.data)
             next_page = request.args.get('next')
             flash(f'Welcome to squirrel, {username}.', 'success')
-            return redirect(next_page) if next_page else redirect(url_for('listing'))
+            if next_page and is_safe_url(next_page, socket.gethostname()):
+                return redirect(next_page)
+            else:
+                return redirect(url_for('listing'))
         else:
             flash('Login unsucessful, please check email and password.', 'danger')
 

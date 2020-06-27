@@ -10,7 +10,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
-
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY')
 app.config["MONGO_DBNAME"] = os.environ.get('MONGO_DBNAME')
@@ -29,6 +28,22 @@ login_manager.init_app(app)
 USER MANAGEMENT
 """
 
+class User(UserMixin):
+    def __init__(self, user):
+        self.user = user
+
+    def get_id(self):
+        object_id = self.user['_id']
+        return str(object_id)
+
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    user =  mongo.db.users.find_one({'_id' : ObjectId(user_id)})
+    return User(user)
+
+
 # Login
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -36,14 +51,14 @@ def login():
     form = LoginForm()
     users = mongo.db.users
     if form.validate_on_submit():
-        login_user = users.find_one({'email' : form.email.data})
-        if login_user and bcrypt.check_password_hash(login_user['password'], form.password.data.encode('utf-8')):
-            username = login_user['username']
-            session["user"] = form.email.data
+        user = users.find_one({'email' : form.email.data})
+        if user and bcrypt.check_password_hash(user['password'], form.password.data.encode('utf-8')):
+            username = user['username']
+            login_user(User(user), remember = form.remember.data)
             flash(f'Welcome to squirrel, {username}.', 'success')
             return redirect(url_for('listing'))
         else:
-            flash('Wrong username or password.', 'danger')
+            flash('Login unsucessful, please check email and password.', 'danger')
 
     return render_template('pages/login.html', title="Login", form=form)
 

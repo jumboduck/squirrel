@@ -2,7 +2,7 @@ import os
 from os import path
 if path.exists("env.py"):
     import env
-from flask import Flask, render_template, url_for, flash, redirect, session
+from flask import Flask, render_template, url_for, flash, redirect, request
 from forms import RegistrationForm, LoginForm
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
@@ -19,6 +19,8 @@ app.config["MONGO_URI"] = os.environ.get('MONGO_URI')
 mongo = PyMongo(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+login_manager.login_message_category = 'info'
 
 login_manager.init_app(app)
 
@@ -31,6 +33,7 @@ USER MANAGEMENT
 class User(UserMixin):
     def __init__(self, user):
         self.user = user
+        self.username = user['username']
 
     def get_id(self):
         object_id = self.user['_id']
@@ -57,8 +60,9 @@ def login():
         if user and bcrypt.check_password_hash(user['password'], form.password.data.encode('utf-8')):
             username = user['username']
             login_user(User(user), remember = form.remember.data)
+            next_page = request.args.get('next')
             flash(f'Welcome to squirrel, {username}.', 'success')
-            return redirect(url_for('listing'))
+            return redirect(next_page) if next_page else redirect(url_for('listing'))
         else:
             flash('Login unsucessful, please check email and password.', 'danger')
 
@@ -107,27 +111,32 @@ Pages
 
 @app.route('/')
 @app.route('/listing')
+@login_required
 def listing():
     return render_template('pages/listing.html',  title="Listing", entries=mongo.db.entries.find())
 
 
 @app.route('/profile')
+@login_required
 def profile():
     return render_template('pages/profile.html',  title="Profile")
 
 
 @app.route('/entry/<entry_id>')
+@login_required
 def entry(entry_id):
     the_entry = mongo.db.entries.find_one({"_id": ObjectId(entry_id)})
     return render_template('pages/entry.html',  title="Entry" , entry=the_entry)
 
 
 @app.route('/add')
+@login_required
 def new_entry():
     return render_template('pages/new_entry.html',  title="New Entry")
 
 
 @app.route('/search')
+@login_required
 def search():
     return render_template('pages/search.html',  title="Search")
 

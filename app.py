@@ -35,6 +35,8 @@ USER MANAGEMENT
 class User(UserMixin):
     def __init__(self, user):
         self.user = user
+        self.username = user['username']
+        self.id = user['_id']
 
     def get_id(self):
         object_id = self.user['_id']
@@ -125,7 +127,7 @@ Pages
 @app.route('/listing')
 @login_required
 def listing():
-    return render_template('pages/listing.html',  title="Listing", entries=mongo.db.entries.find())
+    return render_template('pages/listing.html',  title="Listing", entries=mongo.db.entries.find({'user_id' : current_user.id}))
 
 
 @app.route('/profile')

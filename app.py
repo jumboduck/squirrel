@@ -52,19 +52,26 @@ def load_user(user_id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # Redirect to listing page if user is logged in
     if current_user.is_authenticated:
         return redirect(url_for('listing'))
     form = LoginForm()
     users = mongo.db.users
     if form.validate_on_submit():
         user = users.find_one({'email' : form.email.data})
+        # If user exists and password matches password in db, log in and create a user session
         if user and bcrypt.check_password_hash(user['password'], form.password.data.encode('utf-8')):
             username = user['username']
             login_user(User(user), remember = form.remember.data)
             next_page = request.args.get('next')
             flash(f'Welcome to squirrel, {username}.', 'success')
+
+            # If unauthorized page has been accessed before being logged in,
+            # redirect to it after login if it is safe
             if next_page and is_safe_url(next_page, socket.gethostname()):
                 return redirect(next_page)
+
+            # If not, redirect to the listing page
             else:
                 return redirect(url_for('listing'))
         else:
@@ -83,6 +90,7 @@ def register():
     users = mongo.db.users
     if form.validate_on_submit():
         existing_email = users.find_one({'email': form.email.data})
+        # Create new user only if email is not already in use
         if existing_email is None:
             hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
             users.insert({
@@ -90,6 +98,9 @@ def register():
                 "email": form.email.data,
                 "password": hashed_password,
             })
+            # Log in once user is created in db
+            user = users.find_one({'email': form.email.data})
+            login_user(User(user), remember = False)
             flash(f'Account created for {form.username.data}.', 'success')
             return redirect(url_for('login'))
         else:

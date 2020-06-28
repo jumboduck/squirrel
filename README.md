@@ -30,6 +30,12 @@ Reviews can be searched by review name, by tag, or by favorited.
 
 ## Technologies Used
 
+-   HTML
+-   CSS
+-   Bootstrap
+-   JavaScript / JQuery
+-   Python
+-   Flask
 -   [The Padwan Project](https://github.com/Eventyret/Padawan)
 -   [Cloudinary](https://cloudinary.com/)
 -   [Cypress](https://www.cypress.io/) for testing throughout the development process
@@ -44,11 +50,12 @@ Reviews can be searched by review name, by tag, or by favorited.
 
 ### Media
 
+-   Acorn logo from [Flaticon](https://www.flaticon.com/authors/freepik)
+
 ### Acknowledgements
 
 -   Inspiration for this project came from conversations with my friend Cameron.
 -   [Simen Daehlin](https://github.com/Eventyret) - [The Padwan Project](https://github.com/Eventyret/Padawan)
 -   [Start Bootstrap Resume Template](https://github.com/StartBootstrap/startbootstrap-resume)
 -   [Corey Schaefer](https://www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g) for his python tutorials on youtube, especially regarding registration and login forms.
--   Acorn logo from [Flaticon](https://www.flaticon.com/authors/freepik)
 -   [Adam Orchard](https://codepen.io/orchard/pen/Jnwvb) for the 5 star rating code.

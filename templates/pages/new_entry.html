@@ -1,4 +1,95 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-<h2>Add Entry</h2>
+<h1 class="page-title">Add Entry</h1>
+
+<form method="POST" action="">
+    {{ form.hidden_tag() }}
+    <fieldset class="form-group">
+        <div class="form-group">
+            {{ form.name.label(class="form-control-label") }}
+
+            {% if form.name.errors %}
+            {{ form.name(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.name.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.name(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.description.label(class="form-control-label") }}
+            {% if form.description.errors %}
+            {{ form.description(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.description.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.description(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.rating.label(class="form-control-label") }}
+            {% if form.rating.errors %}
+            {{ form.description(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.rating.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {% for subfield in form.rating %}
+            <div class="custom-control custom-radio custom-control-inline">
+                {{ subfield(class="custom-control-input") }}
+                {{ subfield.label(class="custom-control-label") }}
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+
+        <div class="form-check">
+            {{ form.is_fav(class="form-check-input")}}
+            {{ form.is_fav.label(class="form-check-label")}}
+        </div>
+
+        <div class="custom-file">
+            {{ form.image.label(class="custom-file-label") }}
+            {% if form.image.errors %}
+            {{ form.image(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.image.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.image(class="custom-file-input") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.tags.label(class="form-control-label") }}
+
+            {% if form.tags.errors %}
+            {{ form.tags(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.name.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.tags(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+
+    </fieldset>
+    <div class="form-group">
+        {{ form.submit(class="btn btn-primary") }}
+    </div>
+</form>
+
+
 {% endblock %}

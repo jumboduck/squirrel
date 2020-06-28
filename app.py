@@ -3,7 +3,7 @@ from os import path
 if path.exists("env.py"):
     import env
 from flask import Flask, render_template, url_for, flash, redirect, request
-from forms import RegistrationForm, LoginForm
+from forms import RegistrationForm, LoginForm, NewEntryForm
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -143,10 +143,11 @@ def entry(entry_id):
     return render_template('pages/entry.html',  title="Entry" , entry=the_entry)
 
 
-@app.route('/add')
+@app.route('/add', methods=['GET', 'POST'])
 @login_required
 def new_entry():
-    return render_template('pages/new_entry.html',  title="New Entry")
+    form = NewEntryForm()
+    return render_template('pages/new_entry.html',  title="New Entry", form=form)
 
 
 @app.route('/search')

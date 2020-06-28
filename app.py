@@ -83,9 +83,8 @@ def register():
     form = RegistrationForm()
     users = mongo.db.users
     if form.validate_on_submit():
-        existing_user = users.find_one({'username' : form.username.data})
         existing_email = users.find_one({'email': form.email.data})
-        if existing_user is None and existing_email is None:
+        if existing_email is None:
             hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
             users.insert({
                 "username": form.username.data,
@@ -94,9 +93,7 @@ def register():
             })
             flash(f'Account created for {form.username.data}.', 'success')
             return redirect(url_for('login'))
-        elif existing_user:
-            flash(f'Username {form.username.data} is already in use.', 'danger')
-        elif existing_email:
+        else:
             flash(f'Something went wrong with the information provided.', 'danger')
 
     return render_template('pages/registration.html', title="Registration", form=form)

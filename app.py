@@ -35,7 +35,6 @@ USER MANAGEMENT
 class User(UserMixin):
     def __init__(self, user):
         self.user = user
-        self.username = user['username']
 
     def get_id(self):
         object_id = self.user['_id']

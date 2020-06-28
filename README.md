@@ -32,6 +32,7 @@ Reviews can be searched by review name, by tag, or by favorited.
 
 -   [The Padwan Project](https://github.com/Eventyret/Padawan)
 -   [Cloudinary](https://cloudinary.com/)
+-   [Cypress](https://www.cypress.io/) for testing throughout the development process
 
 ## Testing
 

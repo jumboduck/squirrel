@@ -174,8 +174,10 @@ def new_entry():
             "tags": tags,
             "created_on": datetime.now().strftime("%d/%m/%Y")
         })
-        flash(f'Entry added for {form.name.data}.', 'success')
-        return redirect(url_for('listing'))
+        new_entry = mongo.db.entries.find_one({"name": form.name.data})
+        new_entry_id = new_entry['_id']
+        flash(f'Review for {form.name.data} created successfully.', 'success')
+        return redirect(url_for('entry', entry_id = new_entry_id))
     return render_template('pages/new_entry.html',  title="New Entry", form=form)
 
 

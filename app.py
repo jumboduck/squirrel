@@ -132,7 +132,8 @@ Pages
 @app.route('/listing')
 @login_required
 def listing():
-    return render_template('pages/listing.html',  title="Listing", entries=mongo.db.entries.find({'user_id' : current_user.id}))
+    entries = mongo.db.entries.find({'user_id' : current_user.id})
+    return render_template('pages/listing.html',  title="Listing", entries=entries.sort("_id", -1))
 
 
 @app.route('/profile')

@@ -12,11 +12,15 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from is_safe_url import is_safe_url
 import socket
 from datetime import datetime
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY')
-app.config["MONGO_DBNAME"] = os.environ.get('MONGO_DBNAME')
-app.config["MONGO_URI"] = os.environ.get('MONGO_URI')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+app.config['MONGO_DBNAME'] = os.environ.get('MONGO_DBNAME')
+app.config['MONGO_URI'] = os.environ.get('MONGO_URI')
+app.config['CLOUDINARY_URL'] = os.environ.get('CLOUDINARY_URL')
 
 
 mongo = PyMongo(app)
@@ -150,12 +154,25 @@ def new_entry():
     form = NewEntryForm()
     entries = mongo.db.entries
     if form.validate_on_submit():
+
+        if form.image.name:
+            image = request.files[form.image.name]
+            uploaded_image = cloudinary.uploader.upload(image)
+            image_url = uploaded_image.get('secure_url')
+            flash(f'{image_url}')
+        else:
+            image_url = ''
+        
+
+        tags = form.tags.data.split(',')
         entries.insert({
             "name": form.name.data,
             "user_id": current_user.id,
             "description": form.description.data,
             "rating": int(form.rating.data),
             "is_fav": form.is_fav.data,
+            "image" : image_url,
+            "tags": tags,
             "created_on": datetime.now().strftime("%d/%m/%Y")
         })
         return redirect(url_for('listing'))

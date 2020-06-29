@@ -2,7 +2,7 @@
 {% block content %}
 <h1 class="page-title">Add Entry</h1>
 
-<form method="POST" action="">
+<form method="POST" action="" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
     <fieldset class="form-group">
         <div class="form-group">
@@ -58,7 +58,7 @@
         </div>
 
         <div class="custom-file">
-            {{ form.image.label(class="custom-file-label") }}
+            {{ form.image.label }}
             {% if form.image.errors %}
             {{ form.image(class="form-control form-control-lg is-invalid") }}
             <div class="invalid-feedback">
@@ -67,9 +67,10 @@
                 {% endfor %}
             </div>
             {% else %}
-            {{ form.image(class="custom-file-input") }}
+            {{ form.image }}
             {% endif %}
         </div>
+
         <div class="form-group">
             {{ form.tags.label(class="form-control-label") }}
 

@@ -157,9 +157,8 @@ def new_entry():
 
         if form.image.name:
             image = request.files[form.image.name]
-            uploaded_image = cloudinary.uploader.upload(image)
+            uploaded_image = cloudinary.uploader.upload(image, width = 800, quality = 'auto')
             image_url = uploaded_image.get('secure_url')
-            flash(f'{image_url}')
         else:
             image_url = ''
         

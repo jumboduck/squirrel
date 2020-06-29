@@ -174,8 +174,8 @@ def new_entry():
             "tags": tags,
             "created_on": datetime.now().strftime("%d/%m/%Y")
         })
+        flash(f'Entry added for {form.name.data}.', 'success')
         return redirect(url_for('listing'))
-
     return render_template('pages/new_entry.html',  title="New Entry", form=form)
 
 

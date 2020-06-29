@@ -11,6 +11,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from is_safe_url import is_safe_url
 import socket
+from datetime import datetime
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY')
@@ -147,6 +148,18 @@ def entry(entry_id):
 @login_required
 def new_entry():
     form = NewEntryForm()
+    entries = mongo.db.entries
+    if form.validate_on_submit():
+        entries.insert({
+            "name": form.name.data,
+            "user_id": current_user.id,
+            "description": form.description.data,
+            "rating": int(form.rating.data),
+            "is_fav": form.is_fav.data,
+            "created_on": datetime.now().strftime("%d/%m/%Y")
+        })
+        return redirect(url_for('listing'))
+
     return render_template('pages/new_entry.html',  title="New Entry", form=form)
 
 

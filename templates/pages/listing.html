@@ -7,7 +7,7 @@
     {% for entry in entries %}
     <div class="card">
         {% if entry.image %}
-        <a href="{{url_for('entry', entry_id = entry._id)}}"><img src="{{ entry.image }}" class="card-img-top"
+        <a href="{{ url_for('entry', entry_id = entry._id) }}"><img src="{{ entry.image }}" class="card-img-top"
                 alt="alt text"></a>
         {% endif %}
         <div class="card-body">
@@ -54,7 +54,8 @@
             {% else %}
             Created on {{ entry.created_on }}
             {% endif %}
-            <span class="material-icons delete-btn">delete</span>
+            <a href="{{ url_for('delete', entry_id = entry._id) }}"><span
+                    class="material-icons delete-btn">delete</span></a>
         </div>
     </div>
     {% endfor %}

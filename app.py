@@ -132,8 +132,8 @@ Pages
 @app.route('/listing')
 @login_required
 def listing():
-    entries = mongo.db.entries.find({'user_id' : current_user.id})
-    return render_template('pages/listing.html',  title="Listing", entries=entries.sort("_id", -1))
+    entries = mongo.db.entries.find({'user_id' : current_user.id}).sort("_id", -1)
+    return render_template('pages/listing.html',  title="Listing", entries=entries)
 
 
 @app.route('/profile')
@@ -182,10 +182,20 @@ def new_entry():
     return render_template('pages/new_entry.html',  title="New Entry", form=form)
 
 
+@app.route('/delete/<entry_id>')
+@login_required
+def delete(entry_id):
+    review_name = mongo.db.entries.find_one({"_id": ObjectId(entry_id)})["name"]
+    mongo.db.entries.delete_one({"_id": ObjectId(entry_id)})
+    flash(f'Review for {review_name} was deleted.', 'success')
+    return redirect(url_for('listing'))
+
+
+
 @app.route('/search')
 @login_required
 def search():
-    return render_template('pages/search.html',  title="Search")
+    return 
 
 
 if __name__ == '__main__':

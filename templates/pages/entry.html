@@ -77,8 +77,8 @@
                         <div class="mb-2" id="view-tags-container">
                             <div id="view-tags" class="d-inline-block">
                                 {% for tag in entry.tags %}
-                                <a id="tag{{loop.index}}" class="view-tag badge badge-pill badge-primary tag"
-                                    href="{{url_for('listing')}}">{{tag}}</a>
+                                <a id="tag{{ loop.index }}" class="view-tag badge badge-pill badge-primary tag"
+                                    href="{{ url_for('listing', tag = tag) }}">{{ tag }}</a>
                                 {% endfor %}
                             </div>
                             <span class="badge badge-pill badge-primary tag light-tag" id="edit-tags-btn">edit

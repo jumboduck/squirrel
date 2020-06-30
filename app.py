@@ -202,7 +202,7 @@ def delete(entry_id):
 @app.route('/search')
 @login_required
 def search():
-    return 
+    return render_template('pages/search.html',  title="Search")
 
 
 if __name__ == '__main__':

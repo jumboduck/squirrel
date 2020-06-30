@@ -1,6 +1,12 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-<h1 class="page-title">Listing</h1>
+<h1 class="page-title">
+    {% if tag %}
+    Reviews tagged as {{ tag }}
+    {% else %}
+    All Reviews
+    {% endif %}
+</h1>
 
 <div class="card-deck">
 
@@ -45,7 +51,7 @@
             <p class="card-text">
                 <span class="small-title">Tags: </span>
                 {% for tag in entry.tags %}
-                <a href="{{url_for('listing')}}" class="badge badge-pill badge-primary">{{tag}}</a>
+                <a href="{{url_for('listing', tag=tag)}}" class="badge badge-pill badge-primary">{{tag}}</a>
                 {% endfor %}</p>
         </div>
         <div class="card-footer">

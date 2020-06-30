@@ -138,7 +138,7 @@ def listing(tag = None):
         entries = mongo.db.entries.find({'user_id' : current_user.id,  'tags': tag }).sort('_id', -1)
     else:
         entries = mongo.db.entries.find({'user_id' : current_user.id }).sort('_id', -1)
-    return render_template('pages/listing.html',  title="Listing", entries=entries)
+    return render_template('pages/listing.html',  title="Listing", entries=entries, tag=tag)
 
 
 @app.route('/profile')

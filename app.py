@@ -134,8 +134,10 @@ Pages
 @app.route('/listing/<tag>')
 @login_required
 def listing(tag = None):
+    # If a tag is passed as an argument, return a listing entries tagged as the argument
     if tag:
         entries = mongo.db.entries.find({'user_id' : current_user.id,  'tags': tag }).sort('_id', -1)
+    # If no tags are passed as an argument, return a list of all entries
     else:
         entries = mongo.db.entries.find({'user_id' : current_user.id }).sort('_id', -1)
     return render_template('pages/listing.html',  title="Listing", entries=entries, tag=tag)

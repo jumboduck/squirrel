@@ -57,6 +57,7 @@ def load_user(user_id):
 
 # Login
 
+@app.route('/')
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # Redirect to listing page if user is logged in
@@ -128,11 +129,15 @@ def logout():
 Pages
 """
 
-@app.route('/')
+
 @app.route('/listing')
+@app.route('/listing/<tag>')
 @login_required
-def listing():
-    entries = mongo.db.entries.find({'user_id' : current_user.id}).sort("_id", -1)
+def listing(tag = None):
+    if tag:
+        entries = mongo.db.entries.find({'user_id' : current_user.id,  'tags': tag }).sort('_id', -1)
+    else:
+        entries = mongo.db.entries.find({'user_id' : current_user.id }).sort('_id', -1)
     return render_template('pages/listing.html',  title="Listing", entries=entries)
 
 

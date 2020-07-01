@@ -46,31 +46,20 @@
                     <div>
                         <!-- Review Description -->
                         {{ form.description(class="form-control review-description", spellcheck="false", maxlength="2000", rows="1", id="review-description",**{"data-expandable":"True"}) }}
-                        <!--<textarea class="form-control review-description" data-expandable name="description"
-                            id="review-description" maxlength="500" rows="1"
-                            spellcheck="false">{{entry.description}}</textarea>-->
+
                     </div>
                     <!-- Rating -->
                     <div class="rating-container">
                         <div class="d-inline-block"><span class="entry-subtitle">Rating:</span></div>
                         <div class="star-rating d-inline-block">
                             <fieldset class="form-check form-check-inline">
-                                <input type="radio" id="star5" name="rating" value="5"
-                                    {% if entry.rating == 5 %}checked{% endif %} /><label for="star5"
-                                    title="Outstanding">5 stars</label>
-                                <input type="radio" id="star4" name="rating" value="4"
-                                    {% if entry.rating == 4 %}checked{% endif %} /><label for="star4"
-                                    title="Very Good">4 stars</label>
-                                <input type="radio" id="star3" name="rating" value="3"
-                                    {% if entry.rating == 3 %}checked{% endif %} /><label for="star3" title="Good">3
-                                    stars</label>
-                                <input type="radio" id="star2" name="rating" value="2"
-                                    {% if entry.rating == 2 %}checked{% endif %} /><label for="star2" title="Poor">2
-                                    stars</label>
-                                <input type="radio" id="star1" name="rating" value="1"
-                                    {% if entry.rating == 1 %}checked{% endif %} /><label for="star1"
-                                    title="Very Poor">1 star</label>
+
+                                {% for subfield in form.rating %}
+                                {{ subfield }}
+                                {{ subfield.label }}
+                                {% endfor %}
                             </fieldset>
+
                         </div>
                     </div>
                     <!-- Tags -->

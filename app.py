@@ -156,6 +156,7 @@ def entry(entry_id):
     the_entry = mongo.db.entries.find_one({"_id": ObjectId(entry_id)})
     form.name.data = the_entry["name"]
     form.description.data = the_entry["description"]
+    form.rating.data = str(the_entry["rating"])
     return render_template('pages/entry.html',  title="Entry" , entry=the_entry, form = form)
 
 

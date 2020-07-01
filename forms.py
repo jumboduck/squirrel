@@ -27,7 +27,7 @@ class LoginForm(FlaskForm):
 class EntryForm(FlaskForm):
     name = TextAreaField('Name', render_kw={"rows": 1}, validators = [DataRequired(), Length(min = 1, max = 30)])
     description = TextAreaField('Description', render_kw={"rows": 5}, validators = [DataRequired(), Length(min = 1, max = 2000)])
-    rating =  RadioField('Rating', validators=[DataRequired()], choices = [('1','Very Poor'),('2','Poor'),('3','Good'),('4','Very Good'),('5','Outstanding')])
+    rating =  RadioField('Rating', validators=[DataRequired()], choices = [('5','Outstanding'),('4','Very Good'),('3','Good'),('2','Poor'), ('1','Very Poor')])
     is_fav = BooleanField('Favorite')
     image = FileField('Image', validators = [FileAllowed(['jpg', 'gif', 'png', 'jpeg'], 'Images only!')])
     tags = StringField('Tags', validators = [Length(min = 0, max = 100)])

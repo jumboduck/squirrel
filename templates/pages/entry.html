@@ -14,14 +14,14 @@
                             {% else %}
                             {{ form.is_fav }}
                             {% endif %}
-                            <!-- <input type="checkbox" id="favorite" {% if entry.is_fav %} checked {% endif %} /> -->
                             <span class="heart-icon"></span>
                             <span class="sr-only">Add to favorites</span>
                         </label>
                     </div>
                     <!-- Review Name -->
-                    <textarea class="form-control review-name" data-expandable name="title" id="review-name"
-                        maxlength="30" rows="1" spellcheck="false">{{entry.name}}</textarea>
+                    {{ form.name(class="form-control review-name", spellcheck="false", maxlength="30", id="review-name",**{'data-expandable':'hello'}) }}
+                    <!--<textarea class="form-control review-name" data-expandable name="title" id="review-name"
+                        maxlength="30" rows="1" spellcheck="false">{{entry.name}}</textarea>-->
                 </div>
                 <!-- Delete Review -->
                 <div class="col-sm-3 text-sm-right align-middle pt-sm-3 pl-2 pr-4 pb-2 delete-entry">

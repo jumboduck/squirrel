@@ -154,6 +154,7 @@ def profile():
 def entry(entry_id):
     form = EntryForm()
     the_entry = mongo.db.entries.find_one({"_id": ObjectId(entry_id)})
+    form.name.data = the_entry["name"]
     return render_template('pages/entry.html',  title="Entry" , entry=the_entry, form = form)
 
 

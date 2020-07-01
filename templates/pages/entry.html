@@ -19,9 +19,8 @@
                         </label>
                     </div>
                     <!-- Review Name -->
-                    {{ form.name(class="form-control review-name", spellcheck="false", maxlength="30", id="review-name",**{'data-expandable':'hello'}) }}
-                    <!--<textarea class="form-control review-name" data-expandable name="title" id="review-name"
-                        maxlength="30" rows="1" spellcheck="false">{{entry.name}}</textarea>-->
+                    {{ form.name(class="form-control review-name", spellcheck="false", maxlength="30", id="review-name",**{"data-expandable":"True"}) }}
+
                 </div>
                 <!-- Delete Review -->
                 <div class="col-sm-3 text-sm-right align-middle pt-sm-3 pl-2 pr-4 pb-2 delete-entry">
@@ -50,9 +49,10 @@
                 <div class="col-md-6">
                     <div>
                         <!-- Review Description -->
-                        <textarea class="form-control review-description" data-expandable name="description"
+                        {{ form.description(class="form-control review-description", spellcheck="false", maxlength="2000", rows="1", id="review-description",**{"data-expandable":"True"}) }}
+                        <!--<textarea class="form-control review-description" data-expandable name="description"
                             id="review-description" maxlength="500" rows="1"
-                            spellcheck="false">{{entry.description}}</textarea>
+                            spellcheck="false">{{entry.description}}</textarea>-->
                     </div>
                     <!-- Rating -->
                     <div class="rating-container">

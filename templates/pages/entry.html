@@ -15,7 +15,7 @@
                         </label>
                     </div>
                     <!-- Review Name -->
-                    {{ form.name(class="form-control review-name", spellcheck="false", maxlength="30", id="review-name",**{"data-expandable":"True"}) }}
+                    {{ form.name(class="form-control review-name", spellcheck="false", maxlength="30",**{"data-expandable":"True"}) }}
 
                 </div>
                 <!-- Delete Review -->
@@ -28,7 +28,7 @@
             <div class="row">
                 <!-- Review Image -->
                 <div class="col-md-6">
-                    <label class="image-selector" for="image-input">
+                    <label class="image-selector" for="image">
                         <div class="overlay-container">
                             <img src="{{entry.image}}" class="entry-image" alt="{{entry.name}}">
                             <div class="image-overlay">
@@ -38,7 +38,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="file" capture id="image-input" name="new-image" accept="image/*">
+                        {{ form.image(accept="image/*", capture="True") }}
 
                     </label>
                 </div>

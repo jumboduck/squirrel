@@ -21,7 +21,7 @@ $("body").on("keydown input", ".badge-input", function () {
 
 // Prevents line breaks in Review Name and tags.
 // Pressing enter will instead send focus to the next element.
-$("body").on("keypress", "#review-name, .badge-input", function (event) {
+$("body").on("keypress", "#name, .badge-input", function (event) {
     if (event.keyCode === 13) {
         $(this).blur();
         return false;

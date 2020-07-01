@@ -279,7 +279,7 @@ a:hover {
     font-size: 200%;
 }
 
-#image-input {
+.entry #image {
     position: absolute;
     top: 0;
     right: 0;

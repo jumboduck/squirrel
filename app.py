@@ -3,7 +3,7 @@ from os import path
 if path.exists("env.py"):
     import env
 from flask import Flask, render_template, url_for, flash, redirect, request
-from forms import RegistrationForm, LoginForm, NewEntryForm
+from forms import RegistrationForm, LoginForm, EntryForm
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -134,7 +134,7 @@ Pages
 @app.route('/listing/<tag>')
 @login_required
 def listing(tag = None):
-    # If a tag is passed as an argument, return a listing entries tagged as the argument
+    # If a tag is passed as an argument, return a list of entries tagged as the argument
     if tag:
         entries = mongo.db.entries.find({'user_id' : current_user.id,  'tags': tag }).sort('_id', -1)
     # If no tags are passed as an argument, return a list of all entries
@@ -152,14 +152,19 @@ def profile():
 @app.route('/entry/<entry_id>')
 @login_required
 def entry(entry_id):
+    form = EntryForm()
     the_entry = mongo.db.entries.find_one({"_id": ObjectId(entry_id)})
-    return render_template('pages/entry.html',  title="Entry" , entry=the_entry)
+    form.name.data = the_entry["name"]
+    form.description.data = the_entry["description"]
+    form.rating.data = str(the_entry["rating"])
+    form.hidden_tags.data = ','.join(the_entry["tags"])
+    return render_template('pages/entry.html',  title="Entry" , entry=the_entry, form = form)
 
 
 @app.route('/add', methods=['GET', 'POST'])
 @login_required
 def new_entry():
-    form = NewEntryForm()
+    form = EntryForm()
     entries = mongo.db.entries
     if form.validate_on_submit():
 

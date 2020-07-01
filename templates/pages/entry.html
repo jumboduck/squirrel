@@ -8,15 +8,15 @@
                 <div class="col-sm-9">
                     <!-- Favorite checkbox -->
                     <div class="favorite-container">
-                        <label for="favorite" class="fav-label">
-                            <input type="checkbox" id="favorite" {% if entry.is_fav %} checked {% endif %} />
+                        <label for="is_fav" class="fav-label">
+                            {{ form.is_fav(checked = entry.is_fav) }}
                             <span class="heart-icon"></span>
                             <span class="sr-only">Add to favorites</span>
                         </label>
                     </div>
                     <!-- Review Name -->
-                    <textarea class="form-control review-name" data-expandable name="title" id="review-name"
-                        maxlength="30" rows="1" spellcheck="false">{{entry.name}}</textarea>
+                    {{ form.name(class="form-control review-name", spellcheck="false", maxlength="30",**{"data-expandable":"True"}) }}
+
                 </div>
                 <!-- Delete Review -->
                 <div class="col-sm-3 text-sm-right align-middle pt-sm-3 pl-2 pr-4 pb-2 delete-entry">
@@ -28,7 +28,7 @@
             <div class="row">
                 <!-- Review Image -->
                 <div class="col-md-6">
-                    <label class="image-selector" for="image-input">
+                    <label class="image-selector" for="image">
                         <div class="overlay-container">
                             <img src="{{entry.image}}" class="entry-image" alt="{{entry.name}}">
                             <div class="image-overlay">
@@ -38,38 +38,28 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="file" capture id="image-input" name="new-image" accept="image/*">
+                        {{ form.image(accept="image/*", capture="True") }}
 
                     </label>
                 </div>
                 <div class="col-md-6">
                     <div>
                         <!-- Review Description -->
-                        <textarea class="form-control review-description" data-expandable name="description"
-                            id="review-description" maxlength="500" rows="1"
-                            spellcheck="false">{{entry.description}}</textarea>
+                        {{ form.description(class="form-control review-description", spellcheck="false", maxlength="2000", rows="1", id="review-description",**{"data-expandable":"True"}) }}
+
                     </div>
                     <!-- Rating -->
                     <div class="rating-container">
                         <div class="d-inline-block"><span class="entry-subtitle">Rating:</span></div>
                         <div class="star-rating d-inline-block">
                             <fieldset class="form-check form-check-inline">
-                                <input type="radio" id="star5" name="rating" value="5"
-                                    {% if entry.rating == 5 %}checked{% endif %} /><label for="star5"
-                                    title="Outstanding">5 stars</label>
-                                <input type="radio" id="star4" name="rating" value="4"
-                                    {% if entry.rating == 4 %}checked{% endif %} /><label for="star4"
-                                    title="Very Good">4 stars</label>
-                                <input type="radio" id="star3" name="rating" value="3"
-                                    {% if entry.rating == 3 %}checked{% endif %} /><label for="star3" title="Good">3
-                                    stars</label>
-                                <input type="radio" id="star2" name="rating" value="2"
-                                    {% if entry.rating == 2 %}checked{% endif %} /><label for="star2" title="Poor">2
-                                    stars</label>
-                                <input type="radio" id="star1" name="rating" value="1"
-                                    {% if entry.rating == 1 %}checked{% endif %} /><label for="star1"
-                                    title="Very Poor">1 star</label>
+
+                                {% for subfield in form.rating %}
+                                {{ subfield }}
+                                {{ subfield.label }}
+                                {% endfor %}
                             </fieldset>
+
                         </div>
                     </div>
                     <!-- Tags -->
@@ -99,6 +89,7 @@
                                         class="material-icons">save</span> save changes</span>
                             </div>
                         </div>
+                        {{ form.hidden_tags }}
                     </div>
                     <!-- Creation / Update Time -->
                     <p><small class="text-muted">{% if entry.updated_on %}

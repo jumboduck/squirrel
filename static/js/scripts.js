@@ -21,7 +21,7 @@ $("body").on("keydown input", ".badge-input", function () {
 
 // Prevents line breaks in Review Name and tags.
 // Pressing enter will instead send focus to the next element.
-$("body").on("keypress", "#review-name, .badge-input", function (event) {
+$("body").on("keypress", "#name, .badge-input", function (event) {
     if (event.keyCode === 13) {
         $(this).blur();
         return false;
@@ -62,10 +62,12 @@ $(document).on("click", "#save-tag-btn", function () {
             $(this).remove();
             $("#tag" + getNumberFromId($(this).attr("id"))).remove();
         } else {
+            let newTagContent = $("#hidden_tags").val() + "," + $(this).val();
             let newDeleteTag = createDeleteTag(
                 $(this).attr("id"),
                 $(this).val()
             );
+            $("#hidden_tags").val(newTagContent);
             $("#new-tag").before(newDeleteTag);
             $(".delete-tag").each(deleteTag);
             $(this).remove();
@@ -86,6 +88,10 @@ function getNumberFromId(id) {
 function deleteTag() {
     $(this).click(function () {
         let viewId = "#tag" + getNumberFromId($(this).attr("id"));
+        // Make value of hidden field an array, remove the deleted tag, then rebuild string
+        let tagArray = $("#hidden_tags").val().split(",");
+        let newTagArray = tagArray.filter((tag) => tag !== $(viewId).text());
+        $("#hidden_tags").val(newTagArray.join());
         $(this).remove();
         $(viewId).remove();
     });

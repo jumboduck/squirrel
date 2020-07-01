@@ -57,6 +57,7 @@ def load_user(user_id):
 
 # Login
 
+@app.route('/')
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # Redirect to listing page if user is logged in
@@ -128,11 +129,18 @@ def logout():
 Pages
 """
 
-@app.route('/')
+
 @app.route('/listing')
+@app.route('/listing/<tag>')
 @login_required
-def listing():
-    return render_template('pages/listing.html',  title="Listing", entries=mongo.db.entries.find({'user_id' : current_user.id}))
+def listing(tag = None):
+    # If a tag is passed as an argument, return a listing entries tagged as the argument
+    if tag:
+        entries = mongo.db.entries.find({'user_id' : current_user.id,  'tags': tag }).sort('_id', -1)
+    # If no tags are passed as an argument, return a list of all entries
+    else:
+        entries = mongo.db.entries.find({'user_id' : current_user.id }).sort('_id', -1)
+    return render_template('pages/listing.html',  title="Listing", entries=entries, tag=tag)
 
 
 @app.route('/profile')
@@ -179,6 +187,16 @@ def new_entry():
         flash(f'Review for {form.name.data} created successfully.', 'success')
         return redirect(url_for('entry', entry_id = new_entry_id))
     return render_template('pages/new_entry.html',  title="New Entry", form=form)
+
+
+@app.route('/delete/<entry_id>')
+@login_required
+def delete(entry_id):
+    review_name = mongo.db.entries.find_one({"_id": ObjectId(entry_id)})["name"]
+    mongo.db.entries.delete_one({"_id": ObjectId(entry_id)})
+    flash(f'Review for {review_name} was deleted.', 'success')
+    return redirect(url_for('listing'))
+
 
 
 @app.route('/search')

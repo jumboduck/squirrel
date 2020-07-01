@@ -167,7 +167,7 @@ a:hover {
     position: absolute;
 }
 
-.entry #favorite {
+.entry #is_fav {
     position: absolute;
     top: 0;
     right: 0;
@@ -177,7 +177,7 @@ a:hover {
     z-index: 1;
 }
 
-#favorite + .heart-icon::before {
+#is_fav + .heart-icon::before {
     font-weight: 400;
     font-family: "Material Icons";
     display: inline-block;
@@ -188,11 +188,11 @@ a:hover {
     content: "favorite_border";
 }
 
-#favorite:checked + .heart-icon::before {
+#is_fav:checked + .heart-icon::before {
     content: "favorite";
 }
 
-#favorite + .heart-icon:active::before {
+#is_fav + .heart-icon:active::before {
     transform: scale(1.2);
 }
 

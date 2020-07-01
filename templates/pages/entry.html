@@ -8,8 +8,13 @@
                 <div class="col-sm-9">
                     <!-- Favorite checkbox -->
                     <div class="favorite-container">
-                        <label for="favorite" class="fav-label">
-                            <input type="checkbox" id="favorite" {% if entry.is_fav %} checked {% endif %} />
+                        <label for="is_fav" class="fav-label">
+                            {% if entry.is_fav %}
+                            {{ form.is_fav(checked=True) }}
+                            {% else %}
+                            {{ form.is_fav }}
+                            {% endif %}
+                            <!-- <input type="checkbox" id="favorite" {% if entry.is_fav %} checked {% endif %} /> -->
                             <span class="heart-icon"></span>
                             <span class="sr-only">Add to favorites</span>
                         </label>

@@ -157,6 +157,7 @@ def entry(entry_id):
     form.name.data = the_entry["name"]
     form.description.data = the_entry["description"]
     form.rating.data = str(the_entry["rating"])
+    form.hidden_tags.data = ','.join(the_entry["tags"])
     return render_template('pages/entry.html',  title="Entry" , entry=the_entry, form = form)
 
 

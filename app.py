@@ -281,7 +281,7 @@ def update_image(entry_id):
             }
         },
     )
-    return jsonify( {"new_image": image_url,
+    return jsonify({"new_image" : image_url,
                     "updated_on" : timestamp,
                     "success_message": image,
                     "message_class": "alert-success"})

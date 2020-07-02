@@ -85,6 +85,10 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             processData: false,
+            error: function (xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+                console.log(err.Message);
+            },
         }).done((data) => {
             $(".entry-image").attr("src", data.new_image);
             $(".timestamp").text("Last updated on " + data.updated_on);

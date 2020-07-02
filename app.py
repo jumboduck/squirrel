@@ -182,6 +182,26 @@ def update_fav(entry_id):
                     "message_class": "alert-success"})
 
 
+@app.route('/update_name/<entry_id>', methods=['POST', 'GET'])
+@login_required
+def update_name(entry_id):
+    form = EntryForm()
+    entries = mongo.db.entries
+    timestamp = datetime.now()
+    entries.update(
+        {"_id": ObjectId(entry_id)},
+        { "$set":
+            {
+                "name": form.name.data,
+                "updated_on": timestamp
+            }
+        },
+    )
+    return jsonify( {"updated_on" : timestamp,
+                    "success_message": "Review sucessfully updated.",
+                    "message_class": "alert-success"})
+
+
 
 @app.route('/add', methods=['GET', 'POST'])
 @login_required

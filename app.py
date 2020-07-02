@@ -3,7 +3,7 @@ from os import path
 if path.exists("env.py"):
     import env
 from flask import Flask, render_template, url_for, flash, redirect, request, jsonify
-from forms import RegistrationForm, LoginForm, EntryForm
+from forms import RegistrationForm, LoginForm, EntryForm, NewEntryForm
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -225,7 +225,7 @@ def update_description(entry_id):
 @app.route('/add', methods=['GET', 'POST'])
 @login_required
 def new_entry():
-    form = EntryForm()
+    form = NewEntryForm()
     entries = mongo.db.entries
     if form.validate_on_submit():
         if form.image.name:
@@ -235,7 +235,6 @@ def new_entry():
         else:
             image_url = ''
         
-
         tags = form.tags.data.split(',')
         entries.insert({
             "name": form.name.data,
@@ -245,7 +244,7 @@ def new_entry():
             "is_fav": form.is_fav.data,
             "image" : image_url,
             "tags": tags,
-            "created_on": datetime.now().strftime("%d/%m/%Y")
+            "created_on": datetime.now()
         })
         new_entry = mongo.db.entries.find_one({"name": form.name.data})
         new_entry_id = new_entry['_id']

@@ -74,6 +74,25 @@ $(document).ready(function () {
                 .addClass("alert " + data.message_class);
         });
     });
+
+    // Update db when a new image is chosen
+    $("#image").change(() => {
+        let form_data = new FormData($("#entry-form")[0]);
+        $.ajax({
+            data: form_data,
+            type: "POST",
+            url: "/update_image/" + entryId,
+            contentType: false,
+            cache: false,
+            processData: false,
+        }).done((data) => {
+            $(".entry-image").attr("src", data.new_image);
+            $(".timestamp").text("Last updated on " + data.updated_on);
+            $("#update-alerts")
+                .text(data.success_message)
+                .addClass("alert " + data.message_class);
+        });
+    });
 });
 
 function sendTagData() {

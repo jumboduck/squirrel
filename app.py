@@ -263,13 +263,37 @@ def update_tags(entry_id):
                     "message_class": "alert-success"})
 
 
+@app.route('/update_image/<entry_id>', methods=['POST', 'GET'])
+@login_required
+def update_image(entry_id):
+    form = EntryForm()
+    entries = mongo.db.entries
+    timestamp = datetime.now()
+    image = request.files[form.image.name]
+    uploaded_image = cloudinary.uploader.upload(image, width = 800, quality = 'auto')
+    image_url = uploaded_image.get('secure_url')
+    entries.update(
+        {"_id": ObjectId(entry_id)},
+        { "$set":
+            {
+                "image": image_url,
+                "updated_on": timestamp
+            }
+        },
+    )
+    return jsonify( {"new_image": image_url,
+                    "updated_on" : timestamp,
+                    "success_message": image,
+                    "message_class": "alert-success"})
+
+
 @app.route('/add', methods=['GET', 'POST'])
 @login_required
 def new_entry():
     form = NewEntryForm()
     entries = mongo.db.entries
     if form.validate_on_submit():
-        if form.image.name:
+        if form.image.data:
             image = request.files[form.image.name]
             uploaded_image = cloudinary.uploader.upload(image, width = 800, quality = 'auto')
             image_url = uploaded_image.get('secure_url')

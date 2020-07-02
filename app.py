@@ -165,13 +165,14 @@ def entry(entry_id):
 @app.route('/update_fav/<entry_id>', methods=['POST', 'GET'])
 @login_required
 def update_fav(entry_id):
+    form = EntryForm()
     entries = mongo.db.entries
     timestamp = datetime.now()
     entries.update(
         {"_id": ObjectId(entry_id)},
         { "$set":
             {
-                "is_fav": request.form["is_fav"],
+                "is_fav": form.is_fav.data,
                 "updated_on": timestamp
             }
         },
@@ -179,6 +180,7 @@ def update_fav(entry_id):
     return jsonify( {"updated_on" : timestamp,
                     "success_message": "Review sucessfully updated.",
                     "message_class": "alert-success"})
+
 
 
 @app.route('/add', methods=['GET', 'POST'])

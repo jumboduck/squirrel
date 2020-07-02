@@ -73,6 +73,7 @@ $(document).on("click", "#save-tag-btn", function () {
             $(this).remove();
         }
     });
+    sendTagData();
     $(".width-machine").each(function () {
         $(this).remove();
     });

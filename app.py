@@ -242,6 +242,27 @@ def update_rating(entry_id):
                     "message_class": "alert-success"})
 
 
+
+@app.route('/update_tags/<entry_id>', methods=['POST', 'GET'])
+@login_required
+def update_tags(entry_id):
+    form = EntryForm()
+    entries = mongo.db.entries
+    timestamp = datetime.now()
+    entries.update(
+        {"_id": ObjectId(entry_id)},
+        { "$set":
+            {
+                "tags": form.tags.data.split(","),
+                "updated_on": timestamp
+            }
+        },
+    )
+    return jsonify( {"updated_on" : timestamp,
+                    "success_message": "Review sucessfully updated.",
+                    "message_class": "alert-success"})
+
+
 @app.route('/add', methods=['GET', 'POST'])
 @login_required
 def new_entry():

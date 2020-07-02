@@ -1,6 +1,6 @@
-$(document).ready(function () {
-    const entryId = $("#hidden_id").val();
+const entryId = $("#hidden_id").val();
 
+$(document).ready(function () {
     // Update db when fav checkbox is clicked
     $(".entry #is_fav").change(() => {
         let favState;
@@ -60,4 +60,31 @@ $(document).ready(function () {
                 .addClass("alert " + data.message_class);
         });
     });
+
+    // Update db when tags are changed
+    $(".entry input[name=rating]:not(:checked)").change(() => {
+        $.ajax({
+            data: { rating: $("input[name=rating]:checked").val() },
+            type: "POST",
+            url: "/update_rating/" + entryId,
+        }).done((data) => {
+            $(".timestamp").text("Last updated on " + data.updated_on);
+            $("#update-alerts")
+                .text(data.success_message)
+                .addClass("alert " + data.message_class);
+        });
+    });
 });
+
+function sendTagData() {
+    $.ajax({
+        data: { tags: $("#hidden_tags").val() },
+        type: "POST",
+        url: "/update_tags/" + entryId,
+    }).done((data) => {
+        $(".timestamp").text("Last updated on " + data.updated_on);
+        $("#update-alerts")
+            .text(data.success_message)
+            .addClass("alert " + data.message_class);
+    });
+}

@@ -90,9 +90,10 @@
                             </div>
                         </div>
                         {{ form.hidden_tags }}
+                        {{ form.hidden_id }}
                     </div>
                     <!-- Creation / Update Time -->
-                    <p><small class="text-muted">{% if entry.updated_on %}
+                    <p><small class="text-muted timestamp">{% if entry.updated_on %}
                             Last updated on {{ entry.updated_on }}
                             {% else %}
                             Created on {{ entry.created_on }}

@@ -2,7 +2,7 @@ import os
 from os import path
 if path.exists("env.py"):
     import env
-from flask import Flask, render_template, url_for, flash, redirect, request
+from flask import Flask, render_template, url_for, flash, redirect, request, jsonify
 from forms import RegistrationForm, LoginForm, EntryForm
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
@@ -158,8 +158,23 @@ def entry(entry_id):
     form.description.data = the_entry["description"]
     form.rating.data = str(the_entry["rating"])
     form.hidden_tags.data = ','.join(the_entry["tags"])
+    form.hidden_id.data = entry_id
     return render_template('pages/entry.html',  title="Entry" , entry=the_entry, form = form)
 
+
+@app.route('/update_fav/<entry_id>', methods=['POST', 'GET'])
+@login_required
+def update(entry_id):
+    entries = mongo.db.entries
+    timestamp = datetime.now()
+    entries.update({"_id": ObjectId(entry_id)},
+        { "$set":
+            {
+                "is_fav": request.form["is_fav"],
+                "updated_on": timestamp
+            }
+        },)
+    return jsonify( {"updated_on" : timestamp.strftime("%d/%m/%Y") })
 
 @app.route('/add', methods=['GET', 'POST'])
 @login_required
@@ -167,7 +182,6 @@ def new_entry():
     form = EntryForm()
     entries = mongo.db.entries
     if form.validate_on_submit():
-
         if form.image.name:
             image = request.files[form.image.name]
             uploaded_image = cloudinary.uploader.upload(image, width = 800, quality = 'auto')

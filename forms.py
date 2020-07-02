@@ -32,5 +32,6 @@ class EntryForm(FlaskForm):
     image = FileField('Image', validators = [FileAllowed(['jpg', 'gif', 'png', 'jpeg'], 'Images only!')])
     tags = StringField('Tags', validators = [Length(max = 100)])
     hidden_tags = HiddenField('Hidden Tags', validators = [Length(max = 100)])
+    hidden_id = HiddenField('Hidden Id', validators = [DataRequired(), Length(max = 100)])
     submit = SubmitField('Add Review')
 

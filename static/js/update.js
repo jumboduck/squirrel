@@ -19,11 +19,25 @@ $(document).ready(function () {
         });
     });
 
+    // Update db when name is changed
     $(".entry #name").blur(function () {
         $.ajax({
             data: { name: $(".entry #name").val() },
             type: "POST",
             url: "/update_name/" + entryId,
+        }).done(function (data) {
+            $(".timestamp").text("Last updated on " + data.updated_on);
+            $("#update-alerts")
+                .text(data.success_message)
+                .addClass("alert " + data.message_class);
+        });
+    });
+
+    $(".entry #description").blur(function () {
+        $.ajax({
+            data: { description: $(".entry #description").val() },
+            type: "POST",
+            url: "/update_description/" + entryId,
         }).done(function (data) {
             $(".timestamp").text("Last updated on " + data.updated_on);
             $("#update-alerts")

@@ -2,8 +2,8 @@ import os
 from os import path
 if path.exists("env.py"):
     import env
-from flask import Flask, render_template, url_for, flash, redirect, request
-from forms import RegistrationForm, LoginForm, EntryForm
+from flask import Flask, render_template, url_for, flash, redirect, request, jsonify
+from forms import RegistrationForm, LoginForm, EntryForm, NewEntryForm
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -158,24 +158,148 @@ def entry(entry_id):
     form.description.data = the_entry["description"]
     form.rating.data = str(the_entry["rating"])
     form.hidden_tags.data = ','.join(the_entry["tags"])
+    form.hidden_id.data = entry_id
     return render_template('pages/entry.html',  title="Entry" , entry=the_entry, form = form)
+
+
+@app.route('/update_fav/<entry_id>', methods=['POST', 'GET'])
+@login_required
+def update_fav(entry_id):
+    form = EntryForm()
+    entries = mongo.db.entries
+    timestamp = datetime.now()
+    entries.update(
+        {"_id": ObjectId(entry_id)},
+        { "$set":
+            {
+                "is_fav": form.is_fav.data,
+                "updated_on": timestamp
+            }
+        },
+    )
+    return jsonify( {"updated_on" : timestamp,
+                    "success_message": "Review sucessfully updated.",
+                    "message_class": "alert-success"})
+
+
+@app.route('/update_name/<entry_id>', methods=['POST', 'GET'])
+@login_required
+def update_name(entry_id):
+    form = EntryForm()
+    entries = mongo.db.entries
+    timestamp = datetime.now()
+    entries.update(
+        {"_id": ObjectId(entry_id)},
+        { "$set":
+            {
+                "name": form.name.data,
+                "updated_on": timestamp
+            }
+        },
+    )
+    return jsonify( {"updated_on" : timestamp,
+                    "success_message": "Review sucessfully updated.",
+                    "message_class": "alert-success"})
+
+
+@app.route('/update_description/<entry_id>', methods=['POST', 'GET'])
+@login_required
+def update_description(entry_id):
+    form = EntryForm()
+    entries = mongo.db.entries
+    timestamp = datetime.now()
+    entries.update(
+        {"_id": ObjectId(entry_id)},
+        { "$set":
+            {
+                "description": form.description.data,
+                "updated_on": timestamp
+            }
+        },
+    )
+    return jsonify( {"updated_on" : timestamp,
+                    "success_message": "Review sucessfully updated.",
+                    "message_class": "alert-success"})
+
+
+@app.route('/update_rating/<entry_id>', methods=['POST', 'GET'])
+@login_required
+def update_rating(entry_id):
+    form = EntryForm()
+    entries = mongo.db.entries
+    timestamp = datetime.now()
+    entries.update(
+        {"_id": ObjectId(entry_id)},
+        { "$set":
+            {
+                "rating": int(form.rating.data),
+                "updated_on": timestamp
+            }
+        },
+    )
+    return jsonify( {"updated_on" : timestamp,
+                    "success_message": "Review sucessfully updated.",
+                    "message_class": "alert-success"})
+
+
+
+@app.route('/update_tags/<entry_id>', methods=['POST', 'GET'])
+@login_required
+def update_tags(entry_id):
+    form = EntryForm()
+    entries = mongo.db.entries
+    timestamp = datetime.now()
+    entries.update(
+        {"_id": ObjectId(entry_id)},
+        { "$set":
+            {
+                "tags": form.tags.data.split(","),
+                "updated_on": timestamp
+            }
+        },
+    )
+    return jsonify( {"updated_on" : timestamp,
+                    "success_message": "Review sucessfully updated.",
+                    "message_class": "alert-success"})
+
+
+@app.route('/update_image/<entry_id>', methods=['POST', 'GET'])
+@login_required
+def update_image(entry_id):
+    form = EntryForm()
+    entries = mongo.db.entries
+    timestamp = datetime.now()
+    image = request.files[form.image.name]
+    uploaded_image = cloudinary.uploader.upload(image, width = 800, quality = 'auto')
+    image_url = uploaded_image.get('secure_url')
+    entries.update(
+        {"_id": ObjectId(entry_id)},
+        { "$set":
+            {
+                "image": image_url,
+                "updated_on": timestamp
+            }
+        },
+    )
+    return jsonify({"new_image" : image_url,
+                    "updated_on" : timestamp,
+                    "success_message": image,
+                    "message_class": "alert-success"})
 
 
 @app.route('/add', methods=['GET', 'POST'])
 @login_required
 def new_entry():
-    form = EntryForm()
+    form = NewEntryForm()
     entries = mongo.db.entries
     if form.validate_on_submit():
-
-        if form.image.name:
+        if form.image.data:
             image = request.files[form.image.name]
             uploaded_image = cloudinary.uploader.upload(image, width = 800, quality = 'auto')
             image_url = uploaded_image.get('secure_url')
         else:
             image_url = ''
         
-
         tags = form.tags.data.split(',')
         entries.insert({
             "name": form.name.data,
@@ -185,7 +309,7 @@ def new_entry():
             "is_fav": form.is_fav.data,
             "image" : image_url,
             "tags": tags,
-            "created_on": datetime.now().strftime("%d/%m/%Y")
+            "created_on": datetime.now()
         })
         new_entry = mongo.db.entries.find_one({"name": form.name.data})
         new_entry_id = new_entry['_id']

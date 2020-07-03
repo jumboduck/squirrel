@@ -283,7 +283,7 @@ def update_image(entry_id):
     )
     return jsonify({"new_image" : image_url,
                     "updated_on" : timestamp,
-                    "success_message": image,
+                    "success_message": "Review sucessfully updated.",
                     "message_class": "alert-success"})
 
 

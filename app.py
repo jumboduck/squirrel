@@ -263,8 +263,8 @@ def update_tags(entry_id):
         },
     )
     return jsonify( {"updated_on" : timestamp,
-                    "success_message": "Review sucessfully updated.",
-                    "message_class": "alert-success"})
+                    "success_message": "Tags sucessfully updated.",
+                    "message_class": "valid-update"})
 
 
 @app.route('/update_image/<entry_id>', methods=['POST', 'GET'])
@@ -287,8 +287,8 @@ def update_image(entry_id):
     )
     return jsonify({"new_image" : image_url,
                     "updated_on" : timestamp,
-                    "success_message": "Review sucessfully updated.",
-                    "message_class": "alert-success"})
+                    "success_message": "Image sucessfully updated.",
+                    "message_class": "valid-update"})
 
 
 @app.route('/add', methods=['GET', 'POST'])

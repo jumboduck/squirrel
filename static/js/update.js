@@ -68,9 +68,11 @@ $(document).ready(function () {
         }).done((data) => {
             $(".entry-image").attr("src", data.new_image);
             $(".timestamp").text("Last updated on " + data.updated_on);
-            $("#update-alerts")
-                .text(data.success_message)
-                .addClass("alert " + data.message_class);
+            newAlert(
+                "#image-feedback",
+                data.success_message,
+                data.message_class
+            );
         });
     });
 });
@@ -78,7 +80,7 @@ $(document).ready(function () {
 // Updata tags in db when new tags are saved
 function sendTagData() {
     let newTags = $("#hidden_tags").val();
-    sendData({ tags: newTags }, "/update_tags/");
+    sendData({ tags: newTags }, "/update_tags/", "#tags-feedback");
 }
 
 // Update fields in db

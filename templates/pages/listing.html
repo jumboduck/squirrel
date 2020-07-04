@@ -49,10 +49,14 @@
             </p>
             <span class="sr-only">Rating: {{ entry.rating }}/5</span>
             <p class="card-text">
+                {% if entry.tags %}
                 <span class="small-title">Tags: </span>
                 {% for tag in entry.tags %}
                 <a href="{{url_for('listing', tag=tag)}}" class="badge badge-pill badge-primary">{{tag}}</a>
-                {% endfor %}</p>
+                {% endfor %}
+                {% endif %}
+            </p>
+
         </div>
         <div class="card-footer">
             {% if entry.updated_on %}

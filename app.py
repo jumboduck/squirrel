@@ -188,18 +188,20 @@ def update_name(entry_id):
     form = EntryForm()
     entries = mongo.db.entries
     timestamp = datetime.now()
-    entries.update(
-        {"_id": ObjectId(entry_id)},
-        { "$set":
-            {
-                "name": form.name.data,
-                "updated_on": timestamp
-            }
-        },
-    )
-    return jsonify( {"updated_on" : timestamp,
-                    "success_message": "Review sucessfully updated.",
-                    "message_class": "alert-success"})
+    new_name = form.name.data
+    if len(new_name) > 0 and len(new_name) <= 30:
+        entries.update(
+            {"_id": ObjectId(entry_id)},
+            { "$set":
+                {
+                    "name": new_name,
+                    "updated_on": timestamp
+                }
+            },
+        )
+        return jsonify( {"updated_on" : timestamp,
+                        "success_message": "Name sucessfully updated.",
+                        "message_class": "valid-update"})
 
 
 @app.route('/update_description/<entry_id>', methods=['POST', 'GET'])
@@ -208,18 +210,20 @@ def update_description(entry_id):
     form = EntryForm()
     entries = mongo.db.entries
     timestamp = datetime.now()
-    entries.update(
-        {"_id": ObjectId(entry_id)},
-        { "$set":
-            {
-                "description": form.description.data,
-                "updated_on": timestamp
-            }
-        },
-    )
-    return jsonify( {"updated_on" : timestamp,
-                    "success_message": "Review sucessfully updated.",
-                    "message_class": "alert-success"})
+    new_description = form.description.data
+    if len(new_description) > 0 and len(new_description) <= 2000:
+        entries.update(
+            {"_id": ObjectId(entry_id)},
+            { "$set":
+                {
+                    "description": form.description.data,
+                    "updated_on": timestamp
+                }
+            },
+        )
+        return jsonify( {"updated_on" : timestamp,
+                        "success_message": "Description sucessfully updated.",
+                        "message_class": "valid-update"})
 
 
 @app.route('/update_rating/<entry_id>', methods=['POST', 'GET'])
@@ -238,8 +242,8 @@ def update_rating(entry_id):
         },
     )
     return jsonify( {"updated_on" : timestamp,
-                    "success_message": "Review sucessfully updated.",
-                    "message_class": "alert-success"})
+                    "success_message": "Rating sucessfully updated.",
+                    "message_class": "valid-update"})
 
 
 
@@ -259,8 +263,8 @@ def update_tags(entry_id):
         },
     )
     return jsonify( {"updated_on" : timestamp,
-                    "success_message": "Review sucessfully updated.",
-                    "message_class": "alert-success"})
+                    "success_message": "Tags sucessfully updated.",
+                    "message_class": "valid-update"})
 
 
 @app.route('/update_image/<entry_id>', methods=['POST', 'GET'])
@@ -283,8 +287,8 @@ def update_image(entry_id):
     )
     return jsonify({"new_image" : image_url,
                     "updated_on" : timestamp,
-                    "success_message": image,
-                    "message_class": "alert-success"})
+                    "success_message": "Image sucessfully updated.",
+                    "message_class": "valid-update"})
 
 
 @app.route('/add', methods=['GET', 'POST'])
@@ -298,7 +302,7 @@ def new_entry():
             uploaded_image = cloudinary.uploader.upload(image, width = 800, quality = 'auto')
             image_url = uploaded_image.get('secure_url')
         else:
-            image_url = ''
+            image_url = '/static/img/image-placeholder.png'
         
         tags = form.tags.data.split(',')
         entries.insert({

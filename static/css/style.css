@@ -433,6 +433,26 @@ a.badge-primary:hover {
     transform: scale(1.2);
 }
 
+/* Update feedback */
+
+#name-feedback {
+    position: relative;
+    top: -0.8rem;
+    left: 3rem;
+}
+
+.update-feedback {
+    font-size: 80%;
+}
+
+.valid-update {
+    color: #28a745;
+}
+
+.invalid-update {
+    color: #dc3545;
+}
+
 /* Media Queries */
 
 @media (min-width: 992px) {

@@ -28,6 +28,7 @@ $("body").on("keypress", "#name, .badge-input", function (event) {
     }
 });
 
+// Expandable text areas resize when window size is changed
 $(window).resize(function () {
     $("textarea[data-expandable]").each(expandTextArea);
 });

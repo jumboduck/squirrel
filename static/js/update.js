@@ -33,13 +33,18 @@ $(document).ready(function () {
     $(".entry #description").blur(() => {
         let newDescription = $(".entry #description").val();
         if (newDescription.length > 0 && newDescription.length <= 2000) {
-            sendData({ description: newDescription }, "/update_description/");
+            sendData(
+                { description: newDescription },
+                "/update_description/",
+                "#description-feedback"
+            );
         } else {
             $(".entry #description").val(originalDescription);
             $("textarea[data-expandable]").each(expandTextArea);
             newAlert(
+                "#description-feedback",
                 "Description must be between 1 and 2000 characters",
-                "alert-danger"
+                "invalid-update"
             );
         }
     });

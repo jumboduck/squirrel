@@ -222,8 +222,8 @@ def update_description(entry_id):
             },
         )
         return jsonify( {"updated_on" : timestamp,
-                        "success_message": "Review sucessfully updated.",
-                        "message_class": "alert-success"})
+                        "success_message": "Description sucessfully updated.",
+                        "message_class": "valid-update"})
 
 
 @app.route('/update_rating/<entry_id>', methods=['POST', 'GET'])

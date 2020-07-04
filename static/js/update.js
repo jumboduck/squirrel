@@ -7,72 +7,25 @@ $(document).ready(function () {
         $(".entry #is_fav").is(":checked")
             ? (favState = true)
             : (favState = false);
-        $.ajax({
-            data: { is_fav: favState },
-            type: "POST",
-            url: "/update_fav/" + entryId,
-        }).done((data) => {
-            $(".timestamp").text("Last updated on " + data.updated_on);
-            $("#update-alerts")
-                .text(data.success_message)
-                .addClass("alert " + data.message_class);
-        });
+        sendData({ is_fav: favState }, "/update_fav/");
     });
 
     // Update db when name is changed
     $(".entry #name").blur(() => {
-        $.ajax({
-            data: { name: $(".entry #name").val() },
-            type: "POST",
-            url: "/update_name/" + entryId,
-        }).done((data) => {
-            $(".timestamp").text("Last updated on " + data.updated_on);
-            $("#update-alerts")
-                .text(data.success_message)
-                .addClass("alert " + data.message_class);
-        });
+        let newName = $(".entry #name").val();
+        sendData({ name: newName }, "/update_name/");
     });
 
     // Update db when description is changed
     $(".entry #description").blur(() => {
-        $.ajax({
-            data: { description: $(".entry #description").val() },
-            type: "POST",
-            url: "/update_description/" + entryId,
-        }).done((data) => {
-            $(".timestamp").text("Last updated on " + data.updated_on);
-            $("#update-alerts")
-                .text(data.success_message)
-                .addClass("alert " + data.message_class);
-        });
+        let newDescription = $(".entry #description").val();
+        sendData({ description: newDescription }, "/update_description/");
     });
 
     // Update db when rating is changed
     $(".entry input[name=rating]:not(:checked)").change(() => {
-        $.ajax({
-            data: { rating: $("input[name=rating]:checked").val() },
-            type: "POST",
-            url: "/update_rating/" + entryId,
-        }).done((data) => {
-            $(".timestamp").text("Last updated on " + data.updated_on);
-            $("#update-alerts")
-                .text(data.success_message)
-                .addClass("alert " + data.message_class);
-        });
-    });
-
-    // Update db when tags are changed
-    $(".entry input[name=rating]:not(:checked)").change(() => {
-        $.ajax({
-            data: { rating: $("input[name=rating]:checked").val() },
-            type: "POST",
-            url: "/update_rating/" + entryId,
-        }).done((data) => {
-            $(".timestamp").text("Last updated on " + data.updated_on);
-            $("#update-alerts")
-                .text(data.success_message)
-                .addClass("alert " + data.message_class);
-        });
+        let newRating = $("input[name=rating]:checked").val();
+        sendData({ rating: newRating }, "/update_rating/");
     });
 
     // Update db when a new image is chosen
@@ -85,10 +38,6 @@ $(document).ready(function () {
             contentType: false,
             cache: false,
             processData: false,
-            error: function (xhr, status, error) {
-                var err = eval("(" + xhr.responseText + ")");
-                console.log(err.Message);
-            },
         }).done((data) => {
             $(".entry-image").attr("src", data.new_image);
             $(".timestamp").text("Last updated on " + data.updated_on);
@@ -99,11 +48,18 @@ $(document).ready(function () {
     });
 });
 
+// Updata tags in db when new tags are saved
 function sendTagData() {
+    let newTags = $("#hidden_tags").val();
+    sendData({ tags: newTags }, "/update_tags/");
+}
+
+// Update fields in db
+function sendData(fieldData, url) {
     $.ajax({
-        data: { tags: $("#hidden_tags").val() },
+        data: fieldData,
         type: "POST",
-        url: "/update_tags/" + entryId,
+        url: url + entryId,
     }).done((data) => {
         $(".timestamp").text("Last updated on " + data.updated_on);
         $("#update-alerts")

@@ -435,6 +435,12 @@ a.badge-primary:hover {
 
 /* Update feedback */
 
+#name-feedback {
+    position: relative;
+    top: -0.8rem;
+    left: 3rem;
+}
+
 .update-feedback {
     font-size: 80%;
 }

@@ -18,6 +18,7 @@ $(document).ready(function () {
         let newName = $(".entry #name").val();
         if (newName.length > 0 && newName.length <= 30) {
             sendData({ name: newName }, "/update_name/", "#name-feedback");
+            originalName = newName;
         } else {
             $(".entry #name").val(originalName);
             newAlert(
@@ -38,6 +39,7 @@ $(document).ready(function () {
                 "/update_description/",
                 "#description-feedback"
             );
+            originalDescription = newDescription;
         } else {
             $(".entry #description").val(originalDescription);
             $("textarea[data-expandable]").each(expandTextArea);

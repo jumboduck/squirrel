@@ -16,7 +16,7 @@
                     </div>
                     <!-- Review Name -->
                     {{ form.name(class="form-control review-name") }}
-
+                    <div id="name-feedback" class="update-feedback"></div>
                 </div>
                 <!-- Delete Review -->
                 <div class="col-sm-3 text-sm-right align-middle pt-sm-3 pl-2 pr-4 pb-2 delete-entry">
@@ -39,14 +39,14 @@
                             </div>
                         </div>
                         {{ form.image }}
-
+                        <div id="image-feedback" class="update-feedback"></div>
                     </label>
                 </div>
                 <div class="col-md-6">
                     <div>
                         <!-- Review Description -->
                         {{ form.description(class="form-control review-description") }}
-
+                        <div id="description-feedback" class="update-feedback"></div>
                     </div>
                     <!-- Rating -->
                     <div class="rating-container">
@@ -59,7 +59,7 @@
                                 {{ subfield.label }}
                                 {% endfor %}
                             </fieldset>
-
+                            <div id="rating-feedback" class="update-feedback"></div>
                         </div>
                     </div>
                     <!-- Tags -->
@@ -73,6 +73,7 @@
                             </div>
                             <span class="badge badge-pill badge-primary tag light-tag" id="edit-tags-btn">edit
                                 tags</span>
+                            <div id="tags-feedback" class="update-feedback"></div>
                         </div>
 
                         <div class="mb-2" id="edit-tags">

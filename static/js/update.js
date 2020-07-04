@@ -1,5 +1,6 @@
 const entryId = $("#hidden_id").val();
 let originalName = $(".entry #name").val();
+let originalDescription = $(".entry #description").val();
 
 $(document).ready(function () {
     // Update db when fav checkbox is clicked
@@ -12,7 +13,7 @@ $(document).ready(function () {
     });
 
     // Update db when name is changed
-    // If name does not pass validation, return original name
+    // If name does not pass validation, return original name and error message
     $(".entry #name").blur(() => {
         let newName = $(".entry #name").val();
         if (newName.length > 0 && newName.length <= 30) {
@@ -27,9 +28,19 @@ $(document).ready(function () {
     });
 
     // Update db when description is changed
+    // If description does not pass validation, return original name and error message
     $(".entry #description").blur(() => {
         let newDescription = $(".entry #description").val();
-        sendData({ description: newDescription }, "/update_description/");
+        if (newDescription.length > 0 && newDescription.length <= 2000) {
+            sendData({ description: newDescription }, "/update_description/");
+        } else {
+            $(".entry #description").val(originalDescription);
+            $("textarea[data-expandable]").each(expandTextArea);
+            newAlert(
+                "Description must be between 1 and 2000 characters",
+                "alert-danger"
+            );
+        }
     });
 
     // Update db when rating is changed

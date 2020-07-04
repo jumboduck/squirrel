@@ -189,7 +189,6 @@ def update_name(entry_id):
     entries = mongo.db.entries
     timestamp = datetime.now()
     new_name = form.name.data
-    print(len(new_name))
     if len(new_name) > 0 and len(new_name) <= 30:
         entries.update(
             {"_id": ObjectId(entry_id)},
@@ -211,18 +210,20 @@ def update_description(entry_id):
     form = EntryForm()
     entries = mongo.db.entries
     timestamp = datetime.now()
-    entries.update(
-        {"_id": ObjectId(entry_id)},
-        { "$set":
-            {
-                "description": form.description.data,
-                "updated_on": timestamp
-            }
-        },
-    )
-    return jsonify( {"updated_on" : timestamp,
-                    "success_message": "Review sucessfully updated.",
-                    "message_class": "alert-success"})
+    new_description = form.description.data
+    if len(new_description) > 0 and len(new_description) <= 2000:
+        entries.update(
+            {"_id": ObjectId(entry_id)},
+            { "$set":
+                {
+                    "description": form.description.data,
+                    "updated_on": timestamp
+                }
+            },
+        )
+        return jsonify( {"updated_on" : timestamp,
+                        "success_message": "Review sucessfully updated.",
+                        "message_class": "alert-success"})
 
 
 @app.route('/update_rating/<entry_id>', methods=['POST', 'GET'])

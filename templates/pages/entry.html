@@ -15,7 +15,7 @@
                         </label>
                     </div>
                     <!-- Review Name -->
-                    {{ form.name(class="form-control review-name", spellcheck="false", maxlength="30",**{"data-expandable":"True"}) }}
+                    {{ form.name(class="form-control review-name") }}
 
                 </div>
                 <!-- Delete Review -->
@@ -38,14 +38,14 @@
                                 </div>
                             </div>
                         </div>
-                        {{ form.image(accept="image/*", capture="True") }}
+                        {{ form.image }}
 
                     </label>
                 </div>
                 <div class="col-md-6">
                     <div>
                         <!-- Review Description -->
-                        {{ form.description(class="form-control review-description", spellcheck="false", maxlength="2000", rows="1",**{"data-expandable":"True"}) }}
+                        {{ form.description(class="form-control review-description") }}
 
                     </div>
                     <!-- Rating -->

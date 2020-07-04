@@ -302,7 +302,7 @@ def new_entry():
             uploaded_image = cloudinary.uploader.upload(image, width = 800, quality = 'auto')
             image_url = uploaded_image.get('secure_url')
         else:
-            image_url = ''
+            image_url = '/static/img/image-placeholder.png'
         
         tags = form.tags.data.split(',')
         entries.insert({

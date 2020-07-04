@@ -17,12 +17,13 @@ $(document).ready(function () {
     $(".entry #name").blur(() => {
         let newName = $(".entry #name").val();
         if (newName.length > 0 && newName.length <= 30) {
-            sendData({ name: newName }, "/update_name/");
+            sendData({ name: newName }, "/update_name/", "#name-feedback");
         } else {
             $(".entry #name").val(originalName);
             newAlert(
+                "#name-feedback",
                 "Name must be between 1 and 30 characters",
-                "alert-danger"
+                "invalid-update"
             );
         }
     });
@@ -76,20 +77,19 @@ function sendTagData() {
 }
 
 // Update fields in db
-function sendData(fieldData, url) {
+function sendData(fieldData, url, feedbackEl) {
     $.ajax({
         data: fieldData,
         type: "POST",
         url: url + entryId,
     }).done((data) => {
         $(".timestamp").text("Last updated on " + data.updated_on);
-        newAlert(data.success_message, data.message_class);
+        newAlert(feedbackEl, data.success_message, data.message_class);
     });
 }
 
 // Create an alert
-function newAlert(message, type) {
-    $("#update-alerts")
-        .text(message)
-        .addClass("alert " + type);
+function newAlert(element, message, type) {
+    $(element).removeClass("invalid-update valid-update");
+    $(element).text(message).addClass(type);
 }

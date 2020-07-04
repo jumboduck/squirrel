@@ -453,6 +453,13 @@ a.badge-primary:hover {
     color: #dc3545;
 }
 
+/* 404 page*/
+
+.error-image {
+    width: 50%;
+    margin: 0 auto;
+}
+
 /* Media Queries */
 
 @media (min-width: 992px) {

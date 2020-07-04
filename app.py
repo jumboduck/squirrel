@@ -338,6 +338,11 @@ def search():
     return render_template('pages/search.html',  title="Search")
 
 
+@app.errorhandler(404) 
+def invalid_route(e): 
+    return render_template('pages/404.html',  title="Page Not Found")
+
+
 if __name__ == '__main__':
     app.run(host=os.environ.get('HOSTNAME'),
             port=int(os.environ.get('PORT')),

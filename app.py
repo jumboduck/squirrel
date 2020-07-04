@@ -242,8 +242,8 @@ def update_rating(entry_id):
         },
     )
     return jsonify( {"updated_on" : timestamp,
-                    "success_message": "Review sucessfully updated.",
-                    "message_class": "alert-success"})
+                    "success_message": "Rating sucessfully updated.",
+                    "message_class": "valid-update"})
 
 
 

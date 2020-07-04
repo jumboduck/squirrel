@@ -52,7 +52,7 @@ $(document).ready(function () {
     // Update db when rating is changed
     $(".entry input[name=rating]:not(:checked)").change(() => {
         let newRating = $("input[name=rating]:checked").val();
-        sendData({ rating: newRating }, "/update_rating/");
+        sendData({ rating: newRating }, "/update_rating/", "#rating-feedback");
     });
 
     // Update db when a new image is chosen

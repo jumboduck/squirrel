@@ -84,6 +84,12 @@ a:hover {
     background-color: #535f6b !important;
 }
 
+.login-info {
+    font-size: 0.8rem;
+    color: #fff;
+    margin-top: 1rem;
+}
+
 /* Review Cards in listing  */
 .card-img-top {
     max-height: 15rem;

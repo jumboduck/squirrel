@@ -323,7 +323,7 @@ def new_entry():
         if form.tags.data != "":
             tags = form.tags.data.split(',')
         else:
-            tags = None;
+            tags = None
         entries.insert({
             "name": form.name.data,
             "user_id": current_user.id,

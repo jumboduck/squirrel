@@ -177,7 +177,7 @@ def update_fav(entry_id):
             }
         },
     )
-    return jsonify( {"updated_on" : timestamp,
+    return jsonify( {"updated_on" : timestamp.strftime("%m/%d/%Y, %H:%M:%S"),
                     "success_message": "Review sucessfully updated.",
                     "message_class": "alert-success"})
 
@@ -199,7 +199,7 @@ def update_name(entry_id):
                 }
             },
         )
-        return jsonify( {"updated_on" : timestamp,
+        return jsonify( {"updated_on" : timestamp.strftime("%m/%d/%Y, %H:%M:%S"),
                         "success_message": "Name sucessfully updated.",
                         "message_class": "valid-update"})
 
@@ -221,7 +221,7 @@ def update_description(entry_id):
                 }
             },
         )
-        return jsonify( {"updated_on" : timestamp,
+        return jsonify( {"updated_on" : timestamp.strftime("%m/%d/%Y, %H:%M:%S"),
                         "success_message": "Description sucessfully updated.",
                         "message_class": "valid-update"})
 
@@ -241,7 +241,7 @@ def update_rating(entry_id):
             }
         },
     )
-    return jsonify( {"updated_on" : timestamp,
+    return jsonify( {"updated_on" : timestamp.strftime("%m/%d/%Y, %H:%M:%S"),
                     "success_message": "Rating sucessfully updated.",
                     "message_class": "valid-update"})
 
@@ -262,7 +262,7 @@ def update_tags(entry_id):
             }
         },
     )
-    return jsonify( {"updated_on" : timestamp,
+    return jsonify( {"updated_on" : timestamp.strftime("%m/%d/%Y, %H:%M:%S"),
                     "success_message": "Tags sucessfully updated.",
                     "message_class": "valid-update"})
 
@@ -286,7 +286,7 @@ def update_image(entry_id):
         },
     )
     return jsonify({"new_image" : image_url,
-                    "updated_on" : timestamp,
+                    "updated_on" : timestamp.strftime("%m/%d/%Y, %H:%M:%S"),
                     "success_message": "Image sucessfully updated.",
                     "message_class": "valid-update"})
 

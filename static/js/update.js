@@ -1,4 +1,5 @@
 const entryId = $("#hidden_id").val();
+let originalName = $(".entry #name").val();
 
 $(document).ready(function () {
     // Update db when fav checkbox is clicked
@@ -11,9 +12,18 @@ $(document).ready(function () {
     });
 
     // Update db when name is changed
+    // If name does not pass validation, return original name
     $(".entry #name").blur(() => {
         let newName = $(".entry #name").val();
-        sendData({ name: newName }, "/update_name/");
+        if (newName.length > 0 && newName.length <= 30) {
+            sendData({ name: newName }, "/update_name/");
+        } else {
+            $(".entry #name").val(originalName);
+            newAlert(
+                "Name must be between 1 and 30 characters",
+                "alert-danger"
+            );
+        }
     });
 
     // Update db when description is changed
@@ -62,8 +72,13 @@ function sendData(fieldData, url) {
         url: url + entryId,
     }).done((data) => {
         $(".timestamp").text("Last updated on " + data.updated_on);
-        $("#update-alerts")
-            .text(data.success_message)
-            .addClass("alert " + data.message_class);
+        newAlert(data.success_message, data.message_class);
     });
+}
+
+// Create an alert
+function newAlert(message, type) {
+    $("#update-alerts")
+        .text(message)
+        .addClass("alert " + type);
 }

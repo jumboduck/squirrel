@@ -438,6 +438,9 @@ a.badge-primary:hover {
 .star-rating > fieldset > label:active {
     transform: scale(1.2);
 }
+.star-rating > fieldset > label:hover {
+    transform: scale(1.2);
+}
 
 /* Update feedback */
 
@@ -445,6 +448,11 @@ a.badge-primary:hover {
     position: relative;
     top: -0.8rem;
     left: 3rem;
+}
+
+#rating-feedback {
+    position: relative;
+    top: -0.6rem;
 }
 
 .update-feedback {

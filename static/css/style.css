@@ -87,6 +87,12 @@ a:hover {
 .login-info {
     font-size: 0.8rem;
     color: #fff;
+    margin-bottom: 1rem;
+}
+
+.logout-info {
+    font-size: 0.8rem;
+    color: #fff;
     margin-top: 1rem;
 }
 

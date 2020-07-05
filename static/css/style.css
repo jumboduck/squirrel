@@ -96,6 +96,13 @@ a:hover {
     margin-top: 1rem;
 }
 
+/* Login Page */
+
+.login-input {
+    width: 50%;
+    min-width: 300px;
+}
+
 /* Review Cards in listing  */
 .card-img-top {
     max-height: 15rem;

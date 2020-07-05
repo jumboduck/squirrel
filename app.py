@@ -57,7 +57,7 @@ def load_user(user_id):
 
 # Login
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # Redirect to listing page if user is logged in

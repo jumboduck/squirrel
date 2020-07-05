@@ -157,8 +157,9 @@ def entry(entry_id):
     form.name.data = the_entry["name"]
     form.description.data = the_entry["description"]
     form.rating.data = str(the_entry["rating"])
-    form.hidden_tags.data = ','.join(the_entry["tags"])
     form.hidden_id.data = entry_id
+    if the_entry["tags"] is not None:
+        form.hidden_tags.data = ','.join(the_entry["tags"])
     return render_template('pages/entry.html',  title="Entry" , entry=the_entry, form = form)
 
 
@@ -177,7 +178,7 @@ def update_fav(entry_id):
             }
         },
     )
-    return jsonify( {"updated_on" : timestamp,
+    return jsonify( {"updated_on" : timestamp.strftime("%m/%d/%Y, %H:%M:%S"),
                     "success_message": "Review sucessfully updated.",
                     "message_class": "alert-success"})
 
@@ -199,7 +200,7 @@ def update_name(entry_id):
                 }
             },
         )
-        return jsonify( {"updated_on" : timestamp,
+        return jsonify( {"updated_on" : timestamp.strftime("%m/%d/%Y, %H:%M:%S"),
                         "success_message": "Name sucessfully updated.",
                         "message_class": "valid-update"})
 
@@ -221,7 +222,7 @@ def update_description(entry_id):
                 }
             },
         )
-        return jsonify( {"updated_on" : timestamp,
+        return jsonify( {"updated_on" : timestamp.strftime("%m/%d/%Y, %H:%M:%S"),
                         "success_message": "Description sucessfully updated.",
                         "message_class": "valid-update"})
 
@@ -241,7 +242,7 @@ def update_rating(entry_id):
             }
         },
     )
-    return jsonify( {"updated_on" : timestamp,
+    return jsonify( {"updated_on" : timestamp.strftime("%m/%d/%Y, %H:%M:%S"),
                     "success_message": "Rating sucessfully updated.",
                     "message_class": "valid-update"})
 
@@ -253,18 +254,33 @@ def update_tags(entry_id):
     form = EntryForm()
     entries = mongo.db.entries
     timestamp = datetime.now()
-    entries.update(
-        {"_id": ObjectId(entry_id)},
-        { "$set":
-            {
-                "tags": form.tags.data.split(","),
-                "updated_on": timestamp
-            }
-        },
-    )
-    return jsonify( {"updated_on" : timestamp,
-                    "success_message": "Tags sucessfully updated.",
-                    "message_class": "valid-update"})
+    if len(form.tags.data) == 0:
+        entries.update(
+            {"_id": ObjectId(entry_id)},
+            { "$unset":
+                {
+                    "tags": "",
+                    "updated_on": timestamp
+                }
+            },
+        )
+        return jsonify( {"updated_on" : timestamp.strftime("%m/%d/%Y, %H:%M:%S"),
+                        "success_message": "Tags sucessfully updated.",
+                        "message_class": "valid-update"})
+        
+    else:
+        entries.update(
+            {"_id": ObjectId(entry_id)},
+            { "$set":
+                {
+                    "tags": form.tags.data.split(","),
+                    "updated_on": timestamp
+                }
+            },
+        )
+        return jsonify( {"updated_on" : timestamp.strftime("%m/%d/%Y, %H:%M:%S"),
+                        "success_message": "Tags sucessfully updated.",
+                        "message_class": "valid-update"})
 
 
 @app.route('/update_image/<entry_id>', methods=['POST', 'GET'])
@@ -286,7 +302,7 @@ def update_image(entry_id):
         },
     )
     return jsonify({"new_image" : image_url,
-                    "updated_on" : timestamp,
+                    "updated_on" : timestamp.strftime("%m/%d/%Y, %H:%M:%S"),
                     "success_message": "Image sucessfully updated.",
                     "message_class": "valid-update"})
 
@@ -304,7 +320,10 @@ def new_entry():
         else:
             image_url = '/static/img/image-placeholder.png'
         
-        tags = form.tags.data.split(',')
+        if form.tags.data != "":
+            tags = form.tags.data.split(',')
+        else:
+            tags = None
         entries.insert({
             "name": form.name.data,
             "user_id": current_user.id,
@@ -336,6 +355,11 @@ def delete(entry_id):
 @login_required
 def search():
     return render_template('pages/search.html',  title="Search")
+
+
+@app.errorhandler(404) 
+def invalid_route(e): 
+    return render_template('pages/404.html',  title="Page Not Found")
 
 
 if __name__ == '__main__':

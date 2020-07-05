@@ -3,7 +3,6 @@
 <div class="entry-container">
     <div class="entry">
         <form action="" method="post" id="entry-form" enctype="multipart/form-data">
-            <div id="update-alerts"></div>
             <div class="row">
                 <div class="col-sm-9">
                     <!-- Favorite checkbox -->
@@ -67,10 +66,12 @@
                     <div> <span class="entry-subtitle">Tags:</span>
                         <div class="mb-2" id="view-tags-container">
                             <div id="view-tags" class="d-inline-block">
+                                {% if entry.tags %}
                                 {% for tag in entry.tags %}
                                 <a id="tag{{ loop.index }}" class="view-tag badge badge-pill badge-primary tag"
                                     href="{{ url_for('listing', tag = tag) }}">{{ tag }}</a>
                                 {% endfor %}
+                                {% endif %}
                             </div>
                             <span class="badge badge-pill badge-primary tag light-tag" id="edit-tags-btn">edit
                                 tags</span>
@@ -78,10 +79,12 @@
                         </div>
 
                         <div class="mb-2" id="edit-tags">
+                            {% if entry.tags %}
                             {% for tag in entry.tags %}
                             <span id="edit-tag-{{loop.index}}"
                                 class="badge badge-pill badge-primary tag delete-tag">{{tag}}
                                 <span class="material-icons">cancel</span></span>{% endfor %}
+                            {% endif %}
                             <span id="new-tag" class="badge badge-pill badge-primary light-tag add-tag"><span
                                     class="material-icons">control_point</span> new
                                 tag</span>
@@ -96,9 +99,9 @@
                     </div>
                     <!-- Creation / Update Time -->
                     <p><small class="text-muted timestamp">{% if entry.updated_on %}
-                            Last updated on {{ entry.updated_on }}
+                            Last updated on {{ entry.updated_on.strftime("%m/%d/%Y, %H:%M:%S") }}
                             {% else %}
-                            Created on {{ entry.created_on }}
+                            Created on {{ entry.created_on.strftime("%m/%d/%Y, %H:%M:%S") }}
                             {% endif %}
                         </small>
                     </p>

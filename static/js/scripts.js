@@ -14,7 +14,10 @@ $("body")
 $("body").on("keydown input", ".badge-input", function () {
     let viewId = "#tag" + getNumberFromId($(this).attr("id"));
     let widthId = "#width" + getNumberFromId($(this).attr("id"));
+    // Update name of View Tag
     $(viewId + " a").text($(this).val());
+    // Update tag url
+    $(viewId + " a").attr("href", "../listing/" + $(this).val());
     $(widthId).text($(this).val());
     $(this).width($(widthId).width());
 });
@@ -35,11 +38,9 @@ $(window).resize(function () {
 
 // Create/Edit/Delete tags in entries
 
-let tagList = ["food", "drink", "yogurt", "aerosol"];
-
 // Creating a new HTML Tag
 function createTag(id, word) {
-    return `<span id="${id}"class="view-tag badge badge-pill badge-primary tag"><a href="{{url_for('listing')}}">${word}</a></span>`;
+    return `<span id="${id}"class="view-tag badge badge-pill badge-primary tag"><a href="/listing/${word}">${word}</a></span>`;
 }
 
 // Creating a new HTML Delete Tag
@@ -64,6 +65,7 @@ $(document).on("click", "#save-tag-btn", function () {
             $("#tag" + getNumberFromId($(this).attr("id"))).remove();
         } else {
             let newTagContent = $("#hidden_tags").val() + "," + $(this).val();
+
             let newDeleteTag = createDeleteTag(
                 $(this).attr("id"),
                 $(this).val()
@@ -74,7 +76,9 @@ $(document).on("click", "#save-tag-btn", function () {
             $(this).remove();
         }
     });
+    // Send new tag information to the database
     sendTagData();
+    // Remove element used to resize tag inputs
     $(".width-machine").each(function () {
         $(this).remove();
     });

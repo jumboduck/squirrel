@@ -49,16 +49,20 @@
             </p>
             <span class="sr-only">Rating: {{ entry.rating }}/5</span>
             <p class="card-text">
+                {% if entry.tags %}
                 <span class="small-title">Tags: </span>
                 {% for tag in entry.tags %}
                 <a href="{{url_for('listing', tag=tag)}}" class="badge badge-pill badge-primary">{{tag}}</a>
-                {% endfor %}</p>
+                {% endfor %}
+                {% endif %}
+            </p>
+
         </div>
         <div class="card-footer">
             {% if entry.updated_on %}
-            Last updated on {{ entry.updated_on }}
+            Last updated on {{ entry.updated_on.strftime("%m/%d/%Y") }}
             {% else %}
-            Created on {{ entry.created_on }}
+            Created on {{ entry.created_on.strftime("%m/%d/%Y") }}
             {% endif %}
             <a href="{{ url_for('delete', entry_id = entry._id) }}"><span
                     class="material-icons delete-btn">delete</span></a>

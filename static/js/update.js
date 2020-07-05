@@ -100,5 +100,7 @@ function sendData(fieldData, url, feedbackEl) {
 // Create an alert
 function newAlert(element, message, type) {
     $(element).removeClass("invalid-update valid-update");
+    $(element).show();
     $(element).text(message).addClass(type);
+    $(element).delay(3000).slideUp();
 }

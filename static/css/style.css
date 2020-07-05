@@ -386,7 +386,8 @@ a.badge-primary:hover {
 /* Star Rating, inspired by Adam Orchard https://codepen.io/orchard/pen/Jnwvb  */
 .rating-container {
     position: relative;
-    top: -1rem;
+    align-items: center;
+    display: flex;
 }
 
 .star-rating {
@@ -418,7 +419,6 @@ a.badge-primary:hover {
     font-size: 200%;
     color: #ffaa1d;
     position: relative;
-    top: 1rem;
     margin-bottom: 0;
 }
 .star-rating > fieldset:not(:checked) > label:before {

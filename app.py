@@ -136,10 +136,30 @@ Pages
 def listing(tag = None):
     # If a tag is passed as an argument, return a list of entries tagged as the argument
     if tag:
-        entries = mongo.db.entries.find({'user_id' : current_user.id,  'tags': tag }).sort('_id', -1)
+        entries = mongo.db.entries.aggregate([
+            {'$match':{'user_id' : current_user.id, 'tags': tag}},
+            {'$addFields': {
+                'sort_date': {
+                    '$cond': {
+                        'if': '$updated_on', 'then': '$updated_on', 'else': '$created_on'
+                    }
+                }              
+            }},
+            {'$sort': {'sort_date': -1}
+        }])
     # If no tags are passed as an argument, return a list of all entries
     else:
-        entries = mongo.db.entries.find({'user_id' : current_user.id }).sort('_id', -1)
+        entries = mongo.db.entries.aggregate([
+            {'$match':{'user_id' : current_user.id}},
+            {'$addFields': {
+                'sort_date':{
+                    '$cond': {
+                        'if': '$updated_on', 'then': '$updated_on', 'else': '$created_on'
+                    }
+                }           
+            }},
+            {'$sort': {'sort_date': -1}
+        }])
     return render_template('pages/listing.html',  title="Listing", entries=entries, tag=tag)
 
 

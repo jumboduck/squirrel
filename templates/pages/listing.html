@@ -60,9 +60,9 @@
         </div>
         <div class="card-footer">
             {% if entry.updated_on %}
-            Last updated on {{ entry.updated_on.strftime("%m/%d/%Y") }}
+            Last updated on {{ entry.updated_on.strftime("%d/%m/%Y at %H:%M") }}
             {% else %}
-            Created on {{ entry.created_on.strftime("%m/%d/%Y") }}
+            Created on {{ entry.created_on.strftime("%d/%m/%Y at %H:%M") }}
             {% endif %}
             <a href="{{ url_for('delete', entry_id = entry._id) }}"><span
                     class="material-icons delete-btn">delete</span></a>

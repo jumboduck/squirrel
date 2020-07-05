@@ -158,7 +158,7 @@ def entry(entry_id):
     form.description.data = the_entry["description"]
     form.rating.data = str(the_entry["rating"])
     form.hidden_id.data = entry_id
-    if the_entry["tags"] is not None:
+    if the_entry.get("tags") is not None:
         form.hidden_tags.data = ','.join(the_entry["tags"])
     return render_template('pages/entry.html',  title="Entry" , entry=the_entry, form = form)
 

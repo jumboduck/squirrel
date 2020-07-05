@@ -23,8 +23,9 @@
 				<li class="nav-item"><a class="nav-link" href="{{url_for('new_entry')}}">New Review</a></li>
 				<li class="nav-item"><a class="nav-link" href="{{url_for('search')}}">Search</a></li>
 				<li class="nav-item"><a class="nav-link" href="{{url_for('profile')}}">Profile</a></li>
-				<li class="nav-item"><a class="nav-link" href="{{url_for('logout')}}">Log Out</a></li>
-				<li class="login-info">logged in as {{current_user.username}}</li>
+
+				<li class="login-info">logged in as {{current_user.username}}
+					<br><a class="nav-link" href="{{url_for('logout')}}">log out</a></li>
 				{% else %}
 				<li class="nav-item"><a class="nav-link" href="{{url_for('login')}}">Log In</a></li>
 				<li class="nav-item"><a class="nav-link" href="{{url_for('register')}}">Create an Account</a></li>

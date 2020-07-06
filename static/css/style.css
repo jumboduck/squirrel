@@ -163,6 +163,19 @@ a:hover {
     cursor: pointer;
 }
 
+/* Add a New Review */
+
+.new-fav {
+    align-items: center;
+    display: flex;
+    position: relative;
+}
+
+.new-fav-label {
+    position: relative;
+    top: -0.4rem;
+}
+
 /* Entry Review Page */
 
 .entry-container {
@@ -188,7 +201,7 @@ a:hover {
     position: absolute;
 }
 
-.entry #is_fav {
+#is_fav {
     position: absolute;
     top: 0;
     right: 0;

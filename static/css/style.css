@@ -176,6 +176,15 @@ a:hover {
     top: -0.4rem;
 }
 
+.custom-file-input {
+    cursor: pointer;
+}
+
+.custom-file-label::after,
+.custom-file-input:lang(en) ~ .custom-file-label::after {
+    content: "Choose Image";
+}
+
 /* Entry Review Page */
 
 .entry-container {

@@ -118,6 +118,12 @@ function addNewTag() {
     tagNum += 1;
 }
 
+// In new entry form, changes text input text when a new file is chosen
+$(".custom-file-input").change((e) => {
+    let fileName = e.target.files[0].name;
+    $(".custom-file-label").text(fileName);
+});
+
 $(document).ready(function () {
     //Expand all textareas when document is ready
     $("textarea[data-expandable]").each(expandTextArea);

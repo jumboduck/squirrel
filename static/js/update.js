@@ -58,7 +58,7 @@ $(document).ready(function () {
     });
 
     // Update db when a new image is chosen
-    $("#image").change(() => {
+    $(".entry #image").change(() => {
         let form_data = new FormData($("#entry-form")[0]);
         $.ajax({
             data: form_data,

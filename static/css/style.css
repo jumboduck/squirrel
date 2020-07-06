@@ -30,6 +30,7 @@ h6,
 
 h1.page-title {
     font-size: 2rem;
+    margin-top: 1rem;
 }
 
 h2.card-title {
@@ -64,6 +65,14 @@ a:hover {
     vertical-align: middle;
     font-size: inherit;
 }
+/* Login Page */
+
+.login-image {
+    width: 12rem;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+}
 
 /* Navigation */
 
@@ -94,13 +103,6 @@ a:hover {
     font-size: 0.8rem;
     color: #fff;
     margin-top: 1rem;
-}
-
-/* Login Page */
-
-.login-input {
-    width: 50%;
-    min-width: 300px;
 }
 
 /* Review Cards in listing  */
@@ -497,5 +499,9 @@ a.badge-primary:hover {
 
     .entry {
         padding: 10% 0;
+    }
+
+    .login-form {
+        width: 50%;
     }
 }

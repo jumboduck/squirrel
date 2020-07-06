@@ -2,21 +2,22 @@
 {% block content %}
 <div class="entry">
     <h1 class="page-title text-center">Login</h1>
-    <div class="content-section ml-auto">
+    <div class="content-section ml-auto mr-auto login-form">
+        <img src={{ url_for('static', filename='img/image-placeholder.png')}} class="login-image" alt="squirrel logo">
         <form method="POST">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
                 <div class="form-group">
                     {{ form.email.label(class="form-control-label") }}
                     {% if form.email.errors %}
-                    {{ form.email(class="form-control form-control-lg is-invalid login-input") }}
+                    {{ form.email(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
                         {% for error in form.email.errors %}
                         <p>{{ error }}</p>
                         {% endfor %}
                     </div>
                     {% else %}
-                    {{ form.email(class="form-control form-control-lg login-input") }}
+                    {{ form.email(class="form-control form-control-lg") }}
                     {% endif %}
 
                 </div>
@@ -24,14 +25,14 @@
                 <div class="form-group">
                     {{ form.password.label(class="form-control-label") }}
                     {% if form.password.errors %}
-                    {{ form.password(class="form-control form-control-lg is-invalid login-input") }}
+                    {{ form.password(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
                         {% for error in form.password.errors %}
                         <p>{{ error }}</p>
                         {% endfor %}
                     </div>
                     {% else %}
-                    {{ form.password(class="form-control form-control-lg login-input") }}
+                    {{ form.password(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
                 <div class="form-check">
@@ -39,14 +40,14 @@
                     {{ form.remember.label(class="form-check-label")}}
                 </div>
             </fieldset>
-            <div class="form-group">
+            <div class="form-group text-right">
                 {{ form.submit(class="btn btn-primary") }}
             </div>
-
-            <small class="text-muted ml-2"><a href="#">Forgot Password?</a></small>
-
+            <div class="text-right">
+                <small class="text-muted ml-2"><a href="#">Forgot Password?</a></small>
+            </div>
         </form>
-        <div class="border-top pt-3">
+        <div class="border-top pt-3 text-right">
             <small class="text-muted">Need an account? <a href="{{url_for('register')}}">Sign up now.</a></small>
         </div>
     </div>

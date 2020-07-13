@@ -64,7 +64,8 @@ $(document).on("click", "#save-tag-btn", function () {
             $(this).remove();
             $("#tag" + getNumberFromId($(this).attr("id"))).remove();
         } else {
-            let newTagContent = $("#hidden_tags").val() + "," + $(this).val();
+            let newTagContent = tagsToString("#hidden_tags", this);
+            console.log(newTagContent);
 
             let newDeleteTag = createDeleteTag(
                 $(this).attr("id"),
@@ -123,6 +124,16 @@ $(".custom-file-input").change((e) => {
     let fileName = e.target.files[0].name;
     $(".custom-file-label").text(fileName);
 });
+
+// Generate string from input tag elements into hidden field separated by commas
+// If no value is there, it returns the input
+function tagsToString(hiddenTagEl, inputEl) {
+    if ($(hiddenTagEl).val()) {
+        return $(hiddenTagEl).val() + "," + $(inputEl).val();
+    } else {
+        return $(inputEl).val();
+    }
+}
 
 $(document).ready(function () {
     //Expand all textareas when document is ready

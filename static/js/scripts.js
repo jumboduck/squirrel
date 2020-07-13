@@ -135,6 +135,23 @@ function tagsToString(hiddenTagEl, inputEl) {
     }
 }
 
+// When creating a new entry, text is added to tags hidden field upon typing
+// When the "new tag" button is clicked, add a comma
+$(document).on("keydown", $(".new-entry .badge-input"), function (event) {
+    let char = String.fromCharCode(event.which);
+    let newTags = $("#hidden_tags").val() + char;
+    $("#hidden_tags").val(newTags.toLowerCase());
+    console.log($("#hidden_tags").val());
+});
+
+$(".new-entry #new-tag").click(function () {
+    if ($("#hidden_tags").val() != "") {
+        let newTags = $("#hidden_tags").val() + ",";
+        $("#hidden_tags").val(newTags);
+        console.log($("#hidden_tags").val());
+    }
+});
+
 $(document).ready(function () {
     //Expand all textareas when document is ready
     $("textarea[data-expandable]").each(expandTextArea);

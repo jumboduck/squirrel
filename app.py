@@ -381,14 +381,15 @@ def get_search():
 def search(search_term):
     entries = mongo.db.entries
     entries.create_index([
-        ("recipe_name", "text"),
-        ("ingredients", "text"),
-        ("recipe_course", "text"),
-        ("recipe_description", "text"),
-        ("recipe_author", "text")
+        ("name", "text"),
+        ("description", "text"),
+        ("tags", "text"),
     ])
 
-    return render_template('pages/search.html',  title=search_term)
+    result = entries.find({"$text": {"$search": search_term}}, 
+    {'score': {'$meta': 'textScore'}}).sort([('score', {'$meta': 'textScore'})])
+
+    return render_template('pages/listing.html',  title="Results for " + search_term, entries=result, tag=None)
 
 
 @app.errorhandler(404) 

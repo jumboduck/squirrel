@@ -147,6 +147,7 @@ $(document).on("keydown", ".badge-input", (e) => {
         k === 46 || //del
         k === 13 || //enter
         k === 8 || // backspaces
+        k === 32 || // space
         (!e.shiftKey && k >= 48 && k <= 57); // only 0-9 (ignore SHIFT options)
     if (!ok || (e.ctrlKey && e.altKey)) {
         e.preventDefault();

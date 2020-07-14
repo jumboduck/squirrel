@@ -57,7 +57,7 @@ def load_user(user_id):
 
 # Login
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # Redirect to listing page if user is logged in
@@ -136,10 +136,30 @@ Pages
 def listing(tag = None):
     # If a tag is passed as an argument, return a list of entries tagged as the argument
     if tag:
-        entries = mongo.db.entries.find({'user_id' : current_user.id,  'tags': tag }).sort('_id', -1)
+        entries = mongo.db.entries.aggregate([
+            {'$match':{'user_id' : current_user.id, 'tags': tag}},
+            {'$addFields': {
+                'sort_date': {
+                    '$cond': {
+                        'if': '$updated_on', 'then': '$updated_on', 'else': '$created_on'
+                    }
+                }              
+            }},
+            {'$sort': {'sort_date': -1}
+        }])
     # If no tags are passed as an argument, return a list of all entries
     else:
-        entries = mongo.db.entries.find({'user_id' : current_user.id }).sort('_id', -1)
+        entries = mongo.db.entries.aggregate([
+            {'$match':{'user_id' : current_user.id}},
+            {'$addFields': {
+                'sort_date':{
+                    '$cond': {
+                        'if': '$updated_on', 'then': '$updated_on', 'else': '$created_on'
+                    }
+                }           
+            }},
+            {'$sort': {'sort_date': -1}
+        }])
     return render_template('pages/listing.html',  title="Listing", entries=entries, tag=tag)
 
 
@@ -158,7 +178,7 @@ def entry(entry_id):
     form.description.data = the_entry["description"]
     form.rating.data = str(the_entry["rating"])
     form.hidden_id.data = entry_id
-    if the_entry["tags"] is not None:
+    if the_entry.get("tags") is not None:
         form.hidden_tags.data = ','.join(the_entry["tags"])
     return render_template('pages/entry.html',  title="Entry" , entry=the_entry, form = form)
 
@@ -320,8 +340,8 @@ def new_entry():
         else:
             image_url = '/static/img/image-placeholder.png'
         
-        if form.tags.data != "":
-            tags = form.tags.data.split(',')
+        if form.hidden_tags.data != "":
+            tags = form.hidden_tags.data.split(',')
         else:
             tags = None
         entries.insert({
@@ -350,11 +370,27 @@ def delete(entry_id):
     return redirect(url_for('listing'))
 
 
-
-@app.route('/search')
+@app.route('/search/', methods=["POST"])
 @login_required
-def search():
-    return render_template('pages/search.html',  title="Search")
+def get_search():
+    return redirect(url_for("search", search_term=request.form.get("search_field")))
+
+
+# Generate page with search results
+@app.route('/search/<search_term>', methods=["POST", "GET"])
+@login_required
+def search(search_term):
+    entries = mongo.db.entries
+    entries.create_index([
+        ("name", "text"),
+        ("description", "text"),
+        ("tags", "text"),
+    ])
+
+    result = entries.find({"$text": {"$search": search_term}}, 
+    {'score': {'$meta': 'textScore'}}).sort([('score', {'$meta': 'textScore'})])
+
+    return render_template('pages/listing.html',  title="Results for " + search_term, entries=result, search_term=search_term)
 
 
 @app.errorhandler(404) 

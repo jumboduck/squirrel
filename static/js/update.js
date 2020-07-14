@@ -4,9 +4,9 @@ let originalDescription = $(".entry #description").val();
 
 $(document).ready(function () {
     // Update db when fav checkbox is clicked
-    $(".entry #is_fav").change(() => {
+    $("#entry-form #is_fav").change(() => {
         let favState;
-        $(".entry #is_fav").is(":checked")
+        $("#entry-form #is_fav").is(":checked")
             ? (favState = true)
             : (favState = false);
         sendData({ is_fav: favState }, "/update_fav/");
@@ -14,13 +14,13 @@ $(document).ready(function () {
 
     // Update db when name is changed
     // If name does not pass validation, return original name and error message
-    $(".entry #name").blur(() => {
-        let newName = $(".entry #name").val();
+    $("#entry-form #name").blur(() => {
+        let newName = $("#entry-form #name").val();
         if (newName.length > 0 && newName.length <= 30) {
             sendData({ name: newName }, "/update_name/", "#name-feedback");
             originalName = newName;
         } else {
-            $(".entry #name").val(originalName);
+            $("#entry-form #name").val(originalName);
             newAlert(
                 "#name-feedback",
                 "Name must be between 1 and 30 characters",
@@ -31,8 +31,8 @@ $(document).ready(function () {
 
     // Update db when description is changed
     // If description does not pass validation, return original name and error message
-    $(".entry #description").blur(() => {
-        let newDescription = $(".entry #description").val();
+    $("#entry-form #description").blur(() => {
+        let newDescription = $("#entry-form #description").val();
         if (newDescription.length > 0 && newDescription.length <= 2000) {
             sendData(
                 { description: newDescription },
@@ -41,7 +41,7 @@ $(document).ready(function () {
             );
             originalDescription = newDescription;
         } else {
-            $(".entry #description").val(originalDescription);
+            $("#entry-form #description").val(originalDescription);
             $("textarea[data-expandable]").each(expandTextArea);
             newAlert(
                 "#description-feedback",
@@ -52,13 +52,13 @@ $(document).ready(function () {
     });
 
     // Update db when rating is changed
-    $(".entry input[name=rating]:not(:checked)").change(() => {
+    $("#entry-form input[name=rating]:not(:checked)").change(() => {
         let newRating = $("input[name=rating]:checked").val();
         sendData({ rating: newRating }, "/update_rating/", "#rating-feedback");
     });
 
     // Update db when a new image is chosen
-    $("#image").change(() => {
+    $("#entry-form #image").change(() => {
         let form_data = new FormData($("#entry-form")[0]);
         $.ajax({
             data: form_data,

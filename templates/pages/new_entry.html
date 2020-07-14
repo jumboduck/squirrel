@@ -1,96 +1,101 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-<h1 class="page-title">Add Entry</h1>
+<div class="entry" id="new-entry">
+    <h1 class="page-title">Add a new Entry</h1>
 
-<form method="POST" action="" enctype="multipart/form-data">
-    {{ form.hidden_tag() }}
-    <fieldset class="form-group">
-        <div class="form-group">
-            {{ form.name.label(class="form-control-label") }}
+    <form method="POST" action="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <div class="form-group">
+                {{ form.name.label(class="form-control-label") }}:
 
-            {% if form.name.errors %}
-            {{ form.name(class="form-control form-control-lg is-invalid") }}
-            <div class="invalid-feedback">
-                {% for error in form.name.errors %}
-                <p>{{ error }}</p>
-                {% endfor %}
+                {% if form.name.errors %}
+                {{ form.name(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.name.errors %}
+                    <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.name(class="form-control form-control-lg") }}
+                {% endif %}
             </div>
-            {% else %}
-            {{ form.name(class="form-control form-control-lg") }}
-            {% endif %}
-        </div>
-        <div class="form-group">
-            {{ form.description.label(class="form-control-label") }}
-            {% if form.description.errors %}
-            {{ form.description(class="form-control form-control-lg is-invalid") }}
-            <div class="invalid-feedback">
-                {% for error in form.description.errors %}
-                <p>{{ error }}</p>
-                {% endfor %}
+            <div class="form-group">
+                {{ form.description.label(class="form-control-label") }}:
+                {% if form.description.errors %}
+                {{ form.description(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.description.errors %}
+                    <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.description(class="form-control form-control-lg") }}
+                {% endif %}
             </div>
-            {% else %}
-            {{ form.description(class="form-control form-control-lg") }}
-            {% endif %}
-        </div>
-        <div class="form-group">
-            {{ form.rating.label(class="form-control-label") }}
+            <div class="rating-container">
+                <div class="inline-block"><span class="entry-subtitle">Rating: </span></div>
+                <div class="star-rating d-inline-block">
+                    <fieldset class="form-check form-check-inline">
+                        {% for subfield in form.rating %}
+
+                        {{ subfield }}
+                        {{ subfield.label }}
+
+                        {% endfor %}
+                    </fieldset>
+                </div>
+            </div>
             {% if form.rating.errors %}
-            {{ form.description(class="form-control form-control-lg is-invalid") }}
-            <div class="invalid-feedback">
+            <div class="invalid-feedback d-block" id="rating-feedback">
                 {% for error in form.rating.errors %}
                 <p>{{ error }}</p>
                 {% endfor %}
             </div>
-            {% else %}
-            {% for subfield in form.rating %}
-            <div class="custom-control custom-radio custom-control-inline">
-                {{ subfield(class="custom-control-input") }}
-                {{ subfield.label(class="custom-control-label") }}
-            </div>
-            {% endfor %}
             {% endif %}
-        </div>
 
 
-        <div class="form-check">
-            {{ form.is_fav(class="form-check-input")}}
-            {{ form.is_fav.label(class="form-check-label")}}
-        </div>
-
-        <div class="custom-file">
-            {{ form.image.label }}
-            {% if form.image.errors %}
-            {{ form.image(class="form-control form-control-lg is-invalid") }}
-            <div class="invalid-feedback">
-                {% for error in form.image.errors %}
-                <p>{{ error }}</p>
-                {% endfor %}
+            <div class="new-fav">
+                <label for="is_fav" class="fav-label">
+                    <span class="new-fav-label">Add to favorites:</span>
+                    {{ form.is_fav }}
+                    <span class="heart-icon"></span>
+                    <span class="sr-only">Add to favorites</span>
+                </label>
             </div>
-            {% else %}
-            {{ form.image }}
-            {% endif %}
-        </div>
 
+            <div class="input-group form-group">
+                <div class="custom-file">
+                    {% if form.image.errors %}
+                    {{ form.image(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.image.errors %}
+                        <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.image(class="custom-file-input") }}
+                    {{ form.image.label(class="custom-file-label") }}
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group">
+                Tags:
+                <div>
+                    <span id="new-tag" class="badge badge-pill badge-primary light-tag add-tag"><span
+                            class="material-icons">control_point</span> new
+                        tag</span>
+                </div>
+            </div>
+
+            {{ form.hidden_tags }}
+
+        </fieldset>
         <div class="form-group">
-            {{ form.tags.label(class="form-control-label") }}
-
-            {% if form.tags.errors %}
-            {{ form.tags(class="form-control form-control-lg is-invalid") }}
-            <div class="invalid-feedback">
-                {% for error in form.name.errors %}
-                <p>{{ error }}</p>
-                {% endfor %}
-            </div>
-            {% else %}
-            {{ form.tags(class="form-control form-control-lg") }}
-            {% endif %}
+            {{ form.submit(class="btn btn-primary") }}
         </div>
+    </form>
 
-    </fieldset>
-    <div class="form-group">
-        {{ form.submit(class="btn btn-primary") }}
-    </div>
-</form>
-
-
+</div>
 {% endblock %}

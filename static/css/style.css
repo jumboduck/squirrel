@@ -30,6 +30,7 @@ h6,
 
 h1.page-title {
     font-size: 2rem;
+    margin-top: 1rem;
 }
 
 h2.card-title {
@@ -64,6 +65,14 @@ a:hover {
     vertical-align: middle;
     font-size: inherit;
 }
+/* Login Page */
+
+.login-image {
+    width: 12rem;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+}
 
 /* Navigation */
 
@@ -85,6 +94,12 @@ a:hover {
 }
 
 .login-info {
+    font-size: 0.8rem;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.logout-info {
     font-size: 0.8rem;
     color: #fff;
     margin-top: 1rem;
@@ -148,6 +163,28 @@ a:hover {
     cursor: pointer;
 }
 
+/* Add a New Review */
+
+.new-fav {
+    align-items: center;
+    display: flex;
+    position: relative;
+}
+
+.new-fav-label {
+    position: relative;
+    top: -0.4rem;
+}
+
+.custom-file-input {
+    cursor: pointer;
+}
+
+.custom-file-label::after,
+.custom-file-input:lang(en) ~ .custom-file-label::after {
+    content: "Choose Image";
+}
+
 /* Entry Review Page */
 
 .entry-container {
@@ -173,7 +210,7 @@ a:hover {
     position: absolute;
 }
 
-.entry #is_fav {
+#is_fav {
     position: absolute;
     top: 0;
     right: 0;
@@ -386,7 +423,8 @@ a.badge-primary:hover {
 /* Star Rating, inspired by Adam Orchard https://codepen.io/orchard/pen/Jnwvb  */
 .rating-container {
     position: relative;
-    top: -1rem;
+    align-items: center;
+    display: flex;
 }
 
 .star-rating {
@@ -418,7 +456,6 @@ a.badge-primary:hover {
     font-size: 200%;
     color: #ffaa1d;
     position: relative;
-    top: 1rem;
     margin-bottom: 0;
 }
 .star-rating > fieldset:not(:checked) > label:before {
@@ -438,6 +475,9 @@ a.badge-primary:hover {
 .star-rating > fieldset > label:active {
     transform: scale(1.2);
 }
+.star-rating > fieldset > label:hover {
+    transform: scale(1.2);
+}
 
 /* Update feedback */
 
@@ -445,6 +485,11 @@ a.badge-primary:hover {
     position: relative;
     top: -0.8rem;
     left: 3rem;
+}
+
+#rating-feedback {
+    position: relative;
+    top: -0.6rem;
 }
 
 .update-feedback {
@@ -476,5 +521,9 @@ a.badge-primary:hover {
 
     .entry {
         padding: 10% 0;
+    }
+
+    .login-form {
+        width: 50%;
     }
 }

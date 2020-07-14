@@ -64,7 +64,8 @@ $(document).on("click", "#save-tag-btn", function () {
             $(this).remove();
             $("#tag" + getNumberFromId($(this).attr("id"))).remove();
         } else {
-            let newTagContent = $("#hidden_tags").val() + "," + $(this).val();
+            let newTagContent = tagsToString("#hidden_tags", this);
+            //console.log(newTagContent);
 
             let newDeleteTag = createDeleteTag(
                 $(this).attr("id"),
@@ -117,6 +118,57 @@ function addNewTag() {
     $(".entry").append(newWidthMachine);
     tagNum += 1;
 }
+
+// In new entry form, changes text input text when a new file is chosen
+$(".custom-file-input").change((e) => {
+    let fileName = e.target.files[0].name;
+    $(".custom-file-label").text(fileName);
+});
+
+// Generate string from input tag elements into hidden field separated by commas
+// If no value is there, it returns the input tag value
+function tagsToString(hiddenTagEl, inputEl) {
+    if ($(hiddenTagEl).val() != "") {
+        return $(hiddenTagEl).val() + "," + $(inputEl).val();
+    } else {
+        return $(inputEl).val();
+    }
+}
+
+// Only allow certain keystrokes in tag input fields
+// Whether in entry or new entry page
+// Inspired by https://stackoverflow.com/questions/43799032/allow-only-alphanumeric-in-textbox-using-jquery
+$(document).on("keydown", ".badge-input", (e) => {
+    let k = e.keyCode || e.which;
+    let ok =
+        (k >= 65 && k <= 90) || // A-Z
+        (k >= 96 && k <= 105) || // a-z
+        (k >= 35 && k <= 40) || // arrows
+        k === 46 || //del
+        k === 13 || //enter
+        k === 8 || // backspaces
+        k === 32 || // space
+        (!e.shiftKey && k >= 48 && k <= 57); // only 0-9 (ignore SHIFT options)
+    if (!ok || (e.ctrlKey && e.altKey)) {
+        e.preventDefault();
+    }
+});
+
+// Text is added to hidden tags field when tag input is unfocused
+$(document).on("blur", "#new-entry .badge-input", function () {
+    let newTags = $("#hidden_tags").val() + $(this).val();
+    $("#hidden_tags").val(newTags);
+    console.log($("#hidden_tags").val());
+});
+
+// When the "new tag" button is clicked add a comma, unless no tags have been added already
+$("#new-entry #new-tag").click(function () {
+    if ($("#hidden_tags").val() != "") {
+        let newTags = $("#hidden_tags").val() + ",";
+        $("#hidden_tags").val(newTags);
+        console.log($("#hidden_tags").val());
+    }
+});
 
 $(document).ready(function () {
     //Expand all textareas when document is ready

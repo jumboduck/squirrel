@@ -52,16 +52,14 @@
                         <div class="d-inline-block"><span class="entry-subtitle">Rating:</span></div>
                         <div class="star-rating d-inline-block">
                             <fieldset class="form-check form-check-inline">
-
                                 {% for subfield in form.rating %}
                                 {{ subfield }}
                                 {{ subfield.label }}
                                 {% endfor %}
                             </fieldset>
-
                         </div>
-                        <div id="rating-feedback" class="update-feedback"></div>
                     </div>
+                    <div id="rating-feedback" class="update-feedback"></div>
                     <!-- Tags -->
                     <div> <span class="entry-subtitle">Tags:</span>
                         <div class="mb-2" id="view-tags-container">
@@ -91,7 +89,7 @@
                             <div>
                                 <span id="save-tag-btn"
                                     class="badge badge-pill badge-primary tag light-tag save-tag"><span
-                                        class="material-icons">save</span> save changes</span>
+                                        class="material-icons">save</span> save tags</span>
                             </div>
                         </div>
                         {{ form.hidden_tags }}

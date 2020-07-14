@@ -1,11 +1,11 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-<h1 class="page-title">Registration</h1>
-<div class="content-section">
-    <form method="POST" action="">
+<div class="content-section login-form ml-auto mr-auto">
+    <h1 class="page-title mb-4">Registration</h1>
+    <form method="POST">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Create an Account</legend>
+
             <div class="form-group">
                 {{ form.username.label(class="form-control-label") }}
 
@@ -61,12 +61,13 @@
                 {% endif %}
             </div>
         </fieldset>
-        <div class="form-group">
+        <div class="form-group text-right">
             {{ form.submit(class="btn btn-primary") }}
         </div>
     </form>
-    <div class="border-top pt-3">
-        <small class="text-muted">Already have an account? <a href="{{url_for('login')}}">Log in now.</a></small>
+    <div class="border-top pt-3  text-right">
+        <small class="text-muted">Already have an account? <a href="{{url_for('login')}}">Log in
+                now.</a></small>
     </div>
 </div>
 

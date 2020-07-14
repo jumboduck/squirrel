@@ -15,6 +15,7 @@ from datetime import datetime
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import math
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
@@ -135,22 +136,31 @@ Pages
 @login_required
 def listing(tag = None):
 
-    # number of entries per page
-    limit = 3 
-
-    if 'offset' in request.args:
-        # Index of starting entry if defined in get request
-        offset = int(request.args['offset']) 
-    else:
-        # if no offset is defined, start at index 0
-        offset = 0 
-
     # Change search query if tag exists or not
     if tag:
         match_query = {'user_id' : current_user.id, 'tags': tag}
     else:
         match_query = {'user_id' : current_user.id}
+
+    # number of entries per page
+    limit = 6
+
+    if 'page' in request.args:
+        # Define which page to view based on get request
+        page = int(request.args['page']) 
+    else:
+        # if no pages are defined, view page 1
+        page = 1
+
+    # Set index of first result of query
+    offset = (page - 1) * limit
+
+    # Count number of results for the query
+    entry_count = mongo.db.entries.count_documents(match_query)
+    max_page = math.ceil(entry_count/limit)
     
+
+    # Query that returns entries, sorted by creation date or update date
     entries = mongo.db.entries.aggregate([
         {'$match': match_query},
         {'$addFields': {
@@ -166,14 +176,15 @@ def listing(tag = None):
         {'$limit': limit}
     ])
 
-    current_url = request.path
-    next_url = current_url + "?offset=" + str(offset + limit)
-    if offset > limit:
-        prev_url = current_url + "?offset=" + str(offset - limit)
-    else:
-        prev_url = current_url
+    next_page_num = (page + 1) if (page + 1) <= max_page else page
+    prev_page_num = (page - 1) if (page - 1) > 0 else page
 
-    return render_template('pages/listing.html',  title="Listing", entries=entries, tag=tag)
+    # Create next and previous urls for pagination
+    current_url = request.path
+    next_url = current_url + "?page=" + str(next_page_num)
+    prev_url = current_url + "?page=" + str(prev_page_num)
+
+    return render_template('pages/listing.html',  title="Listing", entries=entries, tag=tag, next_url = next_url, prev_url = prev_url)
 
 
 @app.route('/profile')

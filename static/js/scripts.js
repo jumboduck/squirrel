@@ -135,15 +135,33 @@ function tagsToString(hiddenTagEl, inputEl) {
     }
 }
 
+// Only allow certain keystrokes in tag input fields
+// Whether in entry or new entry page
+// Inspired by https://stackoverflow.com/questions/43799032/allow-only-alphanumeric-in-textbox-using-jquery
+$(document).on("keydown", ".badge-input", (e) => {
+    let k = e.keyCode || e.which;
+    let ok =
+        (k >= 65 && k <= 90) || // A-Z
+        (k >= 96 && k <= 105) || // a-z
+        (k >= 35 && k <= 40) || // arrows
+        k === 46 || //del
+        k === 13 || //enter
+        k === 8 || // backspaces
+        (!e.shiftKey && k >= 48 && k <= 57); // only 0-9 (ignore SHIFT options)
+    if (!ok || (e.ctrlKey && e.altKey)) {
+        e.preventDefault();
+    }
+});
+
 // When creating a new entry, text is added to tags hidden field when input is unfocused
-// When the "new tag" button is clicked, add a comma
-$(document).on("blur", "#new-entry .badge-input", function () {
+$(document).on("blur", "#new-entry .badge-input", () => {
     let newTags = $("#hidden_tags").val() + $(this).val();
-    $("#hidden_tags").val(newTags.toLowerCase());
+    $("#hidden_tags").val(newTags);
     console.log($("#hidden_tags").val());
 });
 
-$("#new-entry #new-tag").click(function () {
+// When the "new tag" button is clicked add a comma, unless no tags have been added already
+$("#new-entry #new-tag").click(() => {
     if ($("#hidden_tags").val() != "") {
         let newTags = $("#hidden_tags").val() + ",";
         $("#hidden_tags").val(newTags);

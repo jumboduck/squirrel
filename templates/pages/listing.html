@@ -62,9 +62,9 @@
         </div>
         <div class="card-footer">
             {% if entry.updated_on %}
-            Last updated on {{ entry.updated_on.strftime("%d/%m/%Y at %H:%M") }}
+            Last updated on {{ entry.updated_on.strftime("%d/%m/%Y") }}
             {% else %}
-            Created on {{ entry.created_on.strftime("%d/%m/%Y at %H:%M") }}
+            Created on {{ entry.created_on.strftime("%d/%m/%Y") }}
             {% endif %}
             <a href="{{ url_for('delete', entry_id = entry._id) }}"><span
                     class="material-icons delete-btn">delete</span></a>
@@ -73,5 +73,20 @@
     {% endfor %}
 </div>
 
+<div class="row">
+    <div class="col-6">
+        {% if prev_url %}
+        <a href="{{ prev_url }}">
+            <span class="material-icons">chevron_left</span>
+            Previous</a> {% endif %}
+    </div>
+    <div class="col-6 text-right">
+        {% if next_url %}
+        <a href="{{ next_url }}"> Next <span class="material-icons">
+                chevron_right</span>
+        </a>
+        {% endif %}
+    </div>
+</div>
 
 {% endblock %}

@@ -15,6 +15,7 @@ from datetime import datetime
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import math
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
@@ -134,33 +135,56 @@ Pages
 @app.route('/listing/<tag>')
 @login_required
 def listing(tag = None):
-    # If a tag is passed as an argument, return a list of entries tagged as the argument
+
+    # Change search query if tag exists or not
     if tag:
-        entries = mongo.db.entries.aggregate([
-            {'$match':{'user_id' : current_user.id, 'tags': tag}},
-            {'$addFields': {
-                'sort_date': {
-                    '$cond': {
-                        'if': '$updated_on', 'then': '$updated_on', 'else': '$created_on'
-                    }
-                }              
-            }},
-            {'$sort': {'sort_date': -1}
-        }])
-    # If no tags are passed as an argument, return a list of all entries
+        match_query = {'user_id' : current_user.id, 'tags': tag}
     else:
-        entries = mongo.db.entries.aggregate([
-            {'$match':{'user_id' : current_user.id}},
-            {'$addFields': {
-                'sort_date':{
-                    '$cond': {
-                        'if': '$updated_on', 'then': '$updated_on', 'else': '$created_on'
-                    }
-                }           
-            }},
-            {'$sort': {'sort_date': -1}
-        }])
-    return render_template('pages/listing.html',  title="Listing", entries=entries, tag=tag)
+        match_query = {'user_id' : current_user.id}
+
+    # number of entries per page
+    limit = 12
+
+    if 'page' in request.args:
+        # Define which page to view based on get request
+        page = int(request.args['page']) 
+    else:
+        # if no pages are defined, view page 1
+        page = 1
+
+    # Set index of first result of query
+    offset = (page - 1) * limit
+
+    # Count number of results for the query
+    entry_count = mongo.db.entries.count_documents(match_query)
+    max_page = math.ceil(entry_count/limit)
+    
+
+    # Query that returns entries, sorted by creation date or update date
+    entries = mongo.db.entries.aggregate([
+        {'$match': match_query},
+        {'$addFields': {
+            # sorts by created date, or updated date if it exists
+            'sort_date': {
+                '$cond': {
+                    'if': '$updated_on', 'then': '$updated_on', 'else': '$created_on'
+                }
+            }              
+        }},
+        {'$sort': {'sort_date': -1}},
+        {'$skip': offset},
+        {'$limit': limit}
+    ])
+
+    #next_page_num = (page + 1) if (page + 1) <= max_page else None
+    #prev_page_num = (page - 1) if (page - 1) > 0 else None
+
+    # Create next and previous urls for pagination
+    current_url = request.path
+    next_url = current_url + "?page=" + str(page + 1) if (page + 1) <= max_page else None
+    prev_url = current_url + "?page=" + str(page - 1) if (page - 1) > 0 else None
+
+    return render_template('pages/listing.html',  title="Listing", entries=entries, tag=tag, next_url = next_url, prev_url = prev_url)
 
 
 @app.route('/profile')

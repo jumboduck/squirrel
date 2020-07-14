@@ -65,7 +65,7 @@ $(document).on("click", "#save-tag-btn", function () {
             $("#tag" + getNumberFromId($(this).attr("id"))).remove();
         } else {
             let newTagContent = tagsToString("#hidden_tags", this);
-            console.log(newTagContent);
+            //console.log(newTagContent);
 
             let newDeleteTag = createDeleteTag(
                 $(this).attr("id"),
@@ -126,25 +126,24 @@ $(".custom-file-input").change((e) => {
 });
 
 // Generate string from input tag elements into hidden field separated by commas
-// If no value is there, it returns the input
+// If no value is there, it returns the input tag value
 function tagsToString(hiddenTagEl, inputEl) {
-    if ($(hiddenTagEl).val()) {
+    if ($(hiddenTagEl).val() != "") {
         return $(hiddenTagEl).val() + "," + $(inputEl).val();
     } else {
         return $(inputEl).val();
     }
 }
 
-// When creating a new entry, text is added to tags hidden field upon typing
+// When creating a new entry, text is added to tags hidden field when input is unfocused
 // When the "new tag" button is clicked, add a comma
-$(document).on("keydown", $(".new-entry .badge-input"), function (event) {
-    let char = String.fromCharCode(event.which);
-    let newTags = $("#hidden_tags").val() + char;
+$(document).on("blur", "#new-entry .badge-input", function () {
+    let newTags = $("#hidden_tags").val() + $(this).val();
     $("#hidden_tags").val(newTags.toLowerCase());
     console.log($("#hidden_tags").val());
 });
 
-$(".new-entry #new-tag").click(function () {
+$("#new-entry #new-tag").click(function () {
     if ($("#hidden_tags").val() != "") {
         let newTags = $("#hidden_tags").val() + ",";
         $("#hidden_tags").val(newTags);

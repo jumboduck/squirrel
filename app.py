@@ -340,8 +340,8 @@ def new_entry():
         else:
             image_url = '/static/img/image-placeholder.png'
         
-        if form.tags.data != "":
-            tags = form.tags.data.split(',')
+        if form.hidden_tags.data != "":
+            tags = form.hidden_tags.data.split(',')
         else:
             tags = None
         entries.insert({

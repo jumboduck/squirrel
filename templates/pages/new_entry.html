@@ -81,22 +81,12 @@
             </div>
 
             <div class="form-group">
-                {{ form.tags.label(class="form-control-label") }}:
+                Tags:
                 <div>
                     <span id="new-tag" class="badge badge-pill badge-primary light-tag add-tag"><span
                             class="material-icons">control_point</span> new
                         tag</span>
                 </div>
-                {% if form.tags.errors %}
-                {{ form.tags(class="form-control form-control-lg is-invalid") }}
-                <div class="invalid-feedback">
-                    {% for error in form.name.errors %}
-                    <p>{{ error }}</p>
-                    {% endfor %}
-                </div>
-                {% else %}
-                {{ form.tags(class="form-control form-control-lg") }}
-                {% endif %}
             </div>
 
             {{ form.hidden_tags }}

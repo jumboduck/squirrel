@@ -40,7 +40,6 @@ class NewEntryForm(FlaskForm):
     rating =  RadioField('Rating', validators=[DataRequired()], choices = [('5','Outstanding'),('4','Very Good'),('3','Good'),('2','Poor'), ('1','Very Poor')])
     is_fav = BooleanField('Favorite')
     image = FileField('Image', render_kw={"accept":"image/*", "capture":"True"}, validators = [FileAllowed(['jpg', 'gif', 'png', 'jpeg'], 'Only image files can be uploaded.')])
-    tags = StringField('Tags', validators = [Length(min=0, max = 100)])
-    hidden_tags = HiddenField('Hidden Tags', validators = [Length(min = 0, max = 100)])
+    hidden_tags = HiddenField('Hidden Tags')
     submit = SubmitField('Add Review')
 

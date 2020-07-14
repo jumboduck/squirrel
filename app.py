@@ -143,7 +143,7 @@ def listing(tag = None):
         match_query = {'user_id' : current_user.id}
 
     # number of entries per page
-    limit = 6
+    limit = 3
 
     if 'page' in request.args:
         # Define which page to view based on get request

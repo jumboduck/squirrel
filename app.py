@@ -135,8 +135,12 @@ Pages
 @login_required
 def listing(tag = None):
 
-    offset = 0 # Index of starting entry
-    limit = 6 # Number of entries on page
+    limit = 3 # number of entries per page
+
+    if 'offset' in request.args:
+        offset = int(request.args['offset']) # Index of starting entry if defined in get request
+    else:
+        offset = 0 # if no offset is defined, start at index 0
 
     # Change search query if tag exists or not
     if tag:

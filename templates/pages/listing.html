@@ -3,6 +3,8 @@
 <h1 class="page-title">
     {% if tag %}
     Reviews tagged as {{ tag }}
+    {% elif search_term %}
+    Search results for {{ search_term }}
     {% else %}
     All Reviews
     {% endif %}

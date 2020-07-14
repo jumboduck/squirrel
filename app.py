@@ -376,6 +376,7 @@ def get_search():
     return redirect(url_for("search", search_term=request.form.get("search_field")))
 
 
+# Generate page with search results
 @app.route('/search/<search_term>', methods=["POST", "GET"])
 @login_required
 def search(search_term):
@@ -389,7 +390,7 @@ def search(search_term):
     result = entries.find({"$text": {"$search": search_term}}, 
     {'score': {'$meta': 'textScore'}}).sort([('score', {'$meta': 'textScore'})])
 
-    return render_template('pages/listing.html',  title="Results for " + search_term, entries=result, tag=None)
+    return render_template('pages/listing.html',  title="Results for " + search_term, entries=result, search_term=search_term)
 
 
 @app.errorhandler(404) 

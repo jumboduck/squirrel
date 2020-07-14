@@ -135,12 +135,15 @@ Pages
 @login_required
 def listing(tag = None):
 
-    limit = 3 # number of entries per page
+    # number of entries per page
+    limit = 3 
 
     if 'offset' in request.args:
-        offset = int(request.args['offset']) # Index of starting entry if defined in get request
+        # Index of starting entry if defined in get request
+        offset = int(request.args['offset']) 
     else:
-        offset = 0 # if no offset is defined, start at index 0
+        # if no offset is defined, start at index 0
+        offset = 0 
 
     # Change search query if tag exists or not
     if tag:
@@ -163,8 +166,12 @@ def listing(tag = None):
         {'$limit': limit}
     ])
 
-    #output = entries[offset:limit + offset]
-
+    current_url = request.path
+    next_url = current_url + "?offset=" + str(offset + limit)
+    if offset > limit:
+        prev_url = current_url + "?offset=" + str(offset - limit)
+    else:
+        prev_url = current_url
 
     return render_template('pages/listing.html',  title="Listing", entries=entries, tag=tag)
 

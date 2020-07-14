@@ -176,13 +176,13 @@ def listing(tag = None):
         {'$limit': limit}
     ])
 
-    next_page_num = (page + 1) if (page + 1) <= max_page else page
-    prev_page_num = (page - 1) if (page - 1) > 0 else page
+    #next_page_num = (page + 1) if (page + 1) <= max_page else None
+    #prev_page_num = (page - 1) if (page - 1) > 0 else None
 
     # Create next and previous urls for pagination
     current_url = request.path
-    next_url = current_url + "?page=" + str(next_page_num)
-    prev_url = current_url + "?page=" + str(prev_page_num)
+    next_url = current_url + "?page=" + str(page + 1) if (page + 1) <= max_page else None
+    prev_url = current_url + "?page=" + str(page - 1) if (page - 1) > 0 else None
 
     return render_template('pages/listing.html',  title="Listing", entries=entries, tag=tag, next_url = next_url, prev_url = prev_url)
 

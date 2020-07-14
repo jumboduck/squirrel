@@ -72,9 +72,12 @@
     </div>
     {% endfor %}
 </div>
+
+{% if prev_url %}
 <a href="{{ prev_url }}">
-    < Previous</a> <a href="{{ next_url }}"> Next >
+    < Previous</a> {% endif %} {% if next_url %} <a href="{{ next_url }}"> Next >
 </a>
+{% endif %}
 
 
 {% endblock %}

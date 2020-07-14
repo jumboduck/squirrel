@@ -134,32 +134,25 @@ Pages
 @app.route('/listing/<tag>')
 @login_required
 def listing(tag = None):
-    # If a tag is passed as an argument, return a list of entries tagged as the argument
+    # Change search query if tag exists or not
     if tag:
-        entries = mongo.db.entries.aggregate([
-            {'$match':{'user_id' : current_user.id, 'tags': tag}},
-            {'$addFields': {
-                'sort_date': {
-                    '$cond': {
-                        'if': '$updated_on', 'then': '$updated_on', 'else': '$created_on'
-                    }
-                }              
-            }},
-            {'$sort': {'sort_date': -1}
-        }])
-    # If no tags are passed as an argument, return a list of all entries
+        match_query = {'user_id' : current_user.id, 'tags': tag}
     else:
-        entries = mongo.db.entries.aggregate([
-            {'$match':{'user_id' : current_user.id}},
-            {'$addFields': {
-                'sort_date':{
-                    '$cond': {
-                        'if': '$updated_on', 'then': '$updated_on', 'else': '$created_on'
-                    }
-                }           
-            }},
-            {'$sort': {'sort_date': -1}
-        }])
+        match_query = {'user_id' : current_user.id}
+    
+    entries = mongo.db.entries.aggregate([
+        {'$match': match_query},
+        {'$addFields': {
+            #sorts by created date, or updated date if it exists
+            'sort_date': {
+                '$cond': {
+                    'if': '$updated_on', 'then': '$updated_on', 'else': '$created_on'
+                }
+            }              
+        }},
+        {'$sort': {'sort_date': -1}
+    }])
+
     return render_template('pages/listing.html',  title="Listing", entries=entries, tag=tag)
 
 

@@ -134,6 +134,10 @@ Pages
 @app.route('/listing/<tag>')
 @login_required
 def listing(tag = None):
+
+    offset = 0 # Index of starting entry
+    limit = 6 # Number of entries on page
+
     # Change search query if tag exists or not
     if tag:
         match_query = {'user_id' : current_user.id, 'tags': tag}
@@ -143,15 +147,20 @@ def listing(tag = None):
     entries = mongo.db.entries.aggregate([
         {'$match': match_query},
         {'$addFields': {
-            #sorts by created date, or updated date if it exists
+            # sorts by created date, or updated date if it exists
             'sort_date': {
                 '$cond': {
                     'if': '$updated_on', 'then': '$updated_on', 'else': '$created_on'
                 }
             }              
         }},
-        {'$sort': {'sort_date': -1}
-    }])
+        {'$sort': {'sort_date': -1}},
+        {'$skip': offset},
+        {'$limit': limit}
+    ])
+
+    #output = entries[offset:limit + offset]
+
 
     return render_template('pages/listing.html',  title="Listing", entries=entries, tag=tag)
 

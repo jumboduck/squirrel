@@ -153,15 +153,15 @@ $(document).on("keydown", ".badge-input", (e) => {
     }
 });
 
-// When creating a new entry, text is added to tags hidden field when input is unfocused
-$(document).on("blur", "#new-entry .badge-input", () => {
+// Text is added to hidden tags field when tag input is unfocused
+$(document).on("blur", "#new-entry .badge-input", function () {
     let newTags = $("#hidden_tags").val() + $(this).val();
     $("#hidden_tags").val(newTags);
     console.log($("#hidden_tags").val());
 });
 
 // When the "new tag" button is clicked add a comma, unless no tags have been added already
-$("#new-entry #new-tag").click(() => {
+$("#new-entry #new-tag").click(function () {
     if ($("#hidden_tags").val() != "") {
         let newTags = $("#hidden_tags").val() + ",";
         $("#hidden_tags").val(newTags);

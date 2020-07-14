@@ -370,11 +370,25 @@ def delete(entry_id):
     return redirect(url_for('listing'))
 
 
-
-@app.route('/search')
+@app.route('/search/', methods=["POST"])
 @login_required
-def search():
-    return render_template('pages/search.html',  title="Search")
+def get_search():
+    return redirect(url_for("search", search_term=request.form.get("search_field")))
+
+
+@app.route('/search/<search_term>', methods=["POST", "GET"])
+@login_required
+def search(search_term):
+    entries = mongo.db.entries
+    entries.create_index([
+        ("recipe_name", "text"),
+        ("ingredients", "text"),
+        ("recipe_course", "text"),
+        ("recipe_description", "text"),
+        ("recipe_author", "text")
+    ])
+
+    return render_template('pages/search.html',  title=search_term)
 
 
 @app.errorhandler(404) 

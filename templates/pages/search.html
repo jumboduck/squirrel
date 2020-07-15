@@ -1,5 +1,6 @@
 {% extends 'layout/base.html' %}
 {% block content %}
+{% if entries[0] %}
 <h1 class="page-title">
     Search results for {{ search_term }}
 </h1>
@@ -47,7 +48,7 @@
         <span class="sr-only">Rating: {{ entry.rating }}/5</span>
         <p>
             {% if entry.tags %}
-            <span class="small-title">Tags: </span>
+            <span>Tags: </span>
             {% for tag in entry.tags %}
             <a href="{{url_for('listing', tag=tag)}}" class="badge badge-pill badge-primary">{{tag}}</a>
             {% endfor %}
@@ -66,6 +67,18 @@
 <hr class="m-4">
 
 {% endfor %}
+
+{% else %}
+<div class="entry-container">
+    <div class="entry text-center">
+        <h1 class="page-title">Sorry!</h1>
+        <p> No results were found for “{{ search_term }}”.</p>
+        <p>Click <a href="{{url_for('listing')}}">here</a> to return to your stored goods!</p>
+        <a href="{{url_for('listing')}}"><img class="error-image"
+                src="{{url_for('static', filename='img/image-placeholder.png')}}"></a>
+    </div>
 </div>
+
+{%endif%}
 
 {% endblock %}

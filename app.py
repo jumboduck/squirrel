@@ -160,7 +160,7 @@ def listing(tag = None):
     max_page = math.ceil(entry_count/limit)
     
     # Ensure that if an inexistant page is entered in the address bar, a 404 page is returned
-    if page > max_page or page <= 0:
+    if entry_count !=0 and page > max_page or page <= 0:
         return render_template('pages/404.html',  title="Page Not Found")
 
     # Query that returns entries, sorted by creation date or update date
@@ -184,7 +184,7 @@ def listing(tag = None):
     next_url = current_url + "?page=" + str(page + 1) if (page + 1) <= max_page else None
     prev_url = current_url + "?page=" + str(page - 1) if (page - 1) > 0 else None
 
-    return render_template('pages/listing.html',  title="Listing", entries=entries, tag=tag, next_url = next_url, prev_url = prev_url)
+    return render_template('pages/listing.html', title="Listing", entries=entries, tag=tag, next_url = next_url, prev_url = prev_url, entry_count = entry_count)
 
 
 @app.route('/profile')
@@ -411,7 +411,7 @@ def search(search_term):
         ("tags", "text"),
     ])
 
-    result = entries.find({"$text": {"$search": search_term}}, 
+    result = entries.find({'user_id' : current_user.id, "$text": {"$search": search_term}}, 
     {'score': {'$meta': 'textScore'}}).sort([('score', {'$meta': 'textScore'})])
 
     # Count the number of results of the query

@@ -1,5 +1,6 @@
 {% extends 'layout/base.html' %}
 {% block content %}
+{% if entry_count > 0 %}
 <h1 class="page-title">
     {% if tag %}
     Reviews tagged as {{ tag }}
@@ -87,5 +88,18 @@
         {% endif %}
     </div>
 </div>
+{% else %}
+<div class="entry-container">
+    <div class="entry text-center">
+        <h1 class="page-title">Welcome to Squirrel!</h1>
+        <p>Looks like you haven't stored anything yet.</p>
+        <p>Click <a href="{{url_for('new_entry')}}">here</a> to add a new review!</p>
+        <a href="{{url_for('listing')}}"><img class="error-image"
+                src="{{url_for('static', filename='img/image-placeholder.png')}}"></a>
+    </div>
+</div>
+
+{%endif%}
+
 
 {% endblock %}

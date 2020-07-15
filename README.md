@@ -42,6 +42,17 @@ Reviews can be searched by review name, by tag, or by favorited.
 
 ## Testing
 
+### Manual Testing
+
+### Pagination Testing on Listing page
+
+Thorough conducted to ensure pagination worked as intended, several errors were caught and addressed with the following tests:
+
+-   The page number set in the url (/listing?page=2) was set manually to numbers beyond the range of what the listing includes and leads to a 404 page
+-   The page number was manually changed to a string
+
+### Testing with Cypress
+
 ## Deployment
 
 ## Credits

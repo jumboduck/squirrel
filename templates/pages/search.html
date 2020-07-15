@@ -1,5 +1,88 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-<h1 class="page-title">Search</h1>
-<p>Search for {{ title }}</p>
+{% if entries[0] %}
+<h1 class="page-title">
+    Search results for “{{ search_term }}”
+</h1>
+
+<p>
+    {{ num_entries }} result{% if num_entries > 1 %}s{% endif %} found for “{{ search_term }}”.
+</p>
+
+{% for entry in entries %}
+<div class="row search-entry">
+    {% if entry.image %}
+    <div class="col-md-3">
+        <a href="{{ url_for('entry', entry_id = entry._id) }}">
+            <img src="{{ entry.image }}" class="w-100" alt="alt text">
+        </a>
+    </div>
+    {% endif %}
+    <div class="col-md-9">
+        <h2 class="card-title">
+            {% if entry.is_fav %}
+            <span class="material-icons fav">
+                favorite
+            </span>
+            {% endif %}
+
+            <a href="{{url_for('entry', entry_id = entry._id)}}">{{ entry.name }}</a>
+        </h2>
+        {% if entry.image %}
+        <p>{{ entry.description|truncate(150, end='…') }}</p>
+        {% else %}
+        <p>{{ entry.description|truncate(250, end='…') }}</p>
+        {% endif %}
+
+        <p aria-hidden="true">Rating:
+            <span class="rating">
+                {% for i in range(5) %}
+                {% if loop.index <=  entry.rating %}
+                <span class="material-icons">
+                    star
+                </span>
+                {% else %}
+                <span class="material-icons">
+                    star_outline
+                </span>
+                {% endif %}
+                {% endfor %}
+            </span>
+        </p>
+        <span class="sr-only">Rating: {{ entry.rating }}/5</span>
+        <p>
+            {% if entry.tags %}
+            <span>Tags: </span>
+            {% for tag in entry.tags %}
+            <a href="{{url_for('listing', tag=tag)}}" class="badge badge-pill badge-primary">{{tag}}</a>
+            {% endfor %}
+            {% endif %}
+        </p>
+        <small>
+            {% if entry.updated_on %}
+            Last updated on {{ entry.updated_on.strftime("%d/%m/%Y") }}
+            {% else %}
+            Created on {{ entry.created_on.strftime("%d/%m/%Y") }}
+            {% endif %}
+        </small>
+    </div>
+</div>
+
+<hr class="m-4">
+
+{% endfor %}
+
+{% else %}
+<div class="entry-container">
+    <div class="entry text-center">
+        <h1 class="page-title">Sorry!</h1>
+        <p> No results were found for “{{ search_term }}”.</p>
+        <p>Click <a href="{{url_for('listing')}}">here</a> to return to your stored goods!</p>
+        <a href="{{url_for('listing')}}"><img class="error-image"
+                src="{{url_for('static', filename='img/image-placeholder.png')}}"></a>
+    </div>
+</div>
+
+{%endif%}
+
 {% endblock %}

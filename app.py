@@ -143,9 +143,9 @@ def listing(tag = None):
         match_query = {'user_id' : current_user.id}
 
     # number of entries per page
-    limit = 12
+    limit = 6
 
-    if 'page' in request.args:
+    if 'page' in request.args and request.args['page'].isnumeric():
         # Define which page to view based on get request
         page = int(request.args['page']) 
     else:
@@ -159,6 +159,9 @@ def listing(tag = None):
     entry_count = mongo.db.entries.count_documents(match_query)
     max_page = math.ceil(entry_count/limit)
     
+    # Ensure that if an inexistant page is entered in the address bar, a 404 page is returned
+    if page > max_page or page <= 0:
+        return render_template('pages/404.html',  title="Page Not Found")
 
     # Query that returns entries, sorted by creation date or update date
     entries = mongo.db.entries.aggregate([
@@ -175,9 +178,6 @@ def listing(tag = None):
         {'$skip': offset},
         {'$limit': limit}
     ])
-
-    #next_page_num = (page + 1) if (page + 1) <= max_page else None
-    #prev_page_num = (page - 1) if (page - 1) > 0 else None
 
     # Create next and previous urls for pagination
     current_url = request.path
@@ -414,7 +414,10 @@ def search(search_term):
     result = entries.find({"$text": {"$search": search_term}}, 
     {'score': {'$meta': 'textScore'}}).sort([('score', {'$meta': 'textScore'})])
 
-    return render_template('pages/listing.html',  title="Results for " + search_term, entries=result, search_term=search_term)
+    # Count the number of results of the query
+    num_entries = len(list(result.clone()))
+
+    return render_template('pages/search.html',  title="Results for " + search_term, num_entries=num_entries, entries=result, search_term=search_term)
 
 
 @app.errorhandler(404) 

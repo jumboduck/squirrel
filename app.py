@@ -414,7 +414,10 @@ def search(search_term):
     result = entries.find({"$text": {"$search": search_term}}, 
     {'score': {'$meta': 'textScore'}}).sort([('score', {'$meta': 'textScore'})])
 
-    return render_template('pages/search.html',  title="Results for " + search_term, entries=result, search_term=search_term)
+    # Count the number of results of the query
+    num_entries = len(list(result.clone()))
+
+    return render_template('pages/search.html',  title="Results for " + search_term, num_entries=num_entries, entries=result, search_term=search_term)
 
 
 @app.errorhandler(404) 

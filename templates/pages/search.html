@@ -5,6 +5,10 @@
     Search results for {{ search_term }}
 </h1>
 
+<p>
+    {{ num_entries }} result{% if num_entries > 1 %}s{% endif %} found for “{{ search_term }}”.
+</p>
+
 {% for entry in entries %}
 <div class="row search-entry">
     {% if entry.image %}

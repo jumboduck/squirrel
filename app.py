@@ -380,7 +380,7 @@ def new_entry():
         })
         new_entry = mongo.db.entries.find_one({"name": form.name.data})
         new_entry_id = new_entry['_id']
-        flash(f'Review for {form.name.data} created successfully.', 'success')
+        flash(f'Review for “{form.name.data}” created successfully.', 'success')
         return redirect(url_for('entry', entry_id = new_entry_id))
     return render_template('pages/new_entry.html',  title="New Entry", form=form)
 
@@ -390,7 +390,7 @@ def new_entry():
 def delete(entry_id):
     review_name = mongo.db.entries.find_one({"_id": ObjectId(entry_id)})["name"]
     mongo.db.entries.delete_one({"_id": ObjectId(entry_id)})
-    flash(f'Review for {review_name} was deleted.', 'success')
+    flash(f'Review for “{review_name}” was deleted.', 'success')
     return redirect(url_for('listing'))
 
 

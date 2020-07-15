@@ -143,7 +143,7 @@ def listing(tag = None):
         match_query = {'user_id' : current_user.id}
 
     # number of entries per page
-    limit = 12
+    limit = 6
 
     if 'page' in request.args:
         # Define which page to view based on get request
@@ -159,7 +159,7 @@ def listing(tag = None):
     entry_count = mongo.db.entries.count_documents(match_query)
     max_page = math.ceil(entry_count/limit)
     
-    # Ensure that if an inexistant page is entered in the url, the first page shows
+    # Ensure that if an inexistant page is entered in the address bar, a 404 page is returned
     if page > max_page or page <= 0:
         return render_template('pages/404.html',  title="Page Not Found")
 
@@ -414,7 +414,7 @@ def search(search_term):
     result = entries.find({"$text": {"$search": search_term}}, 
     {'score': {'$meta': 'textScore'}}).sort([('score', {'$meta': 'textScore'})])
 
-    return render_template('pages/listing.html',  title="Results for " + search_term, entries=result, search_term=search_term)
+    return render_template('pages/search.html',  title="Results for " + search_term, entries=result, search_term=search_term)
 
 
 @app.errorhandler(404) 

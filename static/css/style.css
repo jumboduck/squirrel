@@ -163,6 +163,17 @@ a:hover {
     cursor: pointer;
 }
 
+/* Search Listing */
+
+.search-entry p {
+    margin: 0;
+}
+
+.search-entry img {
+    max-height: 10rem;
+    object-fit: cover;
+}
+
 /* Add a New Review */
 
 .new-fav {

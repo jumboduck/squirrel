@@ -161,9 +161,7 @@ def listing(tag = None):
     
     # Ensure that if an inexistant page is entered in the url, the first page shows
     if page > max_page or page <= 0:
-        flash(f"Oops! It looks like the page you tried to access does not exist", "danger")
-        offset = 0
-        page = 1
+        return render_template('pages/404.html',  title="Page Not Found")
 
     # Query that returns entries, sorted by creation date or update date
     entries = mongo.db.entries.aggregate([

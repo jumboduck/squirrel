@@ -145,7 +145,7 @@ def listing(tag = None):
     # number of entries per page
     limit = 6
 
-    if 'page' in request.args:
+    if 'page' in request.args and request.args['page'].isnumeric():
         # Define which page to view based on get request
         page = int(request.args['page']) 
     else:

@@ -44,6 +44,7 @@ It is not meant to be a social application, but a repository of likes and dislik
 -   [The Padwan Project](https://github.com/Eventyret/Padawan)
 -   [Cloudinary](https://cloudinary.com/)
 -   [Cypress](https://www.cypress.io/) for testing throughout the development process
+-   [Material Icons](https://material.io/) for all icons on the site
 
 ## Testing
 

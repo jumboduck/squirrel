@@ -39,13 +39,7 @@
 	</nav>
 	<!-- Page Content-->
 	<div class="container-fluid p-4">
-		{% with messages = get_flashed_messages(with_categories=true) %}
-		{% if messages %}
-		{% for category, message in messages  %}
-		<div class="alert alert-{{ category }}">{{ message }}</div>
-		{% endfor %}
-		{% endif %}
-		{% endwith %}
+
 		{% block content %} {% endblock %}
 
 	</div>

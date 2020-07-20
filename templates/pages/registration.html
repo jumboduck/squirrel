@@ -1,6 +1,13 @@
 {% extends 'layout/base.html' %}
 {% block content %}
 <div class="content-section login-form ml-auto mr-auto">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages  %}
+    <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
     <h1 class="page-title mb-4">Registration</h1>
     <form method="POST">
         {{ form.hidden_tag() }}

@@ -21,7 +21,7 @@
                         </label>
                     </div>
                     <!-- Review Name -->
-                    {{ form.name(class="form-control review-name") }}
+                    {{ form.name(class="form-control review-name", **{'data-toggle':'tooltip', 'title':'click to update title'}) }}
                     <div id="name-feedback" class="update-feedback"></div>
                 </div>
                 <!-- Delete Review -->
@@ -51,7 +51,7 @@
                 <div class="col-md-6">
                     <div>
                         <!-- Review Description -->
-                        {{ form.description(class="form-control review-description") }}
+                        {{ form.description(class="form-control review-description", **{'data-toggle':'tooltip', 'data-placement':'top', 'title':'click to update description'}) }}
                         <div id="description-feedback" class="update-feedback"></div>
                     </div>
                     <!-- Rating -->

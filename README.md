@@ -22,9 +22,13 @@ It is not meant to be a social application, but a repository of likes and dislik
 
 ### Existing Features
 
-This application allows user to create, retrieve, edit and delete reviews connected to their personal account.
-Reviews can be favorited.
-Reviews can be searched by review name, by tag, or by favorited.
+-   New users can register for a new account
+-   Existing users can log in and out of their account
+-   This application allows users to create, retrieve, edit and delete reviews connected to their personal account.
+-   Reviews can be favorited.
+-   Reviews can be searched by keyword, in the entries' name, description and tag fields.
+-   Users can upload an image to each review with the cloudinary API.
+-   Updating an entry happens seamlessly on the entry's page, without loading a separate update page.
 
 ### Features Left to Implement
 
@@ -34,17 +38,19 @@ Reviews can be searched by review name, by tag, or by favorited.
 -   CSS
 -   Bootstrap
 -   JavaScript / JQuery
+-   AJAX
 -   Python
 -   Flask
 -   [The Padwan Project](https://github.com/Eventyret/Padawan)
 -   [Cloudinary](https://cloudinary.com/)
 -   [Cypress](https://www.cypress.io/) for testing throughout the development process
+-   [Material Icons](https://material.io/) for all icons on the site
 
 ## Testing
 
 ### Manual Testing
 
-### Pagination Testing on Listing page
+#### Pagination on Listing page
 
 Thorough conducted to ensure pagination worked as intended, several errors were caught and addressed with the following tests:
 
@@ -70,3 +76,4 @@ Thorough conducted to ensure pagination worked as intended, several errors were 
 -   [Start Bootstrap Resume Template](https://github.com/StartBootstrap/startbootstrap-resume)
 -   [Corey Schaefer](https://www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g) for his python tutorials on youtube, especially regarding registration and login forms.
 -   [Adam Orchard](https://codepen.io/orchard/pen/Jnwvb) for the 5 star rating code.
+-   [Andy Osborne](https://github.com/Andy-Osborne) for helping with the search functionality

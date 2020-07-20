@@ -8,7 +8,7 @@
 
 <body id="page-top">
 	<!-- Navigation-->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top text-center" id="sideNav">
 		<a class="navbar-brand js-scroll-trigger" href="{{url_for('listing')}}">
 			<div class="d-block logo"><img src="{{url_for('static', filename='img/acorn-logo.png')}}"
 					class="logo-image d-inline-block d-lg-block">
@@ -17,19 +17,21 @@
 			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
 				class="navbar-toggler-icon"></span></button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav">
+			<ul class="navbar-nav text-center">
 				{% if current_user.is_authenticated %}
-				<li class="login-info">logged in as {{current_user.username}}</li>
+				<li class="nav-item"><a class="nav-link" href="{{url_for('listing')}}">Home</a></li>
+				<li class="nav-item"><a class="nav-link" href="{{url_for('new_entry')}}">+ New Review</a></li>
 				<li>
-					<form class="form-inline" action="{{url_for('get_search')}}" method="POST">
-						<input class="form-control  w-100 ml-4 mr-4" type="search" placeholder="Enter a search term"
-							aria-label="Search" name="search_field" required>
+					<form class="form-inline search-container" action="{{url_for('get_search')}}" method="POST">
+						<input class="search-input" type="search" placeholder="Enter a search term" aria-label="Search"
+							name="search_field" required>
+						<button type="submit" class="search-button"><span class="material-icons">
+								search
+							</span></button>
 					</form>
 				</li>
-				<li class="nav-item"><a class="nav-link" href="{{url_for('listing')}}">Home</a></li>
-				<li class="nav-item"><a class="nav-link" href="{{url_for('new_entry')}}">New Review</a></li>
-				<li class="nav-item"><a class="nav-link" href="{{url_for('profile')}}">Profile</a></li>
-				<li class="logout-info"><a class="nav-link" href="{{url_for('logout')}}">log out</a></li>
+				<li class="logout-info">logged in as {{current_user.username}}<a class="nav-link"
+						href="{{url_for('logout')}}">(log out)</a></li>
 				{% else %}
 				<li class="nav-item"><a class="nav-link" href="{{url_for('login')}}">Log In</a></li>
 				<li class="nav-item"><a class="nav-link" href="{{url_for('register')}}">Create an Account</a></li>
@@ -39,13 +41,7 @@
 	</nav>
 	<!-- Page Content-->
 	<div class="container-fluid p-4">
-		{% with messages = get_flashed_messages(with_categories=true) %}
-		{% if messages %}
-		{% for category, message in messages  %}
-		<div class="alert alert-{{ category }}">{{ message }}</div>
-		{% endfor %}
-		{% endif %}
-		{% endwith %}
+
 		{% block content %} {% endblock %}
 
 	</div>

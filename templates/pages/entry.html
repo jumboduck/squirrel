@@ -1,6 +1,13 @@
 {% extends 'layout/base.html' %}
 {% block content %}
 <div class="entry-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages  %}
+    <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
     <div class="entry">
         <form action="" method="post" id="entry-form" enctype="multipart/form-data">
             <div class="row">

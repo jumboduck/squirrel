@@ -106,6 +106,35 @@ a:hover {
     margin-top: 1rem;
 }
 
+.search-container {
+    height: 2.5rem;
+}
+
+.search-input {
+    width: 80%;
+    margin: 0;
+    height: 100%;
+    border: 0;
+    border-radius: 0.5rem 0 0 0.5rem;
+    padding: 0.5rem;
+}
+
+.search-button {
+    width: 20%;
+    font-size: 1.5rem;
+    margin: 0;
+    height: 100%;
+    border: 0;
+    border-radius: 0 0.5rem 0.5rem 0;
+    color: #fff;
+    background-color: #a99279;
+    transition: all 0.5s;
+}
+
+.search-button:hover {
+    background-color: #997f62;
+}
+
 /* Review Cards in listing  */
 .card-img-top {
     max-height: 15rem;

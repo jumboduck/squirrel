@@ -21,12 +21,12 @@
                         </label>
                     </div>
                     <!-- Review Name -->
-                    {{ form.name(class="form-control review-name") }}
+                    {{ form.name(class="form-control review-name", **{'data-toggle':'tooltip', 'title':'click to update title'}) }}
                     <div id="name-feedback" class="update-feedback"></div>
                 </div>
                 <!-- Delete Review -->
                 <div class="col-sm-3 text-sm-right align-middle pt-sm-3 pl-2 pr-4 pb-2 delete-entry">
-                    <a href="{{ url_for('delete', entry_id = entry._id) }}"><span
+                    <a href="{{ url_for('delete', entry_id = entry._id) }}" class="delete-link"><span
                             class="material-icons delete-btn">delete</span>Delete</a>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                 <div class="col-md-6">
                     <div>
                         <!-- Review Description -->
-                        {{ form.description(class="form-control review-description") }}
+                        {{ form.description(class="form-control review-description", **{'data-toggle':'tooltip', 'data-placement':'top', 'title':'click to update description'}) }}
                         <div id="description-feedback" class="update-feedback"></div>
                     </div>
                     <!-- Rating -->

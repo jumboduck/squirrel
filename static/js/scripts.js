@@ -170,6 +170,9 @@ $("#new-entry #new-tag").click(function () {
     }
 });
 
+// Initialize tooltips
+$("[data-toggle=tooltip]").tooltip();
+
 $(document).ready(function () {
     //Expand all textareas when document is ready
     $("textarea[data-expandable]").each(expandTextArea);

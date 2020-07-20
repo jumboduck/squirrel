@@ -176,6 +176,7 @@ a:hover {
     cursor: pointer;
     font-size: 1.5rem;
     transition: 0.3s;
+    color: #6c757d;
 }
 
 .card .delete-btn:hover {
@@ -244,6 +245,14 @@ a:hover {
 
 .delete-entry a:hover .delete-btn {
     transform: scale(1.2);
+}
+
+.delete-link {
+    color: #6c757d;
+}
+
+.delete-link:hover {
+    color: #343a40;
 }
 
 /* Favorite */

@@ -29,7 +29,7 @@ class EntryForm(FlaskForm):
     description = TextAreaField('Description', render_kw={"spellcheck":"false", "maxlength":2000, "rows":1, "data-expandable":"True"}, validators = [DataRequired(), Length(min = 1, max = 2000)])
     rating =  RadioField('Rating', validators=[DataRequired()], choices = [('5','Outstanding'),('4','Very Good'),('3','Good'),('2','Poor'), ('1','Very Poor')])
     is_fav = BooleanField('Favorite')
-    image = FileField('Image', render_kw={"accept":"image/*", "capture":"True"} ,validators = [FileAllowed(['jpg', 'gif', 'png', 'jpeg'], 'Images only!')])
+    image = FileField('Image', render_kw={"accept":"image/*", "capture":"true"} ,validators = [FileAllowed(['jpg', 'gif', 'png', 'jpeg'], 'Images only!')])
     tags = StringField('Tags', validators = [Length(min=0, max = 100)])
     hidden_tags = HiddenField('Hidden Tags', validators = [Length(min = 0, max = 100)])
     hidden_id = HiddenField('Hidden Id')
@@ -39,7 +39,7 @@ class NewEntryForm(FlaskForm):
     description = TextAreaField('Description', render_kw={"rows": 5, "spellcheck":"false", "maxlength":2000}, validators = [DataRequired(), Length(min = 1, max = 2000)])
     rating =  RadioField('Rating', validators=[DataRequired()], choices = [('5','Outstanding'),('4','Very Good'),('3','Good'),('2','Poor'), ('1','Very Poor')])
     is_fav = BooleanField('Favorite')
-    image = FileField('Image', render_kw={"accept":"image/*", "capture":"True"}, validators = [FileAllowed(['jpg', 'gif', 'png', 'jpeg'], 'Only image files can be uploaded.')])
+    image = FileField('Image', render_kw={"accept":"image/*", "capture":"true"}, validators = [FileAllowed(['jpg', 'gif', 'png', 'jpeg'], 'Only image files can be uploaded.')])
     hidden_tags = HiddenField('Hidden Tags')
     submit = SubmitField('Add Review')
 

@@ -35,18 +35,21 @@
                 <!-- Review Image -->
                 <div class="col-md-6">
                     <label class="image-selector" for="image">
-                        <div class="overlay-container">
+                        <span class="overlay-container d-block">
                             <img src="{{entry.image}}" class="entry-image" alt="{{entry.name}}">
-                            <div class="image-overlay">
-                                <div class="overlay-text"><span class="material-icons new-image-icon">
+                            <span class="image-overlay d-block">
+                                <span class="overlay-text d-block">
+                                    <span class="material-icons new-image-icon">
                                         wallpaper
-                                    </span><br>Choose a New Image
-                                </div>
-                            </div>
-                        </div>
+                                    </span>
+                                    <br>
+                                    Choose a New Image
+                                </span>
+                            </span>
+                        </span>
                         {{ form.image }}
-                        <div id="image-feedback" class="update-feedback"></div>
                     </label>
+                    <div id="image-feedback" class="update-feedback"></div>
                 </div>
                 <div class="col-md-6">
                     <div>
@@ -112,8 +115,8 @@
                     </p>
                 </div>
             </div>
+        </form>
     </div>
-    </form>
 </div>
 
 

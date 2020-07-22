@@ -104,9 +104,9 @@
                     </div>
                     <!-- Creation / Update Time -->
                     <p><small class="text-muted timestamp">{% if entry.updated_on %}
-                            Last updated on {{ entry.updated_on.strftime("%m/%d/%Y, %H:%M:%S") }}
+                            Last updated on {{ entry.updated_on.strftime("%d/%m/%Y at %H:%M:%S") }}
                             {% else %}
-                            Created on {{ entry.created_on.strftime("%m/%d/%Y, %H:%M:%S") }}
+                            Created on {{ entry.created_on.strftime("%d/%m/%Y at %H:%M:%S") }}
                             {% endif %}
                         </small>
                     </p>

@@ -10,7 +10,7 @@
     {% endwith %}
     <h1 class="page-title">Add a new Entry</h1>
 
-    <form method="POST" action="" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
             <div class="form-group">
@@ -95,8 +95,6 @@
                         tag</span>
                 </div>
             </div>
-
-            {{ form.hidden_tags }}
 
         </fieldset>
         <div class="form-group">

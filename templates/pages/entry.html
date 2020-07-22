@@ -9,7 +9,7 @@
     {% endif %}
     {% endwith %}
     <div class="entry">
-        <form action="" method="post" id="entry-form" enctype="multipart/form-data">
+        <form method="post" id="entry-form" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-sm-9">
                     <!-- Favorite checkbox -->
@@ -35,18 +35,21 @@
                 <!-- Review Image -->
                 <div class="col-md-6">
                     <label class="image-selector" for="image">
-                        <div class="overlay-container">
+                        <span class="overlay-container d-block">
                             <img src="{{entry.image}}" class="entry-image" alt="{{entry.name}}">
-                            <div class="image-overlay">
-                                <div class="overlay-text"><span class="material-icons new-image-icon">
+                            <span class="image-overlay d-block">
+                                <span class="overlay-text d-block">
+                                    <span class="material-icons new-image-icon">
                                         wallpaper
-                                    </span><br>Choose a New Image
-                                </div>
-                            </div>
-                        </div>
+                                    </span>
+                                    <br>
+                                    Choose a New Image
+                                </span>
+                            </span>
+                        </span>
                         {{ form.image }}
-                        <div id="image-feedback" class="update-feedback"></div>
                     </label>
+                    <div id="image-feedback" class="update-feedback"></div>
                 </div>
                 <div class="col-md-6">
                     <div>
@@ -68,7 +71,8 @@
                     </div>
                     <div id="rating-feedback" class="update-feedback"></div>
                     <!-- Tags -->
-                    <div> <span class="entry-subtitle">Tags:</span>
+                    <div>
+                        <span class="entry-subtitle">Tags:</span>
                         <div class="mb-2" id="view-tags-container">
                             <div id="view-tags" class="d-inline-block">
                                 {% if entry.tags %}
@@ -78,8 +82,9 @@
                                 {% endfor %}
                                 {% endif %}
                             </div>
-                            <span class="badge badge-pill badge-primary tag light-tag" id="edit-tags-btn">edit
-                                tags</span>
+                            <span class="badge badge-pill badge-primary tag light-tag" id="edit-tags-btn">
+                                edit tags
+                            </span>
                             <div id="tags-feedback" class="update-feedback"></div>
                         </div>
 
@@ -90,13 +95,13 @@
                                 class="badge badge-pill badge-primary tag delete-tag">{{tag}}
                                 <span class="material-icons">cancel</span></span>{% endfor %}
                             {% endif %}
-                            <span id="new-tag" class="badge badge-pill badge-primary light-tag add-tag"><span
-                                    class="material-icons">control_point</span> new
-                                tag</span>
+                            <span id="new-tag" class="badge badge-pill badge-primary light-tag add-tag">
+                                <span class="material-icons">control_point</span> new tag
+                            </span>
                             <div>
-                                <span id="save-tag-btn"
-                                    class="badge badge-pill badge-primary tag light-tag save-tag"><span
-                                        class="material-icons">save</span> save tags</span>
+                                <span id="save-tag-btn" class="badge badge-pill badge-primary tag light-tag save-tag">
+                                    <span class="material-icons">save</span> save tags
+                                </span>
                             </div>
                         </div>
                         {{ form.hidden_tags }}
@@ -104,17 +109,15 @@
                     </div>
                     <!-- Creation / Update Time -->
                     <p><small class="text-muted timestamp">{% if entry.updated_on %}
-                            Last updated on {{ entry.updated_on.strftime("%m/%d/%Y, %H:%M:%S") }}
+                            Last updated on {{ entry.updated_on.strftime("%d/%m/%Y at %H:%M:%S") }}
                             {% else %}
-                            Created on {{ entry.created_on.strftime("%m/%d/%Y, %H:%M:%S") }}
+                            Created on {{ entry.created_on.strftime("%d/%m/%Y at %H:%M:%S") }}
                             {% endif %}
                         </small>
                     </p>
                 </div>
             </div>
+        </form>
     </div>
-    </form>
 </div>
-
-
 {% endblock %}

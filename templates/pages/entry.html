@@ -71,7 +71,8 @@
                     </div>
                     <div id="rating-feedback" class="update-feedback"></div>
                     <!-- Tags -->
-                    <div> <span class="entry-subtitle">Tags:</span>
+                    <div>
+                        <span class="entry-subtitle">Tags:</span>
                         <div class="mb-2" id="view-tags-container">
                             <div id="view-tags" class="d-inline-block">
                                 {% if entry.tags %}
@@ -81,8 +82,9 @@
                                 {% endfor %}
                                 {% endif %}
                             </div>
-                            <span class="badge badge-pill badge-primary tag light-tag" id="edit-tags-btn">edit
-                                tags</span>
+                            <span class="badge badge-pill badge-primary tag light-tag" id="edit-tags-btn">
+                                edit tags
+                            </span>
                             <div id="tags-feedback" class="update-feedback"></div>
                         </div>
 
@@ -93,13 +95,13 @@
                                 class="badge badge-pill badge-primary tag delete-tag">{{tag}}
                                 <span class="material-icons">cancel</span></span>{% endfor %}
                             {% endif %}
-                            <span id="new-tag" class="badge badge-pill badge-primary light-tag add-tag"><span
-                                    class="material-icons">control_point</span> new
-                                tag</span>
+                            <span id="new-tag" class="badge badge-pill badge-primary light-tag add-tag">
+                                <span class="material-icons">control_point</span> new tag
+                            </span>
                             <div>
-                                <span id="save-tag-btn"
-                                    class="badge badge-pill badge-primary tag light-tag save-tag"><span
-                                        class="material-icons">save</span> save tags</span>
+                                <span id="save-tag-btn" class="badge badge-pill badge-primary tag light-tag save-tag">
+                                    <span class="material-icons">save</span> save tags
+                                </span>
                             </div>
                         </div>
                         {{ form.hidden_tags }}
@@ -118,6 +120,4 @@
         </form>
     </div>
 </div>
-
-
 {% endblock %}

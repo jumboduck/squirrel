@@ -12,3 +12,7 @@ Cypress.Commands.add("login", (email, password) => {
         .get("#submit")
         .click();
 });
+
+Cypress.Commands.add("logout", () => {
+    cy.visit("/").get("#logout").click();
+});

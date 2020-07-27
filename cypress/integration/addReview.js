@@ -10,5 +10,6 @@ describe("Add review page", () => {
             .should("match", /entry/)
             .get("#name")
             .should("have.value", "Test Name");
+        cy.delete();
     });
 });

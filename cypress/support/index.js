@@ -25,7 +25,7 @@ Cypress.Commands.add("addReview", (name, description, rating, fav, tags) => {
         .get("#description")
         .type(description)
 
-        .get(`label[for="rating-${rating - 1}"]`)
+        .get(`label[for="rating-${5 - rating}"]`)
         .click();
 
     if (fav) {
@@ -42,4 +42,8 @@ Cypress.Commands.add("addReview", (name, description, rating, fav, tags) => {
     }
 
     cy.get("#submit").click();
+});
+
+Cypress.Commands.add("delete", () => {
+    cy.get(".delete-link").click();
 });

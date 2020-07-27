@@ -313,11 +313,20 @@ def update_tags(entry_id):
                         "message_class": "valid-update"})
         
     else:
+
+        # turn tags to a lowercase list and remove duplicates
+        lowercase_tags = form.tags.data.lower().split(',')
+
+        final_tags = []
+        for x in lowercase_tags:
+            if x not in final_tags:
+                final_tags.append(x)
+
         entries.update(
             {"_id": ObjectId(entry_id)},
             { "$set":
                 {
-                    "tags": form.tags.data.split(","),
+                    "tags": final_tags,
                     "updated_on": timestamp
                 }
             },
@@ -361,13 +370,20 @@ def new_entry():
             image = request.files[form.image.name]
             uploaded_image = cloudinary.uploader.upload(image, width = 800, quality = 'auto')
             image_url = uploaded_image.get('secure_url')
+
         else:
             image_url = '/static/img/image-placeholder.png'
         
         if form.hidden_tags.data != "":
-            tags = form.hidden_tags.data.split(',')
+            lowercase_tags = form.hidden_tags.data.lower().split(',')
+            final_tags = []
+            for x in lowercase_tags:
+                if x not in final_tags:
+                    final_tags.append(x)
+
         else:
-            tags = None
+            final_tags = None
+            
         entries.insert({
             "name": form.name.data,
             "user_id": current_user.id,
@@ -375,7 +391,7 @@ def new_entry():
             "rating": int(form.rating.data),
             "is_fav": form.is_fav.data,
             "image" : image_url,
-            "tags": tags,
+            "tags": final_tags,
             "created_on": datetime.now()
         })
         new_entry = mongo.db.entries.find_one({"name": form.name.data})

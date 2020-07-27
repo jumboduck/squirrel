@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poiret+One&family=Raleway&Material+Icons&display=swap");
 
 /* GENERAL */
@@ -88,6 +95,7 @@ a:hover {
 .logo-image {
     margin: 0 auto;
     height: 2.5rem;
+    -webkit-filter: invert(1);
     filter: invert(1);
 }
 
@@ -129,6 +137,8 @@ a:hover {
     border-radius: 0 0.5rem 0.5rem 0;
     color: #fff;
     background-color: #a99279;
+    -webkit-transition: all 0.5s;
+    -o-transition: all 0.5s;
     transition: all 0.5s;
 }
 
@@ -139,6 +149,7 @@ a:hover {
 /* Review Cards in listing  */
 .card-img-top {
     max-height: 15rem;
+    -o-object-fit: cover;
     object-fit: cover;
 }
 
@@ -148,6 +159,7 @@ a:hover {
 }
 
 .card-deck {
+    display: -ms-grid;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-gap: 0.5rem;
@@ -155,13 +167,16 @@ a:hover {
 
 .card-deck .card {
     margin-bottom: 1rem;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
     transition: 0.3s;
 }
 
 .card:hover {
+    -webkit-transform: scale(1.05);
+    -ms-transform: scale(1.05);
     transform: scale(1.05);
     -webkit-box-shadow: 0px 14px 20px -14px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 14px 20px -14px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 14px 20px -14px rgba(0, 0, 0, 0.75);
     z-index: 2;
 }
@@ -176,12 +191,16 @@ a:hover {
     right: 1rem;
     cursor: pointer;
     font-size: 1.5rem;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
     transition: 0.3s;
     color: #6c757d;
 }
 
 .card .delete-btn:hover {
     color: #343a40;
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
     transform: scale(1.2);
 }
 
@@ -203,13 +222,18 @@ a:hover {
 
 .search-entry img {
     max-height: 10rem;
+    -o-object-fit: cover;
     object-fit: cover;
 }
 
 /* Add a New Review */
 
 .new-fav {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     position: relative;
 }
@@ -241,10 +265,14 @@ a:hover {
 .entry .delete-btn {
     font-size: 1.5rem;
     padding-bottom: 0.2rem;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
     transition: 0.3s;
 }
 
 .delete-entry a:hover .delete-btn {
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
     transform: scale(1.2);
 }
 
@@ -287,6 +315,8 @@ a:hover {
 }
 
 #is_fav + .heart-icon:active::before {
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
     transform: scale(1.2);
 }
 
@@ -316,6 +346,8 @@ a:hover {
 .entry textarea[data-expandable] {
     cursor: pointer;
     resize: none;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
     transition: all 0.3s;
 }
 
@@ -350,6 +382,8 @@ a:hover {
     height: 100%;
     width: 100%;
     opacity: 0;
+    -webkit-transition: 0.5s ease;
+    -o-transition: 0.5s ease;
     transition: 0.5s ease;
     background-color: #000;
     cursor: pointer;
@@ -366,6 +400,8 @@ a:hover {
     position: absolute;
     top: 50%;
     left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     text-align: center;
     width: 90%;
@@ -388,10 +424,14 @@ a:hover {
 /* Tags */
 
 .badge {
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
     transition: 0.3s;
 }
 
 .badge:hover {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
     transform: scale(1.1);
 }
 
@@ -465,6 +505,22 @@ a.badge-primary:hover {
     width: 80px;
 }
 
+.badge-input::-webkit-input-placeholder {
+    color: #ccc;
+}
+
+.badge-input::-moz-placeholder {
+    color: #ccc;
+}
+
+.badge-input:-ms-input-placeholder {
+    color: #ccc;
+}
+
+.badge-input::-ms-input-placeholder {
+    color: #ccc;
+}
+
 .badge-input::placeholder {
     color: #ccc;
 }
@@ -476,7 +532,11 @@ a.badge-primary:hover {
 /* Star Rating, inspired by Adam Orchard https://codepen.io/orchard/pen/Jnwvb  */
 .rating-container {
     position: relative;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
 }
 
@@ -526,9 +586,13 @@ a.badge-primary:hover {
     content: "star";
 }
 .star-rating > fieldset > label:active {
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
     transform: scale(1.2);
 }
 .star-rating > fieldset > label:hover {
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
     transform: scale(1.2);
 }
 

@@ -18,15 +18,19 @@ Cypress.Commands.add("logout", () => {
 });
 
 Cypress.Commands.add("addReview", (name, description, rating, fav, tags) => {
-    cy.visit("/add")
-        .get("#name")
-        .type(name)
+    cy.visit("/add");
 
-        .get("#description")
-        .type(description)
+    if (name) {
+        cy.get("#name").type(name);
+    }
 
-        .get(`label[for="rating-${5 - rating}"]`)
-        .click();
+    if (description) {
+        cy.get("#description").type(description);
+    }
+
+    if (rating) {
+        cy.get(`label[for="rating-${5 - rating}"]`).click();
+    }
 
     if (fav) {
         cy.get("#is_fav").click();

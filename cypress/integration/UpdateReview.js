@@ -26,4 +26,11 @@ describe("Update entry", () => {
             .should("be.visible")
             .should("have.class", "invalid-update");
     });
+
+    it("should be possible to update the rating", () => {
+        cy.login().addReview().get('label[for="rating-0"').click();
+        cy.get("#rating-feedback")
+            .should("be.visible")
+            .should("have.class", "valid-update");
+    });
 });

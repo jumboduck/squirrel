@@ -360,6 +360,14 @@ a:hover {
     cursor: text;
 }
 
+.tooltip-inner {
+    background-color: #535f6b;
+}
+
+.tooltip .arrow:before {
+    border-top-color: #535f6b;
+}
+
 /* Image and image selector */
 
 .overlay-container {

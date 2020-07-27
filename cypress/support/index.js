@@ -1,17 +1,20 @@
 import "./commands";
 
-Cypress.Commands.add("login", (email, password) => {
-    cy.visit("/login")
+Cypress.Commands.add(
+    "login",
+    (email = Cypress.env("email"), password = Cypress.env("password")) => {
+        cy.visit("/login")
 
-        .get("#email")
-        .type(email)
+            .get("#email")
+            .type(email)
 
-        .get("#password")
-        .type(password)
+            .get("#password")
+            .type(password)
 
-        .get("#submit")
-        .click();
-});
+            .get("#submit")
+            .click();
+    }
+);
 
 Cypress.Commands.add("logout", () => {
     cy.visit("/").get("#logout").click();

@@ -376,14 +376,14 @@ def new_entry():
         
         if form.hidden_tags.data != "":
             lowercase_tags = form.hidden_tags.data.lower().split(',')
-            final_tags = []
+            tags = []
             for x in lowercase_tags:
-                if x not in final_tags:
-                    final_tags.append(x)
+                if x not in tags:
+                    tags.append(x)
 
         else:
-            final_tags = None
-            
+            tags = None
+
         entries.insert({
             "name": form.name.data,
             "user_id": current_user.id,
@@ -391,7 +391,7 @@ def new_entry():
             "rating": int(form.rating.data),
             "is_fav": form.is_fav.data,
             "image" : image_url,
-            "tags": final_tags,
+            "tags": tags,
             "created_on": datetime.now()
         })
         new_entry = mongo.db.entries.find_one({"name": form.name.data})

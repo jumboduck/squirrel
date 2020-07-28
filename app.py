@@ -56,7 +56,22 @@ def load_user(user_id):
     return User(user)
 
 
-# Login
+"""
+# Login Route
+# ===========
+#
+# The following manages the login route.
+# If a session already exists, the user is redirected to the listing page.
+#
+# If not, the login page is displayed.
+# Several requirements exist for the user to login upon submission of the form:
+# 1) The account has to exist in the database
+# 2) The submitted password has to match the hashed password saved in the database
+#
+# The 'next' argument is sent through the url if a user tried to access a page behind a login wall.
+# This argument is used to redirect the user to the appropriate page,
+# after having verified that it is a safe url.
+"""
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
@@ -71,7 +86,10 @@ def login():
         # If user exists and password matches password in db, log in and create a user session
         if user and bcrypt.check_password_hash(user['password'], form.password.data.encode('utf-8')):
             username = user['username']
+            # Save session, even after browser is closed
             login_user(User(user), remember = form.remember.data)
+
+            # Checks where to redirect the user after login
             next_page = request.args.get('next')
             flash(f'Welcome to squirrel, {username}.', 'success')
 
@@ -89,7 +107,18 @@ def login():
     return render_template('pages/login.html', title="Login", form=form)
 
 
-# Registration
+"""
+# Registration Route
+# ==================
+#
+# The following manages new user registration.
+# Upon form submission, if the email does not already exist as an account in the database,
+# and the two password fields match, a new user is inserted.
+# The password is hashed with bcrypt for added security.
+#
+# Once the account is created, the user is automatically logged in with this new account
+# and redirected to the listing page.
+"""
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -111,13 +140,18 @@ def register():
             user = users.find_one({'email': form.email.data})
             login_user(User(user), remember = False)
             flash(f'Account created for {form.username.data}.', 'success')
-            return redirect(url_for('login'))
+            return redirect(url_for('listing'))
         else:
             flash(f'Something went wrong with the information provided.', 'danger')
 
     return render_template('pages/registration.html', title="Registration", form=form)
 
-# Logout
+"""
+# Logout Route
+# ============
+#
+# The following redirects the user to the login page and deletes the session cookie.
+"""
 
 @app.route('/logout')
 def logout():
@@ -127,9 +161,24 @@ def logout():
 
 
 """
-Pages
+# Listing Route
+# =============
+#
+# The following displays a listing of user reviews.
+# The query to the database will be different if a tag has been passed to the url.
+#
+# Several variables are created to manage pagination:
+# limit: defines the number of reviews to display on the page
+# page: defines which page to be viewed, this is sent as an argument through the url
+# offset: defines how many elements to skip in the database query
+# max_page: defines the maximum number of pages
+#
+# If a non existant page is sent as an argument through the url, user is redirected to a 404 page.
+#
+# In the query to mongodb, a field called 'sort_date' is added to each result.
+# It takes the value of 'updated_on' if existant, if not it takes the value of 'created_on'.
+# This allows to sort the entries by their latest update or creation date.
 """
-
 
 @app.route('/listing')
 @app.route('/listing/<tag>')
@@ -142,7 +191,7 @@ def listing(tag = None):
     else:
         match_query = {'user_id' : current_user.id}
 
-    # number of entries per page
+    # Number of entries per page
     limit = 12
 
     if 'page' in request.args and request.args['page'].isnumeric():
@@ -167,7 +216,7 @@ def listing(tag = None):
     entries = mongo.db.entries.aggregate([
         {'$match': match_query},
         {'$addFields': {
-            # sorts by created date, or updated date if it exists
+            # Sorts by created date, or updated date if it exists
             'sort_date': {
                 '$cond': {
                     'if': '$updated_on', 'then': '$updated_on', 'else': '$created_on'
@@ -187,11 +236,12 @@ def listing(tag = None):
     return render_template('pages/listing.html', title="Listing", entries=entries, tag=tag, next_url = next_url, prev_url = prev_url, entry_count = entry_count)
 
 
-@app.route('/profile')
-@login_required
-def profile():
-    return render_template('pages/profile.html',  title="Profile")
+"""
+Entry Route
+===========
 
+
+"""
 
 @app.route('/entry/<entry_id>')
 @login_required

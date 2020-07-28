@@ -258,7 +258,7 @@ def entry(entry_id):
             form.hidden_tags.data = ','.join(the_entry["tags"])
         return render_template('pages/entry.html',  title="Entry" , entry=the_entry, form = form)
     else:
-        return render_template('pages/404.html',  title="Page Not Found")
+        return render_template('pages/403.html',  title="Forbidden")
 
 
 @app.route('/update_fav/<entry_id>', methods=['POST', 'GET'])
@@ -465,7 +465,7 @@ def delete(entry_id):
         flash(f'Review for “{review_name}” was deleted.', 'success')
         return redirect(url_for('listing'))
     else:
-        return render_template('pages/404.html',  title="Page Not Found")
+        return render_template('pages/403.html',  title="Forbidden")
 
 
 @app.route('/search/', methods=["POST"])

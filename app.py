@@ -131,7 +131,7 @@ def register():
         # Create new user only if email is not already in use
         if existing_email is None:
             hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-            users.insert({
+            users.insert_one({
                 "username": form.username.data,
                 "email": form.email.data,
                 "password": hashed_password,
@@ -437,7 +437,7 @@ def new_entry():
         else:
             tags = None
 
-        entries.insert({
+        entries.insert_one({
             "name": form.name.data,
             "user_id": current_user.id,
             "description": form.description.data,

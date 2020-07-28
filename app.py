@@ -267,18 +267,22 @@ def update_fav(entry_id):
     form = EntryForm()
     entries = mongo.db.entries
     timestamp = datetime.now()
-    entries.update(
-        {"_id": ObjectId(entry_id)},
-        { "$set":
-            {
-                "is_fav": form.is_fav.data,
-                "updated_on": timestamp
-            }
-        },
-    )
-    return jsonify( {"updated_on" : timestamp.strftime("%d/%m/%Y at %H:%M:%S"),
-                    "success_message": "Review sucessfully updated.",
-                    "message_class": "alert-success"})
+    the_entry = entries.find_one({"_id": ObjectId(entry_id)})
+    if the_entry["user_id"] == current_user.id:
+        entries.update_one(
+            {"_id": ObjectId(entry_id)},
+            { "$set":
+                {
+                    "is_fav": form.is_fav.data,
+                    "updated_on": timestamp
+                }
+            },
+        )
+        return jsonify( {"updated_on" : timestamp.strftime("%d/%m/%Y at %H:%M:%S"),
+                        "success_message": "Review sucessfully updated.",
+                        "message_class": "alert-success"})
+    else:
+        return render_template('pages/403.html',  title="Forbidden")
 
 
 @app.route('/update_name/<entry_id>', methods=['POST', 'GET'])
@@ -288,19 +292,23 @@ def update_name(entry_id):
     entries = mongo.db.entries
     timestamp = datetime.now()
     new_name = form.name.data
-    if len(new_name) > 0 and len(new_name) <= 30:
-        entries.update_one(
-            {"_id": ObjectId(entry_id)},
-            { "$set":
-                {
-                    "name": new_name,
-                    "updated_on": timestamp
-                }
-            },
-        )
-        return jsonify( {"updated_on" : timestamp.strftime("%d/%m/%Y at %H:%M:%S"),
-                        "success_message": "Name sucessfully updated.",
-                        "message_class": "valid-update"})
+    the_entry = entries.find_one({"_id": ObjectId(entry_id)})
+    if the_entry["user_id"] == current_user.id:
+        if len(new_name) > 0 and len(new_name) <= 30:
+            entries.update_one(
+                {"_id": ObjectId(entry_id)},
+                { "$set":
+                    {
+                        "name": new_name,
+                        "updated_on": timestamp
+                    }
+                },
+            )
+            return jsonify( {"updated_on" : timestamp.strftime("%d/%m/%Y at %H:%M:%S"),
+                            "success_message": "Name sucessfully updated.",
+                            "message_class": "valid-update"})
+    else:
+        return render_template('pages/403.html',  title="Forbidden")
 
 
 @app.route('/update_description/<entry_id>', methods=['POST', 'GET'])
@@ -310,19 +318,23 @@ def update_description(entry_id):
     entries = mongo.db.entries
     timestamp = datetime.now()
     new_description = form.description.data
-    if len(new_description) > 0 and len(new_description) <= 2000:
-        entries.update_one(
-            {"_id": ObjectId(entry_id)},
-            { "$set":
-                {
-                    "description": form.description.data,
-                    "updated_on": timestamp
-                }
-            },
-        )
-        return jsonify( {"updated_on" : timestamp.strftime("%d/%m/%Y at %H:%M:%S"),
-                        "success_message": "Description sucessfully updated.",
-                        "message_class": "valid-update"})
+    the_entry = entries.find_one({"_id": ObjectId(entry_id)})
+    if the_entry["user_id"] == current_user.id:
+        if len(new_description) > 0 and len(new_description) <= 2000:
+            entries.update_one(
+                {"_id": ObjectId(entry_id)},
+                { "$set":
+                    {
+                        "description": form.description.data,
+                        "updated_on": timestamp
+                    }
+                },
+            )
+            return jsonify( {"updated_on" : timestamp.strftime("%d/%m/%Y at %H:%M:%S"),
+                            "success_message": "Description sucessfully updated.",
+                            "message_class": "valid-update"})
+    else:
+        return render_template('pages/403.html',  title="Forbidden")
 
 
 @app.route('/update_rating/<entry_id>', methods=['POST', 'GET'])
@@ -331,18 +343,22 @@ def update_rating(entry_id):
     form = EntryForm()
     entries = mongo.db.entries
     timestamp = datetime.now()
-    entries.update_one(
-        {"_id": ObjectId(entry_id)},
-        { "$set":
-            {
-                "rating": int(form.rating.data),
-                "updated_on": timestamp
-            }
-        },
-    )
-    return jsonify( {"updated_on" : timestamp.strftime("%d/%m/%Y at %H:%M:%S"),
-                    "success_message": "Rating sucessfully updated.",
-                    "message_class": "valid-update"})
+    the_entry = entries.find_one({"_id": ObjectId(entry_id)})
+    if the_entry["user_id"] == current_user.id:
+        entries.update_one(
+            {"_id": ObjectId(entry_id)},
+            { "$set":
+                {
+                    "rating": int(form.rating.data),
+                    "updated_on": timestamp
+                }
+            },
+        )
+        return jsonify( {"updated_on" : timestamp.strftime("%d/%m/%Y at %H:%M:%S"),
+                        "success_message": "Rating sucessfully updated.",
+                        "message_class": "valid-update"})
+    else:
+        return render_template('pages/403.html',  title="Forbidden")
 
 
 
@@ -352,41 +368,45 @@ def update_tags(entry_id):
     form = EntryForm()
     entries = mongo.db.entries
     timestamp = datetime.now()
-    if len(form.tags.data) == 0:
-        entries.update_one(
-            {"_id": ObjectId(entry_id)},
-            { "$unset":
-                {
-                    "tags": "",
-                    "updated_on": timestamp
-                }
-            },
-        )
-        return jsonify( {"updated_on" : timestamp.strftime("%d/%m/%Y at %H:%M:%S"),
-                        "success_message": "Tags sucessfully updated.",
-                        "message_class": "valid-update"})
-        
+    the_entry = entries.find_one({"_id": ObjectId(entry_id)})
+    if the_entry["user_id"] == current_user.id:
+        if len(form.tags.data) == 0:
+            entries.update_one(
+                {"_id": ObjectId(entry_id)},
+                { "$unset":
+                    {
+                        "tags": "",
+                        "updated_on": timestamp
+                    }
+                },
+            )
+            return jsonify( {"updated_on" : timestamp.strftime("%d/%m/%Y at %H:%M:%S"),
+                            "success_message": "Tags sucessfully updated.",
+                            "message_class": "valid-update"})
+            
+        else:
+            # turn tags to a lowercase list and remove duplicates
+            lowercase_tags = form.tags.data.lower().split(',')
+
+            final_tags = []
+            for x in lowercase_tags:
+                if x not in final_tags:
+                    final_tags.append(x)
+
+            entries.update_one(
+                {"_id": ObjectId(entry_id)},
+                { "$set":
+                    {
+                        "tags": final_tags,
+                        "updated_on": timestamp
+                    }
+                },
+            )
+            return jsonify( {"updated_on" : timestamp.strftime("%d/%m/%Y at %H:%M:%S"),
+                            "success_message": "Tags sucessfully updated.",
+                            "message_class": "valid-update"})
     else:
-        # turn tags to a lowercase list and remove duplicates
-        lowercase_tags = form.tags.data.lower().split(',')
-
-        final_tags = []
-        for x in lowercase_tags:
-            if x not in final_tags:
-                final_tags.append(x)
-
-        entries.update_one(
-            {"_id": ObjectId(entry_id)},
-            { "$set":
-                {
-                    "tags": final_tags,
-                    "updated_on": timestamp
-                }
-            },
-        )
-        return jsonify( {"updated_on" : timestamp.strftime("%d/%m/%Y at %H:%M:%S"),
-                        "success_message": "Tags sucessfully updated.",
-                        "message_class": "valid-update"})
+        return render_template('pages/403.html',  title="Forbidden")
 
 
 @app.route('/update_image/<entry_id>', methods=['POST', 'GET'])
@@ -398,19 +418,23 @@ def update_image(entry_id):
     image = request.files[form.image.name]
     uploaded_image = cloudinary.uploader.upload(image, width = 800, quality = 'auto')
     image_url = uploaded_image.get('secure_url')
-    entries.update_one(
-        {"_id": ObjectId(entry_id)},
-        { "$set":
-            {
-                "image": image_url,
-                "updated_on": timestamp
-            }
-        },
-    )
-    return jsonify({"new_image" : image_url,
-                    "updated_on" : timestamp.strftime("%d/%m/%Y at %H:%M:%S"),
-                    "success_message": "Image sucessfully updated.",
-                    "message_class": "valid-update"})
+    the_entry = entries.find_one({"_id": ObjectId(entry_id)})
+    if the_entry["user_id"] == current_user.id:
+        entries.update_one(
+            {"_id": ObjectId(entry_id)},
+            { "$set":
+                {
+                    "image": image_url,
+                    "updated_on": timestamp
+                }
+            },
+        )
+        return jsonify({"new_image" : image_url,
+                        "updated_on" : timestamp.strftime("%d/%m/%Y at %H:%M:%S"),
+                        "success_message": "Image sucessfully updated.",
+                        "message_class": "valid-update"})
+    else:
+        return render_template('pages/403.html',  title="Forbidden")
 
 
 @app.route('/add', methods=['GET', 'POST'])

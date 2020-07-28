@@ -289,7 +289,7 @@ def update_name(entry_id):
     timestamp = datetime.now()
     new_name = form.name.data
     if len(new_name) > 0 and len(new_name) <= 30:
-        entries.update(
+        entries.update_one(
             {"_id": ObjectId(entry_id)},
             { "$set":
                 {
@@ -311,7 +311,7 @@ def update_description(entry_id):
     timestamp = datetime.now()
     new_description = form.description.data
     if len(new_description) > 0 and len(new_description) <= 2000:
-        entries.update(
+        entries.update_one(
             {"_id": ObjectId(entry_id)},
             { "$set":
                 {
@@ -331,7 +331,7 @@ def update_rating(entry_id):
     form = EntryForm()
     entries = mongo.db.entries
     timestamp = datetime.now()
-    entries.update(
+    entries.update_one(
         {"_id": ObjectId(entry_id)},
         { "$set":
             {
@@ -353,7 +353,7 @@ def update_tags(entry_id):
     entries = mongo.db.entries
     timestamp = datetime.now()
     if len(form.tags.data) == 0:
-        entries.update(
+        entries.update_one(
             {"_id": ObjectId(entry_id)},
             { "$unset":
                 {
@@ -367,7 +367,6 @@ def update_tags(entry_id):
                         "message_class": "valid-update"})
         
     else:
-
         # turn tags to a lowercase list and remove duplicates
         lowercase_tags = form.tags.data.lower().split(',')
 
@@ -376,7 +375,7 @@ def update_tags(entry_id):
             if x not in final_tags:
                 final_tags.append(x)
 
-        entries.update(
+        entries.update_one(
             {"_id": ObjectId(entry_id)},
             { "$set":
                 {
@@ -399,7 +398,7 @@ def update_image(entry_id):
     image = request.files[form.image.name]
     uploaded_image = cloudinary.uploader.upload(image, width = 800, quality = 'auto')
     image_url = uploaded_image.get('secure_url')
-    entries.update(
+    entries.update_one(
         {"_id": ObjectId(entry_id)},
         { "$set":
             {

@@ -1,11 +1,14 @@
 describe("Add review page", () => {
+    before(() => cy.login());
+    beforeEach(() => Cypress.Cookies.preserveOnce("session"));
     it("should be possible to add a review", () => {
-        cy.login("test@test.com", "password");
-        cy.addReview("Test Name", "Test Description", 4, true, [
-            "tag1",
-            "tag2",
-            "tag3",
-        ])
+        cy.addReview({
+            name: "Test Name",
+            description: "Test Description",
+            rating: 4,
+            fav: true,
+            tags: ["tag1", "tag2", "tag3"],
+        })
             .url()
             .should("match", /entry/)
             .get("#name")
@@ -14,22 +17,37 @@ describe("Add review page", () => {
     });
 
     it("should not add a review if no name is typed", () => {
-        cy.login("test@test.com", "password");
-        cy.addReview("", "Test Description", 3, false, [])
+        cy.addReview({
+            name: "",
+            description: "Test Description",
+            rating: 3,
+            fav: false,
+            tags: [],
+        })
             .url()
             .should("match", /add/);
     });
 
     it("should not add a review if no description is typed", () => {
-        cy.login("test@test.com", "password");
-        cy.addReview("Test Name", "", 3, false, [])
+        cy.addReview({
+            name: "Test Name",
+            description: "",
+            rating: 3,
+            fav: false,
+            tags: [],
+        })
             .url()
             .should("match", /add/);
     });
 
     it("should not add a review if no rating is chosen", () => {
-        cy.login("test@test.com", "password");
-        cy.addReview("Test Name", "Test Description", NaN, false, [])
+        cy.addReview({
+            name: "Test Name",
+            description: "Test Description",
+            rating: undefined,
+            fav: false,
+            tags: [],
+        })
             .url()
             .should("match", /add/);
     });

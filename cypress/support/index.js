@@ -23,36 +23,38 @@ Cypress.Commands.add("logout", () => {
 Cypress.Commands.add(
     "addReview",
     (
-        name = "Test Name",
-        description = "Test Description",
-        rating = 4,
-        fav = true,
-        tags = ["tag1", "tag2", "tag3"]
+        content = {
+            name: "Test Name",
+            description: "Test Description",
+            rating: 4,
+            fav: true,
+            tags: ["tag1", "tag2", "tag3"],
+        }
     ) => {
         cy.visit("/add");
 
-        if (name) {
-            cy.get("#name").type(name);
+        if (content.name) {
+            cy.get("#name").type(content.name);
         }
 
-        if (description) {
-            cy.get("#description").type(description);
+        if (content.description) {
+            cy.get("#description").type(content.description);
         }
 
-        if (rating) {
-            cy.get(`label[for="rating-${5 - rating}"]`).click();
+        if (content.rating || content.rating === 0) {
+            cy.get(`label[for="rating-${5 - content.rating}"]`).click();
         }
 
-        if (fav) {
+        if (content.fav) {
             cy.get("#is_fav").click();
         }
 
-        if (tags) {
-            for (let i = 0; i < tags.length; i++) {
+        if (content.tags) {
+            for (let i = 0; i < content.tags.length; i++) {
                 cy.get("#new-tag")
                     .click()
                     .get("#edit-tag-" + (i + 1))
-                    .type(tags[i]);
+                    .type(content.tags[i]);
             }
         }
 

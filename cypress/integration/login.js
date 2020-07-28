@@ -3,6 +3,7 @@ describe("Login page", () => {
         cy.login()
             .url()
             .should("match", /listing/);
+        cy.logout();
     });
 
     it("should reject wrong credentials", () => {

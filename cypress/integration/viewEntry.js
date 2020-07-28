@@ -8,4 +8,5 @@ describe("View entry", () => {
         cy.get(".logo-image").click();
         cy.get(".card:first h2 a").click().url().should("match", /entry/);
     });
+    after(() => cy.logout());
 });

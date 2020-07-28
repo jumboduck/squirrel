@@ -10,4 +10,5 @@ describe("Login page", () => {
             matchCase: false,
         });
     });
+    after(() => cy.logout());
 });

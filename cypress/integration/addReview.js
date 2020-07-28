@@ -51,4 +51,5 @@ describe("Add review page", () => {
             .url()
             .should("match", /add/);
     });
+    after(() => cy.logout());
 });

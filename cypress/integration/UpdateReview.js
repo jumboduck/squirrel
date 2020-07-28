@@ -63,5 +63,5 @@ describe("Update entry", () => {
             cy.get(".view-tag").should("have.length", 2);
         });
     });
-    after(() => cy.delete());
+    after(() => cy.delete().logout());
 });

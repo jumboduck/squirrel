@@ -458,10 +458,14 @@ def new_entry():
 @app.route('/delete/<entry_id>')
 @login_required
 def delete(entry_id):
-    review_name = mongo.db.entries.find_one({"_id": ObjectId(entry_id)})["name"]
-    mongo.db.entries.delete_one({"_id": ObjectId(entry_id)})
-    flash(f'Review for “{review_name}” was deleted.', 'success')
-    return redirect(url_for('listing'))
+    the_entry = mongo.db.entries.find_one({"_id": ObjectId(entry_id)})
+    if the_entry["user_id"] == current_user.id:
+        review_name = the_entry["name"]
+        mongo.db.entries.delete_one({"_id": ObjectId(entry_id)})
+        flash(f'Review for “{review_name}” was deleted.', 'success')
+        return redirect(url_for('listing'))
+    else:
+        return render_template('pages/404.html',  title="Page Not Found")
 
 
 @app.route('/search/', methods=["POST"])

@@ -498,6 +498,15 @@ def new_entry():
     return render_template('pages/new_entry.html',  title="New Entry", form=form)
 
 
+"""
+# Delete Entry Route
+# ==================
+#
+# The following checks that the current user created the entry
+# and removes the document from the database.
+# If a different user created the document, they are redirected to
+# a 403 error.
+"""
 @app.route('/delete/<entry_id>')
 @login_required
 def delete(entry_id):
@@ -511,6 +520,13 @@ def delete(entry_id):
         return render_template('pages/403.html',  title="Forbidden")
 
 
+"""
+# Search Routes
+# =============
+#
+# This first route sends the information in the search bar to
+# the search results route.
+"""
 @app.route('/search/', methods=["POST"])
 @login_required
 def get_search():

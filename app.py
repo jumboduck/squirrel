@@ -534,6 +534,7 @@ def new_entry():
             # A default placeholder image is selected
             # if no image has been inputed.
             image_url = '/static/img/image-placeholder.png'
+            image_id = 'blank'
 
         # The tags are retrieved as a string of words separated by commas.
         # We generate a list by splitting the string, words are lowercased

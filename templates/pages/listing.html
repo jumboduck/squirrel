@@ -88,13 +88,13 @@
 <div class="row">
     <div class="col-6">
         {% if prev_url %}
-        <a href="{{ prev_url }}">
+        <a href="{{ prev_url }}" class="btn btn-secondary pagination-btn">
             <span class="material-icons">chevron_left</span>
             Previous</a> {% endif %}
     </div>
     <div class="col-6 text-right">
         {% if next_url %}
-        <a href="{{ next_url }}"> Next <span class="material-icons">
+        <a href="{{ next_url }}" class="btn btn-secondary pagination-btn"> Next <span class="material-icons">
                 chevron_right</span>
         </a>
         {% endif %}

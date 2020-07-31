@@ -71,6 +71,26 @@ a:hover {
     border-color: #a99279;
 }
 
+.pagination-btn {
+    width: 6rem;
+}
+
+.btn-secondary {
+    color: #fff;
+    background-color: #535f6b;
+    border-color: #535f6b;
+    font-size: 0.8rem;
+    padding: 0.2rem 0.5rem;
+}
+
+.btn-secondary:hover {
+    color: #535f6b;
+    background-color: transparent;
+    border-color: #535f6b;
+    font-size: 0.8rem;
+    padding: 0.2rem 0.5rem;
+}
+
 .material-icons {
     vertical-align: middle;
     font-size: inherit;

@@ -49,19 +49,20 @@ describe("Update entry", () => {
             .should("be.visible")
             .should("have.class", "valid-update");
         cy.get(".view-tag").should("have.length", 4);
-
-        it("should be possible to delete a tag", () => {
-            cy.get("#edit-tags-btn")
-                .click()
-                .get(".delete-tag:first")
-                .click()
-                .get("#save-tag-btn")
-                .click();
-            cy.get("#tags-feedback")
-                .should("be.visible")
-                .should("have.class", "valid-update");
-            cy.get(".view-tag").should("have.length", 2);
-        });
     });
+
+    it("should be possible to delete a tag", () => {
+        cy.get("#edit-tags-btn")
+            .click()
+            .get(".delete-tag:first")
+            .click()
+            .get("#save-tag-btn")
+            .click();
+        cy.get("#tags-feedback")
+            .should("be.visible")
+            .should("have.class", "valid-update");
+        cy.get(".view-tag").should("have.length", 3);
+    });
+
     after(() => cy.delete().logout());
 });

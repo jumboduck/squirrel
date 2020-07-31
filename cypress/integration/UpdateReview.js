@@ -23,6 +23,14 @@ describe("Update entry", () => {
             .should("have.class", "valid-update");
     });
 
+    it("should be possible to update the image", () => {
+        cy.get("input[type=file]").attachFile("acorn-test-image.jpg");
+
+        cy.get("#image-feedback")
+            .should("be.visible")
+            .should("have.class", "valid-update");
+    });
+
     it("should not be possible to leave the description blank", () => {
         cy.get("#description").clear().blur();
         cy.get("#description-feedback")

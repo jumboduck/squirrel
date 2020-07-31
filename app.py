@@ -482,12 +482,14 @@ def update_image(entry_id):
                                                 quality='auto'
                                                 )
     image_url = uploaded_image.get('secure_url')
+    new_image_id = uploaded_image.get('public_id')
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
+    cloudinary.uploader.destroy(the_entry["image_id"])
     if the_entry["user_id"] == current_user.id:
         entries.update_one(
                     {"_id": ObjectId(entry_id)},
                     {"$set":
-                        {"image": image_url, "updated_on": timestamp}
+                        {"image": image_url, "image_id": new_image_id, "updated_on": timestamp}
                      }
                 )
 
@@ -526,6 +528,7 @@ def new_entry():
                 quality='auto'
             )
             image_url = uploaded_image.get('secure_url')
+            image_id = uploaded_image.get('public_id')
 
         else:
             # A default placeholder image is selected
@@ -553,6 +556,7 @@ def new_entry():
             "rating": int(form.rating.data),
             "is_fav": form.is_fav.data,
             "image": image_url,
+            "image_id": image_id,
             "tags": tags,
             "created_on": datetime.now()
         })
@@ -588,7 +592,9 @@ def delete(entry_id):
     the_entry = mongo.db.entries.find_one({"_id": ObjectId(entry_id)})
     if the_entry["user_id"] == current_user.id:
         review_name = the_entry["name"]
+        image_id = the_entry["image_id"]
         mongo.db.entries.delete_one({"_id": ObjectId(entry_id)})
+        cloudinary.uploader.destroy(image_id)
         flash(f'Review for “{review_name}” was deleted.', 'success')
         return redirect(url_for('listing'))
     else:

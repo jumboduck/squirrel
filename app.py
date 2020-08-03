@@ -603,6 +603,46 @@ def delete(entry_id):
 
 
 """
+# Profile Route
+# =============
+#
+# This route displays the user profile, which contains statistics about
+# their squirrel repository, such as number of reviews, number of favorites,
+# average rating, most used tags.
+# It also allows for users to update their username, password, and email
+# address.
+"""
+
+
+@app.route('/profile/', methods=["POST", "GET"])
+@login_required
+def profile():
+    entries = mongo.db.entries
+    num_entries = entries.count({'user_id': current_user.id})
+    num_fav = entries.count({'user_id': current_user.id, 'is_fav': True})
+    avg_rating = entries.aggregate([
+        {
+            "$group": {
+                "_id": current_user.id,
+                "result": {
+                    "$avg": "$rating"
+                }
+            }
+        }
+    ])
+    rounded_avg = round(list(avg_rating)[0]['result'], 2)
+    return render_template(
+        'pages/profile.html',
+        title="Profile",
+        num_entries=num_entries,
+        num_fav=num_fav,
+        avg_rating=rounded_avg,
+        username=current_user.username
+    )
+
+
+
+"""
 # Search Routes
 # =============
 #

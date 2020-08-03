@@ -5,7 +5,7 @@
 * Browsers: last 4 version
 */
 
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poiret+One&family=Raleway&Material+Icons&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poiret+One&family=Raleway:wght@400;700&Material+Icons&display=swap");
 
 /* GENERAL */
 
@@ -166,6 +166,10 @@ a:hover {
 
 .search-button:hover {
     background-color: #997f62;
+}
+
+#sideNav .navbar-nav .nav-item .nav-link {
+    font-weight: 400;
 }
 
 /* Review Cards in listing  */

@@ -642,22 +642,12 @@ def profile():
             if bcrypt.check_password_hash(
                 current_user.password,
                 form.password.data.encode('utf-8')):
-                if form.username.data:
-                    new_username = form.username.data
-                else:
-                    new_username = current_user.username
-                if form.email.data:
-                    new_email = form.email.data
-                else:
-                    new_email = current_user.email
-                if form.new_password.data:
-                    new_password = bcrypt.generate_password_hash(
+                new_username = form.username.data
+                new_email = form.email.data
+                new_password = bcrypt.generate_password_hash(
                                         form.new_password.data
                                         ).decode('utf-8')
-                else:
-                    new_password = bcrypt.generate_password_hash(
-                                        current_user.password
-                                        ).decode('utf-8')
+                
                 users.update_one(
                 {"_id": current_user.id},
                 {"$set":

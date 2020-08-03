@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, RadioField, TextAreaField, HiddenField
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms.validators import DataRequired, Length, Email, EqualTo, Optional
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 
 
@@ -44,9 +44,11 @@ class NewEntryForm(FlaskForm):
     submit = SubmitField('Add Review')
 
 class UpdateAccount(FlaskForm):
-    username = StringField('Username', validators=[Length(min=1, max=30)])
-    email = StringField('Email', validators=[Email()])
-    new_password = PasswordField('New Password', validators=[Length(min=8)])
+    username = StringField('Username', validators=[Length(min=1, max=30), Optional()])
+    email = StringField('Email', validators=[Email(), Optional()])
+    new_password = PasswordField('New Password',  validators=[Length(min=8), Optional()])
+    confirm_password = PasswordField('Confirm New Password', validators=[EqualTo('new_password'), Optional()])
     password = PasswordField('Current Password', validators=[DataRequired()])
+ 
     submit = SubmitField('Save Changes')
 

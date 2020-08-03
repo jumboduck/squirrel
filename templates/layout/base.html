@@ -19,9 +19,6 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav text-center">
 				{% if current_user.is_authenticated %}
-				<li class="nav-item"><a class="nav-link" href="{{url_for('listing')}}">Home</a></li>
-				<li class="nav-item"><a class="nav-link" href="{{url_for('new_entry')}}">+ New Review</a></li>
-				<li class="nav-item"><a class="nav-link" href="{{url_for('profile')}}">Profile</a></li>
 				<li>
 					<form class="form-inline search-container" action="{{url_for('get_search')}}" method="POST">
 						<input class="search-input" type="search" placeholder="Enter a search term" aria-label="Search"
@@ -31,6 +28,10 @@
 							</span></button>
 					</form>
 				</li>
+				<li class="nav-item"><a class="nav-link" href="{{url_for('listing')}}">Home</a></li>
+				<li class="nav-item"><a class="nav-link" href="{{url_for('new_entry')}}">+ New Review</a></li>
+				<li class="nav-item"><a class="nav-link" href="{{url_for('profile')}}">Profile</a></li>
+
 				<li class="logout-info">logged in as {{current_user.username}}<a class="nav-link"
 						href="{{url_for('logout')}}" id="logout">(log out)</a></li>
 				{% else %}

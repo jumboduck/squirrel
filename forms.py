@@ -43,3 +43,11 @@ class NewEntryForm(FlaskForm):
     hidden_tags = HiddenField('Hidden Tags')
     submit = SubmitField('Add Review')
 
+class UpdateAccount(FlaskForm):
+    username = StringField('Username', validators=[Length(min=1, max=30)])
+    email = StringField('Email', validators=[Email()])
+    new_password = PasswordField('New Password', validators=[Length(min=8)])
+    password = PasswordField('Current Password', validators=[
+                             DataRequired(), Length(min=8)])
+    submit = SubmitField('Save Changes')
+

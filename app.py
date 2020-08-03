@@ -1,7 +1,7 @@
 from os import path
 from flask import Flask, render_template, url_for, flash, redirect,\
     request, jsonify
-from forms import RegistrationForm, LoginForm, EntryForm, NewEntryForm
+from forms import RegistrationForm, LoginForm, EntryForm, NewEntryForm, UpdateAccount
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -617,6 +617,7 @@ def delete(entry_id):
 @app.route('/profile/', methods=["POST", "GET"])
 @login_required
 def profile():
+    form = UpdateAccount()
     entries = mongo.db.entries
     num_entries = entries.count({'user_id': current_user.id})
     num_fav = entries.count({'user_id': current_user.id, 'is_fav': True})
@@ -630,14 +631,17 @@ def profile():
             }
         }
     ])
+
     rounded_avg = round(list(avg_rating)[0]['result'], 2)
+
     return render_template(
         'pages/profile.html',
         title="Profile",
         num_entries=num_entries,
         num_fav=num_fav,
         avg_rating=rounded_avg,
-        username=current_user.username
+        username=current_user.username,
+        form=form
     )
 
 

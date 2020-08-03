@@ -5,7 +5,7 @@
 * Browsers: last 4 version
 */
 
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poiret+One&family=Raleway&Material+Icons&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poiret+One&family=Raleway:wght@400;700&Material+Icons&display=swap");
 
 /* GENERAL */
 
@@ -83,7 +83,8 @@ a:hover {
     padding: 0.2rem 0.5rem;
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover,
+.btn-secondary.selected {
     color: #535f6b;
     background-color: transparent;
     border-color: #535f6b;
@@ -165,6 +166,10 @@ a:hover {
 
 .search-button:hover {
     background-color: #997f62;
+}
+
+#sideNav .navbar-nav .nav-item .nav-link {
+    font-weight: 400;
 }
 
 /* Review Cards in listing  */

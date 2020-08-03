@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, RadioField, TextAreaField, HiddenField
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms.validators import DataRequired, Length, Email, EqualTo, Optional
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 
 
@@ -42,4 +42,12 @@ class NewEntryForm(FlaskForm):
     image = FileField('Image', render_kw={"accept":"image/*"}, validators = [FileAllowed(['jpg', 'gif', 'png', 'jpeg'], 'Only image files can be uploaded.')])
     hidden_tags = HiddenField('Hidden Tags')
     submit = SubmitField('Add Review')
+
+class UpdateAccount(FlaskForm):
+    username = StringField('Username', validators=[Length(min=1, max=30), Optional()])
+    email = StringField('Email', validators=[Email(), Optional()])
+    new_password = PasswordField('New Password',  validators=[Length(min=8), Optional()])
+    confirm_password = PasswordField('Confirm New Password', validators=[EqualTo('new_password')])
+    password = PasswordField('Current Password', validators=[DataRequired()])
+    submit = SubmitField('Save Changes')
 

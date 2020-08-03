@@ -170,6 +170,32 @@ $("#new-entry #new-tag").click(function () {
     }
 });
 
+/* The following code shows and hides the fields to update account information */
+
+function toggleField(field) {
+    $(field).toggle();
+    $(field).attr("aria-expanded", function (i, attr) {
+        return attr === "true" ? "false" : "true";
+    });
+    $(field).attr("aria-hidden", function (i, attr) {
+        return attr === "true" ? "false" : "true";
+    });
+    $(this).toggleClass("selected");
+    $(this).find(".icon").text() === "edit"
+        ? $(this).find(".icon").text("close")
+        : $(this).find(".icon").text("edit");
+}
+
+$("#update-username-btn").click(function () {
+    toggleField.call(this, "#update-username");
+});
+$("#update-email-btn").click(function () {
+    toggleField.call(this, "#update-email");
+});
+$("#update-password-btn").click(function () {
+    toggleField.call(this, "#update-password");
+});
+
 // Initialize tooltips
 $("[data-toggle=tooltip]").tooltip();
 
@@ -185,4 +211,8 @@ $(document).ready(function () {
 
     // Make delete tags deleteable
     $(".delete-tag").each(deleteTag);
+
+    $("#update-username").hide();
+    $("#update-email").hide();
+    $("#update-password").hide();
 });

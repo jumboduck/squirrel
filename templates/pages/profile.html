@@ -1,0 +1,144 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages  %}
+<div class="alert alert-{{ category }} fade show alert-dismissible" role="alert">{{ message }}<button type="button"
+        class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<div class="entry">
+    <img class="d-block ml-auto mr-auto w-25" src="{{url_for('static', filename='img/image-placeholder.png')}}">
+    <h1 class="page-title text-center">Profile for {{ username }}</h1>
+
+    <p class="text-center"><strong>Number of reviews:</strong> {{ num_entries }}</p>
+    <p class="text-center"><strong>Number of favorites:</strong> {{ num_fav }}</p>
+    <p class="text-center"><strong>Average rating:</strong> {{ avg_rating }}/5</p>
+
+    <button class="btn btn-primary ml-auto mr-auto d-block" data-toggle="modal" data-target="#accountManagement">Manage
+        Account</button>
+
+
+    <div class="modal fade" id="accountManagement" tabindex="-1" role="dialog" aria-labelledby="accountManagementLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="accountManagementLabel">Manage Account</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+                        <fieldset class="form-group">
+                            <div class="text-center">
+                                <button type="button" class="btn btn-secondary mb-4 mr-auto ml-auto"
+                                    id="update-username-btn" aria-controls="update-username">
+                                    Update Username <span class="material-icons icon">edit</span>
+                                </button>
+                                <button type="button" class="btn btn-secondary mb-4 mr-auto ml-auto"
+                                    id="update-email-btn" aria-controls="update-email">
+                                    Update Email <span class="material-icons icon">edit</span>
+                                </button>
+                                <button type="button" class="btn btn-secondary mb-4 mr-auto ml-auto"
+                                    id="update-password-btn" aria-controls="update-password">
+                                    Update Password <span class="material-icons icon">edit</span>
+                                </button>
+                            </div>
+                            <div class="form-group" id="update-username" aria-expanded="false"
+                                aria-labelledby="update-username-btn" aria-hidden="true">
+                                {{ form.username.label(class="form-control-label") }}
+                                {% if form.username.errors %}
+                                {{ form.username(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.email.errors %}
+                                    <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.username(class="form-control form-control-lg", placeholder=username) }}
+                                {% endif %}
+                                <hr class="w-50 mb-3">
+                            </div>
+
+                            <div class="form-group" id="update-email" aria-expanded="false"
+                                aria-labelledby="update-email-btn" aria-hidden="true">
+                                {{ form.email.label(class="form-control-label") }}
+                                {% if form.email.errors %}
+                                {{ form.email(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.email.errors %}
+                                    <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.email(class="form-control form-control-lg", placeholder=email) }}
+                                {% endif %}
+                                <hr class="w-50 mb-3">
+                            </div>
+
+                            <div id="update-password" aria-expanded="false" aria-labelledby="update-password-btn"
+                                aria-hidden="true">
+                                <div class="form-group">
+                                    {{ form.new_password.label(class="form-control-label") }}
+                                    {% if form.new_password.errors %}
+                                    {{ form.new_password(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.new_password.errors %}
+                                        <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ form.new_password(class="form-control form-control-lg") }}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form.confirm_password.label(class="form-control-label") }}
+                                    {% if form.confirm_password.errors %}
+                                    {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.confirm_password.errors %}
+                                        <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ form.new_password(class="form-control form-control-lg") }}
+                                    {% endif %}
+                                </div>
+
+                                <hr class="w-50 mb-3">
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.password.label(class="form-control-label") }}
+                                {% if form.password.errors %}
+                                {{ form.password(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.password.errors %}
+                                    <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ form.password(class="form-control form-control-lg") }}
+                                {% endif %}
+                            </div>
+                        </fieldset>
+                        <div class="form-group text-right">
+                            {{ form.submit(class="btn btn-primary") }}
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

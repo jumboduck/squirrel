@@ -1,7 +1,7 @@
 from os import path
 from flask import Flask, render_template, url_for, flash, redirect,\
     request, jsonify
-from forms import RegistrationForm, LoginForm, EntryForm, NewEntryForm
+from forms import RegistrationForm, LoginForm, EntryForm, NewEntryForm, UpdateAccount
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -45,6 +45,8 @@ class User(UserMixin):
         self.user = user
         self.username = user['username']
         self.id = user['_id']
+        self.email = user['email']
+        self.password = user['password']
 
     def get_id(self):
         object_id = self.user['_id']
@@ -600,6 +602,89 @@ def delete(entry_id):
         return redirect(url_for('listing'))
     else:
         return render_template('pages/403.html',  title="Forbidden")
+
+
+"""
+# Profile Route
+# =============
+#
+# This route displays the user profile, which contains statistics about
+# their squirrel repository, such as number of reviews, number of favorites,
+# average rating, most used tags.
+# It also allows for users to update their username, password, and email
+# address.
+"""
+
+
+@app.route('/profile/', methods=["POST", "GET"])
+@login_required
+def profile():
+    form = UpdateAccount()
+    entries = mongo.db.entries
+    users = mongo.db.users
+    num_entries = entries.count({'user_id': current_user.id})
+    num_fav = entries.count({'user_id': current_user.id, 'is_fav': True})
+    avg_rating = entries.aggregate([
+        {
+            "$group": {
+                "_id": current_user.id,
+                "result": {
+                    "$avg": "$rating"
+                }
+            }
+        }
+    ])
+
+    rounded_avg = round(list(avg_rating)[0]['result'], 2)
+
+    if form.is_submitted():
+        if form.validate() and bcrypt.check_password_hash(
+            current_user.password,
+            form.password.data.encode('utf-8')):
+
+            if form.username.data:     
+                new_username = form.username.data
+            else:
+                new_username = current_user.username
+
+            if form.email.data:
+                new_email = form.email.data
+            else:
+                new_email = current_user.email
+
+            if form.new_password.data:
+                new_password = bcrypt.generate_password_hash(
+                                        form.new_password.data
+                                        ).decode('utf-8')
+            else:
+                new_password = current_user.password
+            
+            users.update_one(
+            {"_id": current_user.id},
+            {"$set":
+                {
+                    "username": new_username,
+                    "email": new_email,
+                    "password": new_password
+                }
+            })
+            flash("Account information updated successfully", "success")
+            return redirect(url_for("profile"))
+
+        else:
+            flash("There was a problem updating your information.", "danger")
+
+    return render_template(
+        'pages/profile.html',
+        title="Profile",
+        num_entries=num_entries,
+        num_fav=num_fav,
+        avg_rating=rounded_avg,
+        username=current_user.username,
+        email=current_user.email,
+        form=form
+    )
+
 
 
 """

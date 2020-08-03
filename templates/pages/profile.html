@@ -12,11 +12,11 @@
 {% endif %}
 {% endwith %}
 
-<h1>Profile for {{ username }}</h1>
+<h1 class="page-title">Profile for {{ username }}</h1>
 
 <p>Number of reviews: {{ num_entries }}</p>
 <p>Number of favorites: {{ num_fav }}</p>
-<p>Average rating: {{ avg_rating }}</p>
+<p>Average rating: {{ avg_rating }}/5</p>
 
 
 {% endblock %}

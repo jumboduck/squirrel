@@ -36,7 +36,19 @@
                 <form method="POST">
                     {{ form.hidden_tag() }}
                     <fieldset class="form-group">
-
+                        <div class="text-center">
+                            <button type="button" class="btn btn-secondary mb-4 mr-auto ml-auto"
+                                id="update-username-btn">
+                                Update Username <span class="material-icons">edit</span>
+                            </button>
+                            <button type="button" class="btn btn-secondary mb-4 mr-auto ml-auto" id="update-email-btn">
+                                Update Email <span class="material-icons">edit</span>
+                            </button>
+                            <button type="button" class="btn btn-secondary mb-4 mr-auto ml-auto"
+                                id="update-password-btn">
+                                Update Password <span class="material-icons">edit</span>
+                            </button>
+                        </div>
                         <div class="form-group" id="update-username">
                             {{ form.username.label(class="form-control-label") }}
                             {% if form.username.errors %}
@@ -50,10 +62,6 @@
                             {{ form.username(class="form-control form-control-lg") }}
                             {% endif %}
                         </div>
-
-                        <button class="btn btn-secondary mb-4 mr-auto ml-auto d-block" id="update-username-btn">
-                            Update Username <span class="material-icons">edit</span>
-                        </button>
 
                         <div class="form-group" id="update-email">
                             {{ form.email.label(class="form-control-label") }}
@@ -69,10 +77,6 @@
                             {% endif %}
                         </div>
 
-                        <button class="btn btn-secondary mb-4 mr-auto ml-auto d-block" id="update-email-btn">
-                            Update Email <span class="material-icons">edit</span>
-                        </button>
-
                         <div class="form-group" id="update-password">
                             {{ form.new_password.label(class="form-control-label") }}
                             {% if form.new_password.errors %}
@@ -86,10 +90,6 @@
                             {{ form.new_password(class="form-control form-control-lg") }}
                             {% endif %}
                         </div>
-
-                        <button class="btn btn-secondary mb-4 mr-auto ml-auto d-block" id="update-password-btn">
-                            Update Password <span class="material-icons">edit</span>
-                        </button>
 
                         <div class="form-group">
                             {{ form.password.label(class="form-control-label") }}

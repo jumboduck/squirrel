@@ -170,6 +170,25 @@ $("#new-entry #new-tag").click(function () {
     }
 });
 
+/* The following code shows and hides the fields to update account information */
+
+$("#update-username").hide();
+$("#update-email").hide();
+$("#update-password").hide();
+
+$("#update-username-btn").click(() => {
+    $("#update-username").toggle();
+    $("#update-username-btn").toggleClass("selected");
+});
+$("#update-email-btn").click(() => {
+    $("#update-email").toggle();
+    $("#update-email-btn").toggleClass("selected");
+});
+$("#update-password-btn").click(() => {
+    $("#update-password").toggle();
+    $("#update-password-btn").toggleClass("selected");
+});
+
 // Initialize tooltips
 $("[data-toggle=tooltip]").tooltip();
 

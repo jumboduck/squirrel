@@ -83,7 +83,8 @@ a:hover {
     padding: 0.2rem 0.5rem;
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover,
+.btn-secondary.selected {
     color: #535f6b;
     background-color: transparent;
     border-color: #535f6b;

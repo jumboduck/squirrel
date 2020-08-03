@@ -63,7 +63,7 @@
                                     {% endfor %}
                                 </div>
                                 {% else %}
-                                {{ form.username(class="form-control form-control-lg") }}
+                                {{ form.username(class="form-control form-control-lg", placeholder=username) }}
                                 {% endif %}
                             </div>
 
@@ -78,7 +78,7 @@
                                     {% endfor %}
                                 </div>
                                 {% else %}
-                                {{ form.email(class="form-control form-control-lg") }}
+                                {{ form.email(class="form-control form-control-lg", placeholder=email) }}
                                 {% endif %}
                             </div>
 

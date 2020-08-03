@@ -45,6 +45,7 @@ class User(UserMixin):
         self.user = user
         self.username = user['username']
         self.id = user['_id']
+        self.email = user['email']
 
     def get_id(self):
         object_id = self.user['_id']
@@ -634,6 +635,8 @@ def profile():
 
     rounded_avg = round(list(avg_rating)[0]['result'], 2)
 
+    # if form.validate_on_submit():
+
     return render_template(
         'pages/profile.html',
         title="Profile",
@@ -641,6 +644,7 @@ def profile():
         num_fav=num_fav,
         avg_rating=rounded_avg,
         username=current_user.username,
+        email=current_user.email,
         form=form
     )
 

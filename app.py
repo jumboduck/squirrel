@@ -638,27 +638,38 @@ def profile():
     rounded_avg = round(list(avg_rating)[0]['result'], 2)
 
     if form.is_submitted():
-        if form.validate():
-            if bcrypt.check_password_hash(
-                current_user.password,
-                form.password.data.encode('utf-8')):
+        if form.validate() and bcrypt.check_password_hash(
+            current_user.password,
+            form.password.data.encode('utf-8')):
+
+            if form.username.data:     
                 new_username = form.username.data
+            else:
+                new_username = current_user.username
+
+            if form.email.data:
                 new_email = form.email.data
+            else:
+                new_email = current_user.email
+
+            if form.new_password.data:
                 new_password = bcrypt.generate_password_hash(
                                         form.new_password.data
                                         ).decode('utf-8')
-                
-                users.update_one(
-                {"_id": current_user.id},
-                {"$set":
-                    {
-                        "username": new_username,
-                        "email": new_email,
-                        "password": new_password
-                    }
+            else:
+                new_password = current_user.password
+            
+            users.update_one(
+            {"_id": current_user.id},
+            {"$set":
+                {
+                    "username": new_username,
+                    "email": new_email,
+                    "password": new_password
                 }
-            )
+            })
             flash("Account information updated successfully", "success")
+            return redirect(url_for("profile"))
 
         else:
             flash("There was a problem updating your information.", "danger")

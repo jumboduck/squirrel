@@ -38,18 +38,20 @@
                     <fieldset class="form-group">
                         <div class="text-center">
                             <button type="button" class="btn btn-secondary mb-4 mr-auto ml-auto"
-                                id="update-username-btn">
-                                Update Username <span class="material-icons">edit</span>
+                                id="update-username-btn" aria-controls="update-username">
+                                Update Username <span class="material-icons icon">edit</span>
                             </button>
-                            <button type="button" class="btn btn-secondary mb-4 mr-auto ml-auto" id="update-email-btn">
-                                Update Email <span class="material-icons">edit</span>
+                            <button type="button" class="btn btn-secondary mb-4 mr-auto ml-auto" id="update-email-btn"
+                                aria-controls="update-email">
+                                Update Email <span class="material-icons icon">edit</span>
                             </button>
                             <button type="button" class="btn btn-secondary mb-4 mr-auto ml-auto"
-                                id="update-password-btn">
-                                Update Password <span class="material-icons">edit</span>
+                                id="update-password-btn" aria-controls="update-password">
+                                Update Password <span class="material-icons icon">edit</span>
                             </button>
                         </div>
-                        <div class="form-group" id="update-username">
+                        <div class="form-group" id="update-username" aria-expanded="false"
+                            aria-labelledby="update-username-btn" aria-hidden="true">
                             {{ form.username.label(class="form-control-label") }}
                             {% if form.username.errors %}
                             {{ form.email(class="form-control form-control-lg is-invalid") }}
@@ -63,7 +65,8 @@
                             {% endif %}
                         </div>
 
-                        <div class="form-group" id="update-email">
+                        <div class="form-group" id="update-email" aria-expanded="false"
+                            aria-labelledby="update-email-btn" aria-hidden="true">
                             {{ form.email.label(class="form-control-label") }}
                             {% if form.email.errors %}
                             {{ form.email(class="form-control form-control-lg is-invalid") }}
@@ -77,7 +80,8 @@
                             {% endif %}
                         </div>
 
-                        <div class="form-group" id="update-password">
+                        <div class="form-group" id="update-password" aria-expanded="false"
+                            aria-labelledby="update-password-btn" aria-hidden="true">
                             {{ form.new_password.label(class="form-control-label") }}
                             {% if form.new_password.errors %}
                             {{ form.new_password(class="form-control form-control-lg is-invalid") }}

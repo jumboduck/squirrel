@@ -47,8 +47,7 @@ class UpdateAccount(FlaskForm):
     username = StringField('Username', validators=[Length(min=1, max=30), Optional()])
     email = StringField('Email', validators=[Email(), Optional()])
     new_password = PasswordField('New Password',  validators=[Length(min=8), Optional()])
-    confirm_password = PasswordField('Confirm New Password', validators=[EqualTo('new_password'), Optional()])
+    confirm_password = PasswordField('Confirm New Password', validators=[EqualTo('new_password')])
     password = PasswordField('Current Password', validators=[DataRequired()])
- 
     submit = SubmitField('Save Changes')
 

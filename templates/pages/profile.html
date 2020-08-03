@@ -56,7 +56,7 @@
                                 aria-labelledby="update-username-btn" aria-hidden="true">
                                 {{ form.username.label(class="form-control-label") }}
                                 {% if form.username.errors %}
-                                {{ form.email(class="form-control form-control-lg is-invalid") }}
+                                {{ form.username(class="form-control form-control-lg is-invalid") }}
                                 <div class="invalid-feedback">
                                     {% for error in form.email.errors %}
                                     <p>{{ error }}</p>

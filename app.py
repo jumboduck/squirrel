@@ -39,8 +39,17 @@ Global Variables
 """
 users = mongo.db.users
 entries = mongo.db.entries
-timestamp = datetime.now()
 time_format  = "%d/%m/%Y at %H:%M:%S"
+
+
+"""
+Update functions
+"""
+def update_success_msg(field, timestamp, image=""):
+    return jsonify({"updated_on": timestamp.strftime(time_format),
+                    "new_image": image,
+                    "success_message": f"{field} sucessfully updated.",
+                    "message_class": "valid-update"})
 
 
 """
@@ -323,6 +332,7 @@ def entry(entry_id):
 @app.route('/update_fav/<entry_id>', methods=['POST', 'GET'])
 @login_required
 def update_fav(entry_id):
+    timestamp = datetime.now()
     form = EntryForm()
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     if the_entry["user_id"] == current_user.id:
@@ -335,11 +345,7 @@ def update_fav(entry_id):
                 }
              },
         )
-        return jsonify({"updated_on": timestamp.strftime(
-                            time_format
-                        ),
-                        "success_message": "Review sucessfully updated.",
-                        "message_class": "alert-success"})
+        return jsonify({"updated_on": timestamp.strftime(time_format)})
     else:
         return render_template('pages/403.html',  title="Forbidden")
 
@@ -347,6 +353,7 @@ def update_fav(entry_id):
 @app.route('/update_name/<entry_id>', methods=['POST', 'GET'])
 @login_required
 def update_name(entry_id):
+    timestamp = datetime.now()
     form = EntryForm()
     new_name = form.name.data
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
@@ -361,11 +368,7 @@ def update_name(entry_id):
                     }
                  }
             )
-            return jsonify({"updated_on": timestamp.strftime(
-                                time_format
-                            ),
-                            "success_message": "Name sucessfully updated.",
-                            "message_class": "valid-update"})
+            return update_success_msg("Name", timestamp)
     else:
         return render_template('pages/403.html',  title="Forbidden")
 
@@ -373,6 +376,7 @@ def update_name(entry_id):
 @app.route('/update_description/<entry_id>', methods=['POST', 'GET'])
 @login_required
 def update_description(entry_id):
+    timestamp = datetime.now()
     form = EntryForm()
     new_description = form.description.data
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
@@ -387,12 +391,7 @@ def update_description(entry_id):
                     }
                  }
             )
-            return jsonify({"updated_on": timestamp.strftime(
-                                time_format
-                            ),
-                            "success_message":
-                                "Description sucessfully updated.",
-                            "message_class": "valid-update"})
+            return update_success_msg("Description", timestamp)
     else:
         return render_template('pages/403.html',  title="Forbidden")
 
@@ -400,6 +399,7 @@ def update_description(entry_id):
 @app.route('/update_rating/<entry_id>', methods=['POST', 'GET'])
 @login_required
 def update_rating(entry_id):
+    timestamp = datetime.now()
     form = EntryForm()
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     if the_entry["user_id"] == current_user.id:
@@ -412,11 +412,7 @@ def update_rating(entry_id):
                 }
              }
         )
-        return jsonify({"updated_on": timestamp.strftime(
-                            time_format
-                            ),
-                        "success_message": "Rating sucessfully updated.",
-                        "message_class": "valid-update"})
+        return update_success_msg("Rating", timestamp)
     else:
         return render_template('pages/403.html',  title="Forbidden")
 
@@ -424,6 +420,7 @@ def update_rating(entry_id):
 @app.route('/update_tags/<entry_id>', methods=['POST', 'GET'])
 @login_required
 def update_tags(entry_id):
+    timestamp = datetime.now()
     form = EntryForm()
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     if the_entry["user_id"] == current_user.id:
@@ -437,11 +434,7 @@ def update_tags(entry_id):
                                     }
                                  }
                              )
-            return jsonify({"updated_on": timestamp.strftime(
-                                time_format
-                            ),
-                            "success_message": "Tags sucessfully updated.",
-                            "message_class": "valid-update"})
+            return update_success_msg("Tags", timestamp)
 
         else:
             # turn tags to a lowercase list and remove duplicates
@@ -459,11 +452,7 @@ def update_tags(entry_id):
                                      "updated_on": timestamp}
                                  }
                             )
-            return jsonify({"updated_on": timestamp.strftime(
-                                time_format
-                            ),
-                            "success_message": "Tags sucessfully updated.",
-                            "message_class": "valid-update"})
+            return update_success_msg("Tags", timestamp)
     else:
         return render_template('pages/403.html',  title="Forbidden")
 
@@ -471,6 +460,7 @@ def update_tags(entry_id):
 @app.route('/update_image/<entry_id>', methods=['POST', 'GET'])
 @login_required
 def update_image(entry_id):
+    timestamp = datetime.now()
     form = EntryForm()
     image = request.files[form.image.name]
     uploaded_image = cloudinary.uploader.upload(
@@ -489,12 +479,7 @@ def update_image(entry_id):
                      }
                 )
 
-        return jsonify({"new_image": image_url,
-                        "updated_on": timestamp.strftime(
-                            time_format
-                        ),
-                        "success_message": "Image sucessfully updated.",
-                        "message_class": "valid-update"})
+        return update_success_msg("Image", timestamp, image_url)
     else:
         return render_template('pages/403.html',  title="Forbidden")
 
@@ -682,7 +667,7 @@ def profile():
 # Search Routes
 # =============
 #
-# This first route sends the information in the search bar to
+# This first route sends the information from the search bar to
 # the search results route.
 """
 

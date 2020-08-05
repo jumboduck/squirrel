@@ -31,8 +31,16 @@ bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
-
 login_manager.init_app(app)
+
+
+"""
+Global Variables
+"""
+users = mongo.db.users
+entries = mongo.db.entries
+timestamp = datetime.now()
+time_format  = "%d/%m/%Y at %H:%M:%S"
 
 
 """
@@ -55,7 +63,7 @@ class User(UserMixin):
 
 @login_manager.user_loader
 def load_user(user_id):
-    user = mongo.db.users.find_one({'_id': ObjectId(user_id)})
+    user = users.find_one({'_id': ObjectId(user_id)})
     return User(user)
 
 
@@ -87,7 +95,6 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('listing'))
     form = LoginForm()
-    users = mongo.db.users
     if form.validate_on_submit():
         user = users.find_one({'email': form.email.data})
         # If user exists and password matches password in db,
@@ -138,7 +145,6 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for('listing'))
     form = RegistrationForm()
-    users = mongo.db.users
     if form.validate_on_submit():
         existing_email = users.find_one({'email': form.email.data})
         # Create new user only if email is not already in use
@@ -232,7 +238,7 @@ def listing(tag=None):
     offset = (page - 1) * limit
 
     # Count number of results for the query
-    entry_count = mongo.db.entries.count_documents(match_query)
+    entry_count = entries.count_documents(match_query)
     max_page = math.ceil(entry_count/limit)
 
     # Ensure that if an inexistant page is entered in the address bar,
@@ -241,7 +247,7 @@ def listing(tag=None):
         return render_template('pages/404.html',  title="Page Not Found")
 
     # Query that returns entries, sorted by creation date or update date
-    entries = mongo.db.entries.aggregate([
+    entries_list = entries.aggregate([
         {'$match': match_query},
         {'$addFields': {
             # Sorts by created date, or updated date if it exists
@@ -270,7 +276,7 @@ def listing(tag=None):
     return render_template(
         'pages/listing.html',
         title="Listing",
-        entries=entries,
+        entries=entries_list,
         tag=tag,
         next_url=next_url,
         prev_url=prev_url,
@@ -297,7 +303,7 @@ def listing(tag=None):
 @login_required
 def entry(entry_id):
     form = EntryForm()
-    the_entry = mongo.db.entries.find_one({"_id": ObjectId(entry_id)})
+    the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     if the_entry["user_id"] == current_user.id:
         form.name.data = the_entry["name"]
         form.description.data = the_entry["description"]
@@ -318,8 +324,6 @@ def entry(entry_id):
 @login_required
 def update_fav(entry_id):
     form = EntryForm()
-    entries = mongo.db.entries
-    timestamp = datetime.now()
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     if the_entry["user_id"] == current_user.id:
         entries.update_one(
@@ -332,7 +336,7 @@ def update_fav(entry_id):
              },
         )
         return jsonify({"updated_on": timestamp.strftime(
-                            "%d/%m/%Y at %H:%M:%S"
+                            time_format
                         ),
                         "success_message": "Review sucessfully updated.",
                         "message_class": "alert-success"})
@@ -344,8 +348,6 @@ def update_fav(entry_id):
 @login_required
 def update_name(entry_id):
     form = EntryForm()
-    entries = mongo.db.entries
-    timestamp = datetime.now()
     new_name = form.name.data
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     if the_entry["user_id"] == current_user.id:
@@ -360,7 +362,7 @@ def update_name(entry_id):
                  }
             )
             return jsonify({"updated_on": timestamp.strftime(
-                                "%d/%m/%Y at %H:%M:%S"
+                                time_format
                             ),
                             "success_message": "Name sucessfully updated.",
                             "message_class": "valid-update"})
@@ -372,8 +374,6 @@ def update_name(entry_id):
 @login_required
 def update_description(entry_id):
     form = EntryForm()
-    entries = mongo.db.entries
-    timestamp = datetime.now()
     new_description = form.description.data
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     if the_entry["user_id"] == current_user.id:
@@ -388,7 +388,7 @@ def update_description(entry_id):
                  }
             )
             return jsonify({"updated_on": timestamp.strftime(
-                                "%d/%m/%Y at %H:%M:%S"
+                                time_format
                             ),
                             "success_message":
                                 "Description sucessfully updated.",
@@ -401,8 +401,6 @@ def update_description(entry_id):
 @login_required
 def update_rating(entry_id):
     form = EntryForm()
-    entries = mongo.db.entries
-    timestamp = datetime.now()
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     if the_entry["user_id"] == current_user.id:
         entries.update_one(
@@ -415,7 +413,7 @@ def update_rating(entry_id):
              }
         )
         return jsonify({"updated_on": timestamp.strftime(
-                            "%d/%m/%Y at %H:%M:%S"
+                            time_format
                             ),
                         "success_message": "Rating sucessfully updated.",
                         "message_class": "valid-update"})
@@ -427,8 +425,6 @@ def update_rating(entry_id):
 @login_required
 def update_tags(entry_id):
     form = EntryForm()
-    entries = mongo.db.entries
-    timestamp = datetime.now()
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     if the_entry["user_id"] == current_user.id:
         if len(form.tags.data) == 0:
@@ -442,7 +438,7 @@ def update_tags(entry_id):
                                  }
                              )
             return jsonify({"updated_on": timestamp.strftime(
-                                "%d/%m/%Y at %H:%M:%S"
+                                time_format
                             ),
                             "success_message": "Tags sucessfully updated.",
                             "message_class": "valid-update"})
@@ -452,9 +448,9 @@ def update_tags(entry_id):
             lowercase_tags = form.tags.data.lower().split(',')
 
             final_tags = []
-            for x in lowercase_tags:
-                if x not in final_tags:
-                    final_tags.append(x)
+            for tag in lowercase_tags:
+                if tag not in final_tags:
+                    final_tags.append(tag)
 
             entries.update_one(
                                 {"_id": ObjectId(entry_id)},
@@ -464,7 +460,7 @@ def update_tags(entry_id):
                                  }
                             )
             return jsonify({"updated_on": timestamp.strftime(
-                                "%d/%m/%Y at %H:%M:%S"
+                                time_format
                             ),
                             "success_message": "Tags sucessfully updated.",
                             "message_class": "valid-update"})
@@ -476,8 +472,6 @@ def update_tags(entry_id):
 @login_required
 def update_image(entry_id):
     form = EntryForm()
-    entries = mongo.db.entries
-    timestamp = datetime.now()
     image = request.files[form.image.name]
     uploaded_image = cloudinary.uploader.upload(
                                                 image, width=800,
@@ -497,7 +491,7 @@ def update_image(entry_id):
 
         return jsonify({"new_image": image_url,
                         "updated_on": timestamp.strftime(
-                            "%d/%m/%Y at %H:%M:%S"
+                            time_format
                         ),
                         "success_message": "Image sucessfully updated.",
                         "message_class": "valid-update"})
@@ -518,7 +512,6 @@ def update_image(entry_id):
 @login_required
 def new_entry():
     form = NewEntryForm()
-    entries = mongo.db.entries
     if form.validate_on_submit():
         # Images are uploaded to cloudinary, and their url
         # is inserted into the image field of the database.
@@ -592,11 +585,11 @@ def new_entry():
 @app.route('/delete/<entry_id>')
 @login_required
 def delete(entry_id):
-    the_entry = mongo.db.entries.find_one({"_id": ObjectId(entry_id)})
+    the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     if the_entry["user_id"] == current_user.id:
         review_name = the_entry["name"]
         image_id = the_entry["image_id"]
-        mongo.db.entries.delete_one({"_id": ObjectId(entry_id)})
+        entries.delete_one({"_id": ObjectId(entry_id)})
         cloudinary.uploader.destroy(image_id)
         flash(f'Review for “{review_name}” was deleted.', 'success')
         return redirect(url_for('listing'))
@@ -620,8 +613,6 @@ def delete(entry_id):
 @login_required
 def profile():
     form = UpdateAccount()
-    entries = mongo.db.entries
-    users = mongo.db.users
     num_entries = entries.count({'user_id': current_user.id})
     num_fav = entries.count({'user_id': current_user.id, 'is_fav': True})
     avg_rating = entries.aggregate([
@@ -713,7 +704,6 @@ def get_search():
 @app.route('/search/<search_term>', methods=["POST", "GET"])
 @login_required
 def search(search_term):
-    entries = mongo.db.entries
     entries.create_index([
         ("name", "text"),
         ("description", "text"),

@@ -19,7 +19,7 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav text-center">
 				{% if current_user.is_authenticated %}
-				<li>
+				<li class="mt-2 mb-2">
 					<form class="form-inline search-container" action="{{url_for('get_search')}}" method="POST">
 						<input class="search-input" type="search" placeholder="Enter a search term" aria-label="Search"
 							name="search_field" required>
@@ -31,7 +31,7 @@
 				<li class="nav-item"><a class="nav-link" href="{{url_for('listing')}}">Home</a></li>
 				<li class="nav-item"><a class="nav-link" href="{{url_for('new_entry')}}">+ New Review</a></li>
 				<li class="nav-item"><a class="nav-link" href="{{url_for('profile')}}">Profile</a></li>
-
+				<hr class="nav-hr">
 				<li class="logout-info">logged in as {{current_user.username}}<a class="nav-link"
 						href="{{url_for('logout')}}" id="logout">(log out)</a></li>
 				{% else %}

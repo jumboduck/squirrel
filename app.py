@@ -398,7 +398,7 @@ def update_rating(entry_id):
     form = EntryForm()
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     if the_entry["user_id"] == current_user.id:
-        update_field({"rating": form.rating.data, "updated_on": timestamp}, entry_id)
+        update_field({"rating": int(form.rating.data), "updated_on": timestamp}, entry_id)
         return update_success_msg("Rating", timestamp)
     else:
         return render_template('pages/403.html',  title="Forbidden")

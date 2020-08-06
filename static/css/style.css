@@ -620,6 +620,16 @@ a.badge-primary:focus {
     transform: scale(1.2);
 }
 
+/* Profile */
+
+.profile-rating {
+    color: #ffaa1d;
+}
+
+.profile-fav {
+    color: #ff69b4;
+}
+
 /* Update feedback */
 
 #name-feedback {

@@ -64,7 +64,7 @@
             <span class="sr-only">Rating: {{ entry.rating }}/5</span>
             <p class="card-text">
                 {% if entry.tags %}
-                <span class="small-title">Tags: </span>
+                <p class="card-text d-inline-block mb-0">Tags: </p>
                 {% for tag in entry.tags %}
                 <a href="{{url_for('listing', tag=tag)}}" class="badge badge-pill badge-primary">{{tag}}</a>
                 {% endfor %}

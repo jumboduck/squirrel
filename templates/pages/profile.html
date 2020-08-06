@@ -13,24 +13,29 @@
 {% endwith %}
 <div class="entry">
     <img class="d-block ml-auto mr-auto w-25" src="{{url_for('static', filename='img/image-placeholder.png')}}">
-    <h1 class="page-title text-center">Profile for {{ username }}</h1>
-    <div class="row">
-        <div class="col-md-6">
-            <p class="text-center"><strong>Number of reviews:</strong> {{ num_entries }}</p>
-            <p class="text-center"><strong>Number of favorites:</strong> {{ num_fav }}
-                <span class="material-icons profile-fav">
-                    favorite
-                </span>
-            </p>
-            <p class="text-center"><strong>Average rating:</strong> {{ avg_rating }}/5
-                <span class="material-icons profile-rating">
-                    star
-                </span>
-            </p>
+    <h1 class="page-title text-center mb-5">Profile for {{ username }}</h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
+                <p><strong>Number of reviews:</strong> {{ num_entries }}</p>
+                <p><strong>Number of favorites:</strong> {{ num_fav }}
+                    <span class="material-icons profile-fav">
+                        favorite
+                    </span>
+                </p>
+                <p><strong>Average rating:</strong> {{ avg_rating }}/5
+                    <span class="material-icons profile-rating">
+                        star
+                    </span>
+                </p>
+            </div>
         </div>
     </div>
 
-    <button class="btn btn-primary ml-auto mr-auto d-block" data-toggle="modal" data-target="#accountManagement">Manage
+    <button class="btn btn-primary ml-auto mr-auto d-block mt-4" data-toggle="modal"
+        data-target="#accountManagement">Manage
         Account</button>
 
 
@@ -121,7 +126,7 @@
                                         {% endfor %}
                                     </div>
                                     {% else %}
-                                    {{ form.new_password(class="form-control form-control-lg") }}
+                                    {{ form.confirm_password(class="form-control form-control-lg") }}
                                     {% endif %}
                                 </div>
 

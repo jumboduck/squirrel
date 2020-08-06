@@ -469,12 +469,12 @@ a:hover {
     transform: scale(1.1);
 }
 
-.badge-primary {
-    background-color: #a99279;
-}
-
-a.badge-primary:hover {
+.badge-primary,
+a.badge-primary:hover,
+a.badge-primary:active,
+a.badge-primary:focus {
     background-color: #997f62;
+    font-weight: 400;
 }
 
 .entry .tag {

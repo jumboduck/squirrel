@@ -45,6 +45,9 @@ time_format  = "%d/%m/%Y at %H:%M:%S"
 """
 Update functions
 """
+
+
+# This function creates return information for AJAX when a field is updated.
 def update_success_msg(field, timestamp, image=""):
     return jsonify({"updated_on": timestamp.strftime(time_format),
                     "new_image": image,
@@ -52,6 +55,7 @@ def update_success_msg(field, timestamp, image=""):
                     "message_class": "valid-update"})
 
 
+# This function updates a document in the database with new information
 def update_field(fields, entry_id):
     entries.update_one(
             {"_id": ObjectId(entry_id)},
@@ -334,6 +338,14 @@ def entry(entry_id):
             form=form)
     else:
         return render_template('pages/403.html',  title="Forbidden")
+
+
+"""
+# Update Routes
+# =============
+# The following routes are called with AJAX requests to make updates to the
+# various fields of an entry without reloading the page.
+"""
 
 
 @app.route('/update_fav/<entry_id>', methods=['POST', 'GET'])

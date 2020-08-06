@@ -52,15 +52,10 @@ def update_success_msg(field, timestamp, image=""):
                     "message_class": "valid-update"})
 
 
-def update_db(field, value, entry_id, timestamp):
+def update_field(fields, entry_id):
     entries.update_one(
             {"_id": ObjectId(entry_id)},
-            {"$set":
-                {
-                    field: value,
-                    "updated_on": timestamp
-                }
-             }
+            {"$set": fields}
         )
 
 
@@ -348,7 +343,7 @@ def update_fav(entry_id):
     form = EntryForm()
     timestamp = datetime.now()
     if the_entry["user_id"] == current_user.id:
-        update_db("is_fav", form.is_fav.data, entry_id, timestamp)
+        update_field({"is_fav": form.is_fav.data, "updated_on": timestamp}, entry_id)
         return update_success_msg("is_fav", timestamp)
     else:
         return render_template('pages/403.html',  title="Forbidden")
@@ -363,7 +358,7 @@ def update_name(entry_id):
     timestamp = datetime.now()
     if the_entry["user_id"] == current_user.id:
         if len(new_name) > 0 and len(new_name) <= 30:
-            update_db("name", form.name.data, entry_id, timestamp)
+            update_field({"name": form.name.data, "updated_on": timestamp}, entry_id)
             return update_success_msg("Name", timestamp)
     else:
         return render_template('pages/403.html',  title="Forbidden")
@@ -378,7 +373,7 @@ def update_description(entry_id):
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     if the_entry["user_id"] == current_user.id:
         if len(new_description) > 0 and len(new_description) <= 2000:
-            update_db("description", form.description.data, entry_id, timestamp)
+            update_field({"description": form.description.data, "updated_on": timestamp}, entry_id)
             return update_success_msg("Description", timestamp)
     else:
         return render_template('pages/403.html',  title="Forbidden")
@@ -391,7 +386,7 @@ def update_rating(entry_id):
     form = EntryForm()
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     if the_entry["user_id"] == current_user.id:
-        update_db("rating", int(form.rating.data), entry_id, timestamp)
+        update_field({"rating": form.rating.data, "updated_on": timestamp}, entry_id)
         return update_success_msg("Rating", timestamp)
     else:
         return render_template('pages/403.html',  title="Forbidden")
@@ -424,7 +419,7 @@ def update_tags(entry_id):
             for tag in lowercase_tags:
                 if tag not in final_tags:
                     final_tags.append(tag)
-            update_db("tags", final_tags, entry_id, timestamp)
+            update_field({"tags": final_tags, "updated_on": timestamp}, entry_id)
             return update_success_msg("Tags", timestamp)
     else:
         return render_template('pages/403.html',  title="Forbidden")
@@ -445,12 +440,7 @@ def update_image(entry_id):
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     cloudinary.uploader.destroy(the_entry["image_id"])
     if the_entry["user_id"] == current_user.id:
-        entries.update_one(
-                    {"_id": ObjectId(entry_id)},
-                    {"$set":
-                        {"image": image_url, "image_id": new_image_id, "updated_on": timestamp}
-                     }
-                )
+        update_field({"image": image_url, "image_id": new_image_id, "updated_on": timestamp}, entry_id)
 
         return update_success_msg("Image", timestamp, image_url)
     else:

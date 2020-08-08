@@ -172,6 +172,12 @@ a:hover {
     font-weight: 400;
 }
 
+.nav-hr {
+    width: 50%;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 0;
+}
+
 /* Review Cards in listing  */
 .card-img-top {
     max-height: 15rem;
@@ -457,24 +463,18 @@ a:hover {
 
 /* Tags */
 
-.badge {
-    -webkit-transition: 0.3s;
-    -o-transition: 0.3s;
-    transition: 0.3s;
-}
-
-.badge:hover {
-    -webkit-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    transform: scale(1.1);
-}
-
 .badge-primary {
-    background-color: #a99279;
+    background-color: #997f62;
+    border: 1px solid #997f62;
+    font-weight: 400;
 }
 
-a.badge-primary:hover {
-    background-color: #997f62;
+a.badge-primary:hover,
+a.badge-primary:active,
+a.badge-primary:focus {
+    background-color: transparent;
+    border: 1px solid #997f62;
+    color: #997f62;
 }
 
 .entry .tag {
@@ -486,10 +486,6 @@ a.badge-primary:hover {
 
 .entry .delete-tag {
     padding-right: 0.4rem;
-    border: 0;
-}
-
-.view-tag {
     border: 0;
 }
 
@@ -628,6 +624,16 @@ a.badge-primary:hover {
     -webkit-transform: scale(1.2);
     -ms-transform: scale(1.2);
     transform: scale(1.2);
+}
+
+/* Profile */
+
+.profile-rating {
+    color: #ffaa1d;
+}
+
+.profile-fav {
+    color: #ff69b4;
 }
 
 /* Update feedback */

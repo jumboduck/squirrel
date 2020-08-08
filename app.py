@@ -612,7 +612,11 @@ def profile():
         }
     ])
 
-    rounded_avg = round(list(avg_rating)[0]['result'], 2)
+    if not list(avg_rating):
+        rounded_avg = 0
+    else:
+        rounded_avg = round(list(avg_rating)[0]['result'], 2)
+        
 
     if form.is_submitted():
         if form.validate() and bcrypt.check_password_hash(

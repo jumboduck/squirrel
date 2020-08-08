@@ -604,17 +604,19 @@ def profile():
     num_entries = entries.count({'user_id': current_user.id})
     num_fav = entries.count({'user_id': current_user.id, 'is_fav': True})
     avg_rating = entries.aggregate([
-        {
-            "$group": {
-                "_id": current_user.id,
-                "result": {
-                    "$avg": "$rating"
-                }
-            }
+        {"$match": {"user_id": current_user.id}},
+        {"$group": {
+                "_id": None,
+                "result": {"$avg": "$rating"}
+           }
         }
     ])
 
-    rounded_avg = round(list(avg_rating)[0]['result'], 2)
+    if num_entries == 0:
+        rounded_avg = 0
+    else:
+        rounded_avg = round(list(avg_rating)[0]['result'],2)
+
 
     if form.is_submitted():
         if form.validate() and bcrypt.check_password_hash(
@@ -652,7 +654,6 @@ def profile():
 
         else:
             flash("There was a problem updating your information.", "danger")
-
     return render_template(
         'pages/profile.html',
         title="Profile",

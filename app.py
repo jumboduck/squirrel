@@ -37,6 +37,8 @@ login_manager.init_app(app)
 """
 Global Variables
 """
+
+
 users = mongo.db.users
 entries = mongo.db.entries
 time_format  = "%d/%m/%Y at %H:%M:%S"
@@ -64,7 +66,10 @@ def update_field(fields, entry_id):
 
 
 """
-USER MANAGEMENT
+# USER MANAGEMENT
+# ===============
+# The following uses flask_login to create a user class that will be used
+# throughout the application.
 """
 
 
@@ -315,7 +320,6 @@ def listing(tag=None):
 #
 # If a user tries to access an entry created by another user (through the url),
 # they are redirected to a 403 page.
-
 """
 
 
@@ -345,9 +349,17 @@ def entry(entry_id):
 # =============
 # The following routes are called with AJAX requests to make updates to the
 # various fields of an entry without reloading the page.
+# They return a JSON object to the page which is processed with JavaScript.
+#
+# These function each update the appropriate field in the database and updates
+# the updated_on field with a new timestamp.
+#
+# On each of these routes, if the user tries to update an entry connected to
+# another account, it returns a 403 error.
 """
 
 
+# This route updates the is_fav status of the entry.
 @app.route('/update_fav/<entry_id>', methods=['POST', 'GET'])
 @login_required
 def update_fav(entry_id):
@@ -361,6 +373,9 @@ def update_fav(entry_id):
         return render_template('pages/403.html',  title="Forbidden")
 
 
+# This route updates the name of the entry.
+# The database is only is updated if the submitted string is between 0 and 30
+# characters long.
 @app.route('/update_name/<entry_id>', methods=['POST', 'GET'])
 @login_required
 def update_name(entry_id):
@@ -368,14 +383,16 @@ def update_name(entry_id):
     new_name = form.name.data
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     timestamp = datetime.now()
-    if the_entry["user_id"] == current_user.id:
-        if len(new_name) > 0 and len(new_name) <= 30:
-            update_field({"name": form.name.data, "updated_on": timestamp}, entry_id)
-            return update_success_msg("Name", timestamp)
+    if the_entry["user_id"] == current_user.id and len(new_name) > 0 and len(new_name) <= 30:
+        update_field({"name": form.name.data, "updated_on": timestamp}, entry_id)
+        return update_success_msg("Name", timestamp)
     else:
         return render_template('pages/403.html',  title="Forbidden")
 
 
+# This route updates the description of the entry.
+# The database is only is updated if the submitted string is between 0 and 2000
+# characters long.
 @app.route('/update_description/<entry_id>', methods=['POST', 'GET'])
 @login_required
 def update_description(entry_id):
@@ -383,14 +400,15 @@ def update_description(entry_id):
     form = EntryForm()
     new_description = form.description.data
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
-    if the_entry["user_id"] == current_user.id:
-        if len(new_description) > 0 and len(new_description) <= 2000:
-            update_field({"description": form.description.data, "updated_on": timestamp}, entry_id)
-            return update_success_msg("Description", timestamp)
+    if the_entry["user_id"] == current_user.id and len(new_description) > 0 and len(new_description) <= 2000:
+        update_field({"description": form.description.data, "updated_on": timestamp}, entry_id)
+        return update_success_msg("Description", timestamp)
     else:
         return render_template('pages/403.html',  title="Forbidden")
 
 
+# This route updates the rating of the entry.
+# It ensures that the data sent to the database is an integer, and not a string.
 @app.route('/update_rating/<entry_id>', methods=['POST', 'GET'])
 @login_required
 def update_rating(entry_id):
@@ -403,7 +421,7 @@ def update_rating(entry_id):
     else:
         return render_template('pages/403.html',  title="Forbidden")
 
-
+# This route updates the tags of the entry.
 @app.route('/update_tags/<entry_id>', methods=['POST', 'GET'])
 @login_required
 def update_tags(entry_id):
@@ -411,6 +429,7 @@ def update_tags(entry_id):
     form = EntryForm()
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     if the_entry["user_id"] == current_user.id:
+        # If the tag list sent to python is empty, remove field from db
         if len(form.tags.data) == 0:
             entries.update_one(
                                 {"_id": ObjectId(entry_id)},
@@ -424,7 +443,8 @@ def update_tags(entry_id):
             return update_success_msg("Tags", timestamp)
 
         else:
-            # turn tags to a lowercase list and remove duplicates
+            # If there is a list of tags, turn tags to a lowercase list and
+            # remove any duplicates
             lowercase_tags = form.tags.data.lower().split(',')
 
             final_tags = []
@@ -437,12 +457,17 @@ def update_tags(entry_id):
         return render_template('pages/403.html',  title="Forbidden")
 
 
+
+# This route updates the image of the entry.
+# It retrieves the new image's url and its public id from cloudinary to store
+# in the database.
 @app.route('/update_image/<entry_id>', methods=['POST', 'GET'])
 @login_required
 def update_image(entry_id):
     timestamp = datetime.now()
     form = EntryForm()
     image = request.files[form.image.name]
+    # The new image is uploaded to cloudinary and its url and id are retrieved
     uploaded_image = cloudinary.uploader.upload(
                                                 image, width=800,
                                                 quality='auto'
@@ -450,7 +475,10 @@ def update_image(entry_id):
     image_url = uploaded_image.get('secure_url')
     new_image_id = uploaded_image.get('public_id')
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
+    # The previous image in is deleted from cloudinary to not crowd it with
+    # unused images
     cloudinary.uploader.destroy(the_entry["image_id"])
+    # Image fields are updated in the database
     if the_entry["user_id"] == current_user.id:
         update_field({"image": image_url, "image_id": new_image_id, "updated_on": timestamp}, entry_id)
 

@@ -1,4 +1,11 @@
 /**
+ * TAG MANAGEMENT
+ * ==============
+ * The following code holds variables, functions, and event listeners that
+ * manage the tag functionality in review pages and in the "New Review" page
+ */
+
+/**
  * The tagNum variable counts the number of tags in an entry
  * This is used to give an ID number to dynamically generated tags.
  * */
@@ -136,30 +143,30 @@ function addNewTag() {
  * The textarea fields that have the data-expandable attribute are able to expand to fit their
  * content when keys are pressed or the input is clicked into.
  */
-$("body")
+$(document)
     .on("keydown input", "textarea[data-expandable]", expandTextArea)
     .on("mousedown", "textarea[data-expandable]", expandTextArea);
 
 // Copy content of new tag to tag list when created
-$("body").on("keydown input", ".badge-input", function () {
-    let viewId = "#tag" + getNumberFromId($(this).attr("id"));
-    let widthId = "#width" + getNumberFromId($(this).attr("id"));
-    // Update name of View Tag
-    $(viewId).text($(this).val());
-    // Update tag url
-    $(viewId).attr("href", "../listing/" + $(this).val());
-    $(widthId).text($(this).val());
-    $(this).width($(widthId).width());
-});
-
-// Prevents line breaks in Review Name and tags.
-// Pressing enter will instead send focus to the next element.
-$("body").on("keypress", "#name, .badge-input", function (event) {
-    if (event.keyCode === 13) {
-        $(this).blur();
-        return false;
-    }
-});
+$(document)
+    .on("keydown input", ".badge-input", function () {
+        let viewId = "#tag" + getNumberFromId($(this).attr("id"));
+        let widthId = "#width" + getNumberFromId($(this).attr("id"));
+        // Update name of View Tag
+        $(viewId).text($(this).val());
+        // Update tag url
+        $(viewId).attr("href", "../listing/" + $(this).val());
+        $(widthId).text($(this).val());
+        $(this).width($(widthId).width());
+    })
+    // Prevents line breaks in Review Name and tags.
+    // Pressing enter will instead send focus to the next element.
+    .on("keypress", "#name, .badge-input", function (event) {
+        if (event.keyCode === 13) {
+            $(this).blur();
+            return false;
+        }
+    });
 
 // Expandable text areas resize when window size is changed
 $(window).resize(function () {
@@ -221,6 +228,7 @@ $(document).on("keydown", ".badge-input", (e) => {
         k === 13 || //enter
         k === 8 || // backspaces
         k === 32 || // space
+        k === 9 || //tab
         (!e.shiftKey && k >= 48 && k <= 57); // only 0-9 (ignore SHIFT options)
     if (!ok || (e.ctrlKey && e.altKey)) {
         e.preventDefault();
@@ -253,7 +261,7 @@ $("#update-password-btn").click(function () {
     toggleField.call(this, "#update-password");
 });
 
-// Initialize tooltips
+// Initialize bootstrap tooltips
 $("[data-toggle=tooltip]").tooltip();
 
 $(document).ready(function () {

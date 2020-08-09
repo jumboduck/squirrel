@@ -230,15 +230,12 @@ $(document).on("click", "#save-tag-btn", function () {
     toggleViewTags();
 });
 
-// In new entry form, changes text input text when a new file is chosen
-$(".custom-file-input").change((e) => {
-    let fileName = e.target.files[0].name;
-    $(".custom-file-label").text(fileName);
-});
-
-// Only allow certain keystrokes in tag input fields
-// Whether in entry or new entry page
-// Inspired by https://stackoverflow.com/questions/43799032/allow-only-alphanumeric-in-textbox-using-jquery
+/**
+ * The following only allows specific keystrokes in tag input fields,
+ * whether in an entry page or when adding a new entry.
+ * This code is inspired by the following conversation on Stack Overflow:
+ * https://stackoverflow.com/questions/43799032/allow-only-alphanumeric-in-textbox-using-jquery
+ */
 $(document).on("keydown", ".badge-input", (e) => {
     let k = e.keyCode || e.which;
     let ok =
@@ -324,4 +321,10 @@ $(document)
 // Expandable text areas resize when window size is changed
 $(window).resize(function () {
     $("textarea[data-expandable]").each(expandTextArea);
+});
+
+// In new entry form, changes file input text when a new file is chosen
+$(".custom-file-input").change((e) => {
+    let fileName = e.target.files[0].name;
+    $(".custom-file-label").text(fileName);
 });

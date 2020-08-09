@@ -4,7 +4,24 @@
  * The following code holds variables, functions, and event listeners that
  * manage the tag functionality in review pages and in the "New Review" page.
  *
+ * In the review pages, the tags are initially displayed as "view tags", which link
+ * to a listing of all reviews tagged with the keyword.
+ * Each "view tag" has a corresponding "delete tag", which is initially hidden. When
+ * clicked, a delete tag will remove itself and its corresponding "view tag".
  *
+ * Cliking the "edit tags" button, will hide "view tags" and reveal "delete tags".
+ *
+ * When editing tags, a new tag can be created by clicking the "new tag" button.
+ * This will generate an "tag input", which is a text input field, and allows the
+ * user to add new tags.
+ *
+ * Clicking the "save tags" button will send the newly created tags to the backend,
+ * to be validated and to update the database. It will also toggle the "view tags"
+ * and "delete tags".
+ *
+ * This functionality is similar when creating a new review, with the exception that
+ * the "view tags" are not generated. The user will only be working with "tag inputs"
+ * and "delete tags".
  */
 
 /**
@@ -14,9 +31,9 @@
 let tagNum = $(".view-tag").length + 1;
 
 /**
- * This function takes the id of a tag, and extracts the number at the end
+ * This function takes the id of a tag, and extracts the number at the end.
  *
- * @param {number} id The id of tag
+ * @param {string} id The id of tag
  * @returns {number} The number in the id tag
  */
 function getNumberFromId(id) {
@@ -24,31 +41,8 @@ function getNumberFromId(id) {
 }
 
 /**
- * The following code shows and hides the fields to update account information
- * on the user's Profile page. It changes the appearance and content of the buttons
- * used to toggle these fields.
- * It also alters the "aria-expanded" and "aria-hidden" properties for
- * accessibility purposes.
- *
- * @param {string} field The jQuery selector of the field to toggle
- */
-function toggleField(field) {
-    $(field).toggle();
-    $(field).attr("aria-expanded", function (i, attr) {
-        return attr === "true" ? "false" : "true";
-    });
-    $(field).attr("aria-hidden", function (i, attr) {
-        return attr === "true" ? "false" : "true";
-    });
-    $(this).toggleClass("selected");
-    $(this).find(".icon").text() === "edit"
-        ? $(this).find(".icon").text("close")
-        : $(this).find(".icon").text("edit");
-}
-
-/**
- * This function adds the tag created by the user to a hidden input field, separated by
- * comma.
+ * This function adds the tag created by the user to the hidden input field, separated by
+ * a comma.
  * If no content is present in the field, it simply adds the content of the new tag.
  * The hidden field will thus contain a list of all tags for the entry, separated
  * by commas.
@@ -65,29 +59,19 @@ function addToHiddenInput(inputEl) {
 }
 
 /**
- * This function expands textarea input fields to fit their content content automatically.
- * It is inspired inspired by Vanderson https://codepen.io/Vanderson
- */
-function expandTextArea() {
-    this.style.removeProperty("height");
-    this.style.height = this.scrollHeight + 2 + "px";
-}
-
-/**
- * The following function generates the code for a new tag on an entry page.
+ * The following function generates the code for a new "view tag" on an entry page.
  *
  * @param {string} id The id of the newly created tag
  * @param {string} word The content of the newly created tag
  * @returns {string} The HTML for the newly created tag
  */
-function createTag(id, word) {
+function createTag(id, word = "New Tag") {
     return `<a id="${id}"class="view-tag badge badge-pill badge-primary tag" href="/listing/${word}">${word}</a>`;
 }
 
 /**
- * This function generates the code to create a new "delete tag" on an entry page.
- * Delete tags are displayed when the user is editing the tags, and allow for the deletion
- * of the corresponding tag.
+ * This function generates the code to create a new "delete tag" on an entry page, or on
+ * the "Add Review" page.
  *
  * @param {string} id The id of the newly created delete tag
  * @param {string} word The content of the newly created delete tag
@@ -99,9 +83,8 @@ function createDeleteTag(id, word) {
 }
 
 /**
- * This function deletes a tag when its corresponding "delete tag" is clicked.
- * It finds the id of its corresponding tag by using getNumberFromId, and removes
- * both the tags and it's delete tag counterpart from the DOM.
+ * This function removes a "view tag" and its corresponding "delete tag" from the DOM,
+ * when the "delete tag" is clicked.
  * It also gets the string of tags in the #hidden_tags field, makes it an array to
  * remove the deleted tag from it, and rebuilds the string of tags separated by commas.
  */
@@ -128,41 +111,60 @@ function deleteTag() {
  * Finally it increments tagNum.
  */
 function addNewTag() {
+    // Create IDs for new elements to be generated
     let editTagId = "edit-tag-" + tagNum;
     let viewTagId = "tag" + tagNum;
     let widthMachineId = "width" + tagNum;
+
+    // Generate HTML for new tag input, new "view tag", and new "width machine"
     let newEditTag = `<input id="${editTagId}" type="text" maxlength="20" placeholder="new tag" spellcheck="false" class="tag badge-pill badge-primary badge-input" />`;
-    let newTag = createTag(viewTagId, "tag name");
+    let newTag = createTag(viewTagId);
     let newWidthMachine = `<span aria-hidden="true" id="${widthMachineId}"class="badge badge-pill badge-primary tag width-machine">invisible</span>`;
+
+    // Append newly created HTML to DOM and focus on the new input
     $(this).before(newEditTag);
     $("#" + editTagId).focus();
     $("#view-tags").append(newTag);
     $(".entry").append(newWidthMachine);
+
     tagNum += 1;
 }
 
 /**
- * The textarea fields that have the data-expandable attribute are able to expand to fit their
- * content when keys are pressed or the input is clicked into.
+ * The following toggles the "view tags" and "delete tags" from hidden
+ * to visible and vice versa.
  */
-$(document)
-    .on("keydown input", "textarea[data-expandable]", expandTextArea)
-    .on("mousedown", "textarea[data-expandable]", expandTextArea);
+function toggleViewTags() {
+    $("#edit-tags").toggle();
+    $("#view-tags-container").toggle();
+}
 
-// Copy content of new tag to tag list when created
+/**
+ * This event handler checks for keystrokes in the tag inputs, and updates the
+ * content and url of the corresponding "view tag" accordingly.
+ * The content of the corresponding "width machine" span is also updated, and its
+ * new width is used to update the width of the input.
+ *
+ * This event is attached to the document because the inputs are dynamically
+ * generated.
+ */
 $(document).on("keydown input", ".badge-input", function () {
     let viewId = "#tag" + getNumberFromId($(this).attr("id"));
     let widthId = "#width" + getNumberFromId($(this).attr("id"));
-    // Update name of View Tag
+    // Update name of "view tag"
     $(viewId).text($(this).val());
-    // Update tag url
+    // Update url of "view tag"
     $(viewId).attr("href", "../listing/" + $(this).val());
+    // Update width machine and width of "view tag"
     $(widthId).text($(this).val());
     $(this).width($(widthId).width());
 });
 
-// Prevents line breaks in Review Name and tags.
-// Pressing enter will instead send focus to the next element.
+/**
+ * The following event ensures that pressing the "enter" key
+ * while the name field or a tag input field are in focus does
+ * not submit the form, but instead removes focus from the element.
+ */
 $(document).on("keypress", "#name, .badge-input", function (event) {
     if (event.keyCode === 13) {
         $(this)[0].blur();
@@ -170,7 +172,13 @@ $(document).on("keypress", "#name, .badge-input", function (event) {
     }
 });
 
-// When new tag input is blurred, it is removed and replaced with a delete tag
+/**
+ * When a "tag input" is blurred, it is removed and replaced with a delete tag.
+ * If the input is blurred while empty, it is simply removed.
+ *
+ * This event is attached to the document because the inputs are dynamically
+ * generated.
+ */
 $(document).on("blur", ".badge-input", function () {
     if (!$(this).val()) {
         $(this).remove();
@@ -183,31 +191,27 @@ $(document).on("blur", ".badge-input", function () {
         $(".delete-tag").each(deleteTag);
         $(this).remove();
     }
-    console.log($("#hidden_tags").val());
 });
 
-// Expandable text areas resize when window size is changed
-$(window).resize(function () {
-    $("textarea[data-expandable]").each(expandTextArea);
-});
+/**
+ * When the "edit tags" button is clicked, hide the "view tags"
+ * and display the "delete tags".
+ */
+$("#edit-tags-btn").on("click", toggleViewTags);
 
-// Turning on Tag Edit mode
-$("#edit-tags-btn").on("click", function () {
-    $("#edit-tags").toggle();
-    $("#view-tags-container").toggle();
-});
-
-// Saving changes to tags
+/**
+ * When the "save tags" button is clicked while editing the tags, the new
+ * tag information is sent to the backend to update the database, the width
+ * machines are removed, and the "delete tags" and "view tags" are toggled
+ */
 $(document).on("click", "#save-tag-btn", function () {
-    $("#edit-tags").toggle();
     // Send new tag information to the database
     sendTagData();
     // Remove element used to resize tag inputs
     $(".width-machine").each(function () {
         $(this).remove();
     });
-    // Return to normal tag view
-    $("#view-tags-container").toggle();
+    toggleViewTags();
 });
 
 // In new entry form, changes text input text when a new file is chosen
@@ -265,4 +269,49 @@ $(document).ready(function () {
     $("#update-username").hide();
     $("#update-email").hide();
     $("#update-password").hide();
+});
+
+/**
+ * The following code shows and hides the fields to update account information
+ * on the user's Profile page. It changes the appearance and content of the buttons
+ * used to toggle these fields.
+ * It also alters the "aria-expanded" and "aria-hidden" properties for
+ * accessibility purposes.
+ *
+ * @param {string} field The jQuery selector of the field to toggle
+ */
+function toggleField(field) {
+    $(field).toggle();
+    $(field).attr("aria-expanded", function (i, attr) {
+        return attr === "true" ? "false" : "true";
+    });
+    $(field).attr("aria-hidden", function (i, attr) {
+        return attr === "true" ? "false" : "true";
+    });
+    $(this).toggleClass("selected");
+    $(this).find(".icon").text() === "edit"
+        ? $(this).find(".icon").text("close")
+        : $(this).find(".icon").text("edit");
+}
+
+/**
+ * This function expands textarea input fields to fit their content content automatically.
+ * It is inspired inspired by Vanderson https://codepen.io/Vanderson
+ */
+function expandTextArea() {
+    this.style.removeProperty("height");
+    this.style.height = this.scrollHeight + 2 + "px";
+}
+
+/**
+ * The textarea fields that have the data-expandable attribute are able to expand to fit their
+ * content when keys are pressed or the input is clicked into.
+ */
+$(document)
+    .on("keydown input", "textarea[data-expandable]", expandTextArea)
+    .on("mousedown", "textarea[data-expandable]", expandTextArea);
+
+// Expandable text areas resize when window size is changed
+$(window).resize(function () {
+    $("textarea[data-expandable]").each(expandTextArea);
 });

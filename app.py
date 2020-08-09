@@ -53,10 +53,18 @@ Update functions
 
 # This function creates return information for AJAX when a field is updated.
 def update_success_msg(field, timestamp, image=""):
-    return jsonify({"updated_on": timestamp.strftime(time_format),
+    return jsonify({"status": "success",
+                    "updated_on": timestamp.strftime(time_format),
                     "new_image": image,
-                    "success_message": f"{field} sucessfully updated.",
+                    "message": f"{field} sucessfully updated.",
                     "message_class": "valid-update"})
+
+
+# This function sends information back to the frontend if a field cannot be updated
+def update_failure_msg(message):
+    return jsonify({"status": "failure",
+                    "message": message,
+                    "message_class": "invalid-update"})
 
 
 # This function updates a document in the database with new information
@@ -389,6 +397,8 @@ def update_name(entry_id):
         if len(new_name) > 0 and len(new_name) <= 30 and text_regex.match(new_name):
             update_field({"name": form.name.data, "updated_on": timestamp}, entry_id)
             return update_success_msg("Name", timestamp)
+        else:
+            return update_failure_msg("Name must be betwen 1 and 30 characters, and cannot start with a space.")
     else:
         return render_template('pages/403.html',  title="Forbidden")
 

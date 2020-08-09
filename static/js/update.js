@@ -16,17 +16,16 @@ $(document).ready(function () {
     // If name does not pass validation, return original name and error message
     $("#entry-form #name").blur(() => {
         let newName = $("#entry-form #name").val();
-        if (newName.length > 0 && newName.length <= 30) {
-            sendData({ name: newName }, "/update_name/", "#name-feedback");
-            originalName = newName;
-        } else {
+        //if (newName.length > 0 && newName.length <= 30) {
+        sendData({ name: newName }, "/update_name/", "#name-feedback");
+        /*} else {
             $("#entry-form #name").val(originalName);
             newAlert(
                 "#name-feedback",
                 "Name must be between 1 and 30 characters",
                 "invalid-update"
             );
-        }
+        }*/
     });
 
     // Update db when description is changed
@@ -92,8 +91,14 @@ function sendData(fieldData, url, feedbackEl) {
         type: "POST",
         url: url + entryId,
     }).done((data) => {
-        $(".timestamp").text("Last updated on " + data.updated_on);
-        newAlert(feedbackEl, data.success_message, data.message_class);
+        if (data.status === "failure") {
+            $("#entry-form #name").val(originalName);
+        } else {
+            originalName = $("#entry-form #name").val();
+            $(".timestamp").text("Last updated on " + data.updated_on);
+        }
+
+        newAlert(feedbackEl, data.message, data.message_class);
     });
 }
 

@@ -16,6 +16,7 @@ import cloudinary.api
 import math
 import os
 import socket
+import re
 if path.exists("env.py"):
     import env
 
@@ -42,6 +43,7 @@ Global Variables
 users = mongo.db.users
 entries = mongo.db.entries
 time_format  = "%d/%m/%Y at %H:%M:%S"
+text_regex = re.compile("^[\\S].*")
 
 
 """
@@ -383,9 +385,10 @@ def update_name(entry_id):
     new_name = form.name.data
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     timestamp = datetime.now()
-    if the_entry["user_id"] == current_user.id and len(new_name) > 0 and len(new_name) <= 30:
-        update_field({"name": form.name.data, "updated_on": timestamp}, entry_id)
-        return update_success_msg("Name", timestamp)
+    if the_entry["user_id"] == current_user.id:
+        if len(new_name) > 0 and len(new_name) <= 30 and text_regex.match(new_name):
+            update_field({"name": form.name.data, "updated_on": timestamp}, entry_id)
+            return update_success_msg("Name", timestamp)
     else:
         return render_template('pages/403.html',  title="Forbidden")
 
@@ -400,9 +403,10 @@ def update_description(entry_id):
     form = EntryForm()
     new_description = form.description.data
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
-    if the_entry["user_id"] == current_user.id and len(new_description) > 0 and len(new_description) <= 2000:
-        update_field({"description": form.description.data, "updated_on": timestamp}, entry_id)
-        return update_success_msg("Description", timestamp)
+    if the_entry["user_id"] == current_user.id:
+        if len(new_description) > 0 and len(new_description) <= 2000 and text_regex.match(new_description):
+            update_field({"description": form.description.data, "updated_on": timestamp}, entry_id)
+            return update_success_msg("Description", timestamp)
     else:
         return render_template('pages/403.html',  title="Forbidden")
 

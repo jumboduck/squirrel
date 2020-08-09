@@ -1,12 +1,14 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, RadioField, TextAreaField, HiddenField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, Optional
+from wtforms.validators import DataRequired, Length, Email, EqualTo, Optional, Regexp
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[
-                           DataRequired(), Length(min=1, max=30)])
+                           DataRequired(),
+                           Length(min=1, max=30),
+                           Regexp("^[\\S].*",  message="Username cannot start with a space")])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[
                              DataRequired(), Length(min=8)])
@@ -25,8 +27,16 @@ class LoginForm(FlaskForm):
 
 
 class EntryForm(FlaskForm):
-    name = TextAreaField('Name', render_kw={"rows": 1, "spellcheck":"false", "maxlength":30, "data-expandable":"true"}, validators = [DataRequired(), Length(min = 1, max = 30)])
-    description = TextAreaField('Description', render_kw={"spellcheck":"false", "maxlength":2000, "rows":1, "data-expandable":"True"}, validators = [DataRequired(), Length(min = 1, max = 2000)])
+    name = TextAreaField('Name',
+                         render_kw={"rows": 1, "spellcheck":"false", "maxlength":30, "data-expandable":"true"},
+                         validators = [Regexp("^[\\S].*",  message="Name cannot start with a space"),
+                                       DataRequired(),
+                                       Length(min = 1, max = 30)])
+    description = TextAreaField('Description',
+                                render_kw={"spellcheck":"false", "maxlength":2000, "rows":1, "data-expandable":"True"},
+                                validators = [Regexp("^[\\S].*", message="Description cannot start with a space or line break"),
+                                              DataRequired(),
+                                              Length(min = 1, max = 2000)])
     rating =  RadioField('Rating', validators=[DataRequired()], choices = [('5','Outstanding'),('4','Very Good'),('3','Good'),('2','Poor'), ('1','Very Poor')])
     is_fav = BooleanField('Favorite')
     image = FileField('Image', render_kw={"accept":"image/*"} ,validators = [FileAllowed(['jpg', 'gif', 'png', 'jpeg'], 'Images only!')])
@@ -35,8 +45,16 @@ class EntryForm(FlaskForm):
     hidden_id = HiddenField('Hidden Id')
 
 class NewEntryForm(FlaskForm):
-    name = TextAreaField('Name', render_kw={"rows": 1, "spellcheck":"false", "maxlength":30}, validators = [DataRequired(), Length(min = 1, max = 30)])
-    description = TextAreaField('Description', render_kw={"rows": 5, "spellcheck":"false", "maxlength":2000}, validators = [DataRequired(), Length(min = 1, max = 2000)])
+    name = TextAreaField('Name',
+                         render_kw={"rows": 1, "spellcheck":"false", "maxlength":30},
+                         validators = [Regexp("^[\\S].*", message="Name cannot start with a space or line break"),
+                                       DataRequired(),
+                                       Length(min = 1, max = 30)])
+    description = TextAreaField('Description',
+                                render_kw={"rows": 5, "spellcheck":"false", "maxlength":2000},
+                                validators = [Regexp("^[\\S].*", message="Description cannot start with a space or line break"),
+                                              DataRequired(),
+                                              Length(min = 1, max = 2000)])
     rating =  RadioField('Rating', validators=[DataRequired()], choices = [('5','Outstanding'),('4','Very Good'),('3','Good'),('2','Poor'), ('1','Very Poor')])
     is_fav = BooleanField('Favorite')
     image = FileField('Image', render_kw={"accept":"image/*"}, validators = [FileAllowed(['jpg', 'gif', 'png', 'jpeg'], 'Only image files can be uploaded.')])

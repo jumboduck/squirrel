@@ -16,6 +16,7 @@ import cloudinary.api
 import math
 import os
 import socket
+import re
 if path.exists("env.py"):
     import env
 
@@ -42,6 +43,7 @@ Global Variables
 users = mongo.db.users
 entries = mongo.db.entries
 time_format  = "%d/%m/%Y at %H:%M:%S"
+text_regex = re.compile("^[\\S].*")
 
 
 """
@@ -51,10 +53,18 @@ Update functions
 
 # This function creates return information for AJAX when a field is updated.
 def update_success_msg(field, timestamp, image=""):
-    return jsonify({"updated_on": timestamp.strftime(time_format),
+    return jsonify({"status": "success",
+                    "updated_on": timestamp.strftime(time_format),
                     "new_image": image,
-                    "success_message": f"{field} sucessfully updated.",
+                    "message": f"{field} sucessfully updated.",
                     "message_class": "valid-update"})
+
+
+# This function sends information back to the frontend if a field cannot be updated
+def update_failure_msg(message):
+    return jsonify({"status": "failure",
+                    "message": message,
+                    "message_class": "invalid-update"})
 
 
 # This function updates a document in the database with new information
@@ -383,9 +393,12 @@ def update_name(entry_id):
     new_name = form.name.data
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     timestamp = datetime.now()
-    if the_entry["user_id"] == current_user.id and len(new_name) > 0 and len(new_name) <= 30:
-        update_field({"name": form.name.data, "updated_on": timestamp}, entry_id)
-        return update_success_msg("Name", timestamp)
+    if the_entry["user_id"] == current_user.id:
+        if len(new_name) > 0 and len(new_name) <= 30 and text_regex.match(new_name):
+            update_field({"name": form.name.data, "updated_on": timestamp}, entry_id)
+            return update_success_msg("Name", timestamp)
+        else:
+            return update_failure_msg("Name must be betwen 1 and 30 characters, and cannot start with a space.")
     else:
         return render_template('pages/403.html',  title="Forbidden")
 
@@ -400,9 +413,12 @@ def update_description(entry_id):
     form = EntryForm()
     new_description = form.description.data
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
-    if the_entry["user_id"] == current_user.id and len(new_description) > 0 and len(new_description) <= 2000:
-        update_field({"description": form.description.data, "updated_on": timestamp}, entry_id)
-        return update_success_msg("Description", timestamp)
+    if the_entry["user_id"] == current_user.id:
+        if len(new_description) > 0 and len(new_description) <= 2000 and text_regex.match(new_description):
+            update_field({"description": form.description.data, "updated_on": timestamp}, entry_id)
+            return update_success_msg("Description", timestamp)
+        else:
+            return update_failure_msg("Description must be betwen 1 and 2000 characters, and cannot start with a space or line break.")
     else:
         return render_template('pages/403.html',  title="Forbidden")
 
@@ -601,8 +617,11 @@ def delete(entry_id):
 @login_required
 def profile():
     form = UpdateAccount()
-    num_entries = entries.count({'user_id': current_user.id})
+    # Count the number of entries created by user
+    num_entries = entries.count_documents({'user_id': current_user.id})
+    # Count the number of entries favorites by user
     num_fav = entries.count({'user_id': current_user.id, 'is_fav': True})
+    # Find average rating of all reviews created by user
     avg_rating = entries.aggregate([
         {"$match": {"user_id": current_user.id}},
         {"$group": {
@@ -612,12 +631,20 @@ def profile():
         }
     ])
 
+
+    # The average is rounded to the second decimal.
+    # If no entries have been created, the average sent to the html
+    # template is 0.
     if num_entries == 0:
         rounded_avg = 0
     else:
         rounded_avg = round(list(avg_rating)[0]['result'],2)
 
 
+    # The following manages updates of the account information.
+    # Data from each field is sent to update the user document in mongodb.
+    # If a field is left blank, the current user's data for that field is
+    # sent instead.
     if form.is_submitted():
         if form.validate() and bcrypt.check_password_hash(
             current_user.password,
@@ -650,6 +677,8 @@ def profile():
                 }
             })
             flash("Account information updated successfully", "success")
+            # A redirect is used to reload the page, to ensure that the newly
+            # updated information is displayed
             return redirect(url_for("profile"))
 
         else:
@@ -722,6 +751,7 @@ def search(search_term):
     )
 
 
+# This route handles 404 errors
 @app.errorhandler(404)
 def invalid_route(e):
     return render_template('pages/404.html',  title="Page Not Found")

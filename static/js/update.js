@@ -16,39 +16,18 @@ $(document).ready(function () {
     // If name does not pass validation, return original name and error message
     $("#entry-form #name").blur(() => {
         let newName = $("#entry-form #name").val();
-        if (newName.length > 0 && newName.length <= 30) {
-            sendData({ name: newName }, "/update_name/", "#name-feedback");
-            originalName = newName;
-        } else {
-            $("#entry-form #name").val(originalName);
-            newAlert(
-                "#name-feedback",
-                "Name must be between 1 and 30 characters",
-                "invalid-update"
-            );
-        }
+        sendData({ name: newName }, "/update_name/", "#name-feedback");
     });
 
     // Update db when description is changed
     // If description does not pass validation, return original name and error message
     $("#entry-form #description").blur(() => {
         let newDescription = $("#entry-form #description").val();
-        if (newDescription.length > 0 && newDescription.length <= 2000) {
-            sendData(
-                { description: newDescription },
-                "/update_description/",
-                "#description-feedback"
-            );
-            originalDescription = newDescription;
-        } else {
-            $("#entry-form #description").val(originalDescription);
-            $("textarea[data-expandable]").each(expandTextArea);
-            newAlert(
-                "#description-feedback",
-                "Description must be between 1 and 2000 characters",
-                "invalid-update"
-            );
-        }
+        sendData(
+            { description: newDescription },
+            "/update_description/",
+            "#description-feedback"
+        );
     });
 
     // Update db when rating is changed
@@ -59,23 +38,8 @@ $(document).ready(function () {
 
     // Update db when a new image is chosen
     $("#entry-form #image").change(() => {
-        let form_data = new FormData($("#entry-form")[0]);
-        $.ajax({
-            data: form_data,
-            type: "POST",
-            url: "/update_image/" + entryId,
-            contentType: false,
-            cache: false,
-            processData: false,
-        }).done((data) => {
-            $(".entry-image").attr("src", data.new_image);
-            $(".timestamp").text("Last updated on " + data.updated_on);
-            newAlert(
-                "#image-feedback",
-                data.success_message,
-                data.message_class
-            );
-        });
+        let formData = new FormData($("#entry-form")[0]);
+        sendData(formData, "/update_image/", "#image-feedback", true);
     });
 });
 
@@ -86,14 +50,39 @@ function sendTagData() {
 }
 
 // Update fields in db
-function sendData(fieldData, url, feedbackEl) {
-    $.ajax({
-        data: fieldData,
-        type: "POST",
-        url: url + entryId,
-    }).done((data) => {
-        $(".timestamp").text("Last updated on " + data.updated_on);
-        newAlert(feedbackEl, data.success_message, data.message_class);
+function sendData(fieldData, url, feedbackEl, isImage = false) {
+    let ajaxRequest;
+    if (isImage) {
+        ajaxRequest = {
+            data: fieldData,
+            type: "POST",
+            url: url + entryId,
+            contentType: false,
+            cache: false,
+            processData: false,
+        };
+    } else {
+        ajaxRequest = {
+            data: fieldData,
+            type: "POST",
+            url: url + entryId,
+        };
+    }
+    $.ajax(ajaxRequest).done((data) => {
+        if (data.status === "failure") {
+            $("#entry-form #name").val(originalName);
+            $("#entry-form #description").val(originalDescription);
+            $("textarea[data-expandable]").each(expandTextArea);
+        } else {
+            originalName = $("#entry-form #name").val();
+            originalDescription = $("#entry-form #description").val();
+            $(".timestamp").text("Last updated on " + data.updated_on);
+            if (isImage) {
+                $(".entry-image").attr("src", data.new_image);
+            }
+        }
+
+        newAlert(feedbackEl, data.message, data.message_class);
     });
 }
 

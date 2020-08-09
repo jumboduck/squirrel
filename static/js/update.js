@@ -38,23 +38,8 @@ $(document).ready(function () {
 
     // Update db when a new image is chosen
     $("#entry-form #image").change(() => {
-        let form_data = new FormData($("#entry-form")[0]);
-        $.ajax({
-            data: form_data,
-            type: "POST",
-            url: "/update_image/" + entryId,
-            contentType: false,
-            cache: false,
-            processData: false,
-        }).done((data) => {
-            $(".entry-image").attr("src", data.new_image);
-            $(".timestamp").text("Last updated on " + data.updated_on);
-            newAlert(
-                "#image-feedback",
-                data.success_message,
-                data.message_class
-            );
-        });
+        let formData = new FormData($("#entry-form")[0]);
+        sendData(formData, "/update_image/", "#image-feedback", true);
     });
 });
 
@@ -65,12 +50,25 @@ function sendTagData() {
 }
 
 // Update fields in db
-function sendData(fieldData, url, feedbackEl) {
-    $.ajax({
-        data: fieldData,
-        type: "POST",
-        url: url + entryId,
-    }).done((data) => {
+function sendData(fieldData, url, feedbackEl, isImage = false) {
+    let ajaxRequest;
+    if (isImage) {
+        ajaxRequest = {
+            data: fieldData,
+            type: "POST",
+            url: url + entryId,
+            contentType: false,
+            cache: false,
+            processData: false,
+        };
+    } else {
+        ajaxRequest = {
+            data: fieldData,
+            type: "POST",
+            url: url + entryId,
+        };
+    }
+    $.ajax(ajaxRequest).done((data) => {
         if (data.status === "failure") {
             $("#entry-form #name").val(originalName);
             $("#entry-form #description").val(originalDescription);
@@ -79,6 +77,9 @@ function sendData(fieldData, url, feedbackEl) {
             originalName = $("#entry-form #name").val();
             originalDescription = $("#entry-form #description").val();
             $(".timestamp").text("Last updated on " + data.updated_on);
+            if (isImage) {
+                $(".entry-image").attr("src", data.new_image);
+            }
         }
 
         newAlert(feedbackEl, data.message, data.message_class);

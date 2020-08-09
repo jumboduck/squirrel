@@ -601,8 +601,11 @@ def delete(entry_id):
 @login_required
 def profile():
     form = UpdateAccount()
-    num_entries = entries.count({'user_id': current_user.id})
+    # Count the number of entries created by user
+    num_entries = entries.count_documents({'user_id': current_user.id})
+    # Count the number of entries favorites by user
     num_fav = entries.count({'user_id': current_user.id, 'is_fav': True})
+    # Find average rating of all reviews created by user
     avg_rating = entries.aggregate([
         {"$match": {"user_id": current_user.id}},
         {"$group": {
@@ -612,12 +615,20 @@ def profile():
         }
     ])
 
+
+    # The average is rounded to the second decimal.
+    # If no entries have been created, the average sent to the html
+    # template is 0.
     if num_entries == 0:
         rounded_avg = 0
     else:
         rounded_avg = round(list(avg_rating)[0]['result'],2)
 
 
+    # The following manages updates of the account information.
+    # Data from each field is sent to update the user document in mongodb.
+    # If a field is left blank, the current user's data for that field is
+    # sent instead.
     if form.is_submitted():
         if form.validate() and bcrypt.check_password_hash(
             current_user.password,
@@ -650,6 +661,8 @@ def profile():
                 }
             })
             flash("Account information updated successfully", "success")
+            # A redirect is used to reload the page, to ensure that the newly
+            # updated information is displayed
             return redirect(url_for("profile"))
 
         else:
@@ -722,6 +735,7 @@ def search(search_term):
     )
 
 
+# This route handles 404 errors
 @app.errorhandler(404)
 def invalid_route(e):
     return render_template('pages/404.html',  title="Page Not Found")

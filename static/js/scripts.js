@@ -131,12 +131,28 @@ function addNewTag() {
 }
 
 /**
+ * This function ensures that when an element's view is toggled,
+ * its aria-expanded and aria-hidden attributes are updated as well for
+ * accessibility purposes.
+ *
+ * @param {string} field
+ */
+function toggleAria(field) {
+    $(field).toggle();
+    $(field).attr("aria-expanded", function (i, attr) {
+        return attr === "true" ? "false" : "true";
+    });
+    $(field).attr("aria-hidden", function (i, attr) {
+        return attr === "true" ? "false" : "true";
+    });
+}
+/**
  * The following toggles the "view tags" and "delete tags" from hidden
  * to visible and vice versa.
  */
 function toggleViewTags() {
-    $("#edit-tags").toggle();
-    $("#view-tags-container").toggle();
+    toggleAria("#edit-tags");
+    toggleAria("#view-tags-container");
 }
 
 /**
@@ -281,13 +297,7 @@ $(document).ready(function () {
  * @param {string} field The jQuery selector of the field to toggle
  */
 function toggleField(field) {
-    $(field).toggle();
-    $(field).attr("aria-expanded", function (i, attr) {
-        return attr === "true" ? "false" : "true";
-    });
-    $(field).attr("aria-hidden", function (i, attr) {
-        return attr === "true" ? "false" : "true";
-    });
+    toggleAria(field);
     $(this).toggleClass("selected");
     $(this).find(".icon").text() === "edit"
         ? $(this).find(".icon").text("close")

@@ -417,6 +417,8 @@ def update_description(entry_id):
         if len(new_description) > 0 and len(new_description) <= 2000 and text_regex.match(new_description):
             update_field({"description": form.description.data, "updated_on": timestamp}, entry_id)
             return update_success_msg("Description", timestamp)
+        else:
+            return update_failure_msg("Description must be betwen 1 and 2000 characters, and cannot start with a space or line break.")
     else:
         return render_template('pages/403.html',  title="Forbidden")
 

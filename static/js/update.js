@@ -16,38 +16,18 @@ $(document).ready(function () {
     // If name does not pass validation, return original name and error message
     $("#entry-form #name").blur(() => {
         let newName = $("#entry-form #name").val();
-        //if (newName.length > 0 && newName.length <= 30) {
         sendData({ name: newName }, "/update_name/", "#name-feedback");
-        /*} else {
-            $("#entry-form #name").val(originalName);
-            newAlert(
-                "#name-feedback",
-                "Name must be between 1 and 30 characters",
-                "invalid-update"
-            );
-        }*/
     });
 
     // Update db when description is changed
     // If description does not pass validation, return original name and error message
     $("#entry-form #description").blur(() => {
         let newDescription = $("#entry-form #description").val();
-        if (newDescription.length > 0 && newDescription.length <= 2000) {
-            sendData(
-                { description: newDescription },
-                "/update_description/",
-                "#description-feedback"
-            );
-            originalDescription = newDescription;
-        } else {
-            $("#entry-form #description").val(originalDescription);
-            $("textarea[data-expandable]").each(expandTextArea);
-            newAlert(
-                "#description-feedback",
-                "Description must be between 1 and 2000 characters",
-                "invalid-update"
-            );
-        }
+        sendData(
+            { description: newDescription },
+            "/update_description/",
+            "#description-feedback"
+        );
     });
 
     // Update db when rating is changed
@@ -93,8 +73,11 @@ function sendData(fieldData, url, feedbackEl) {
     }).done((data) => {
         if (data.status === "failure") {
             $("#entry-form #name").val(originalName);
+            $("#entry-form #description").val(originalDescription);
+            $("textarea[data-expandable]").each(expandTextArea);
         } else {
             originalName = $("#entry-form #name").val();
+            originalDescription = $("#entry-form #description").val();
             $(".timestamp").text("Last updated on " + data.updated_on);
         }
 

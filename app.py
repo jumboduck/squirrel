@@ -567,6 +567,9 @@ def new_entry():
         )
 
         return redirect(url_for('entry', entry_id=new_entry_id.inserted_id))
+    else:
+        # If form does not validate, empty the hidden tags field
+        form.hidden_tags.data = ""
 
     return render_template(
         'pages/new_entry.html',

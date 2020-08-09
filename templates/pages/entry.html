@@ -76,7 +76,7 @@
                     <!-- Tags -->
                     <div>
                         <span class="entry-subtitle">Tags:</span>
-                        <div class="mb-2" id="view-tags-container">
+                        <div class="mb-2" id="view-tags-container" aria-expanded="true" aria-hidden="false">
                             <div id="view-tags" class="d-inline-block">
                                 {% if entry.tags %}
                                 {% for tag in entry.tags %}
@@ -85,13 +85,14 @@
                                 {% endfor %}
                                 {% endif %}
                             </div>
-                            <span class="badge badge-pill badge-primary tag light-tag" id="edit-tags-btn">
+                            <span class="badge badge-pill badge-primary tag light-tag" id="edit-tags-btn"
+                                aria-controls="view-tags-container edit-tags">
                                 edit tags
                             </span>
                             <div id="tags-feedback" class="update-feedback"></div>
                         </div>
 
-                        <div class="mb-2" id="edit-tags">
+                        <div class="mb-2" id="edit-tags" aria-expanded="false" aria-hidden="true">
                             {% if entry.tags %}
                             {% for tag in entry.tags %}
                             <span id="edit-tag-{{loop.index}}"
@@ -102,7 +103,8 @@
                                 <span class="material-icons">control_point</span> new tag
                             </span>
                             <div>
-                                <span id="save-tag-btn" class="badge badge-pill badge-primary tag light-tag save-tag">
+                                <span id="save-tag-btn" class="badge badge-pill badge-primary tag light-tag save-tag"
+                                    aria-controls="view-tags-container edit-tags">
                                     <span class="material-icons">save</span> save tags
                                 </span>
                             </div>

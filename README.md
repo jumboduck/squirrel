@@ -58,6 +58,12 @@ Thorough conducted to ensure pagination worked as intended, several errors were 
 -   The page number set in the url (/listing?page=2) was set manually to numbers beyond the range of what the listing includes and leads to a 404 page
 -   The page number was manually changed to a string
 
+#### Tag Management
+
+-   Issue with hover CSS of tags not working
+-   Issue with tags in adding review: when field is not validated, the variables in the hidden field remain
+-   When input tag is blurred, it is removed, causing an error in the console, see: https://github.com/jquery/jquery/issues/4417
+
 ### Testing with Cypress
 
 ## Deployment

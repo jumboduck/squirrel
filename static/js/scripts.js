@@ -2,7 +2,9 @@
  * TAG MANAGEMENT
  * ==============
  * The following code holds variables, functions, and event listeners that
- * manage the tag functionality in review pages and in the "New Review" page
+ * manage the tag functionality in review pages and in the "New Review" page.
+ *
+ *
  */
 
 /**
@@ -148,25 +150,41 @@ $(document)
     .on("mousedown", "textarea[data-expandable]", expandTextArea);
 
 // Copy content of new tag to tag list when created
-$(document)
-    .on("keydown input", ".badge-input", function () {
-        let viewId = "#tag" + getNumberFromId($(this).attr("id"));
-        let widthId = "#width" + getNumberFromId($(this).attr("id"));
-        // Update name of View Tag
-        $(viewId).text($(this).val());
-        // Update tag url
-        $(viewId).attr("href", "../listing/" + $(this).val());
-        $(widthId).text($(this).val());
-        $(this).width($(widthId).width());
-    })
-    // Prevents line breaks in Review Name and tags.
-    // Pressing enter will instead send focus to the next element.
-    .on("keypress", "#name, .badge-input", function (event) {
-        if (event.keyCode === 13) {
-            $(this).blur();
-            return false;
-        }
-    });
+$(document).on("keydown input", ".badge-input", function () {
+    let viewId = "#tag" + getNumberFromId($(this).attr("id"));
+    let widthId = "#width" + getNumberFromId($(this).attr("id"));
+    // Update name of View Tag
+    $(viewId).text($(this).val());
+    // Update tag url
+    $(viewId).attr("href", "../listing/" + $(this).val());
+    $(widthId).text($(this).val());
+    $(this).width($(widthId).width());
+});
+
+// Prevents line breaks in Review Name and tags.
+// Pressing enter will instead send focus to the next element.
+$(document).on("keypress", "#name, .badge-input", function (event) {
+    if (event.keyCode === 13) {
+        $(this)[0].blur();
+        event.preventDefault();
+    }
+});
+
+// When new tag input is blurred, it is removed and replaced with a delete tag
+$(document).on("blur", ".badge-input", function () {
+    if (!$(this).val()) {
+        $(this).remove();
+        $("#tag" + getNumberFromId($(this).attr("id"))).remove();
+    } else {
+        let newTagContent = addToHiddenInput(this);
+        let newDeleteTag = createDeleteTag($(this).attr("id"), $(this).val());
+        $("#hidden_tags").val(newTagContent);
+        $("#new-tag").before(newDeleteTag);
+        $(".delete-tag").each(deleteTag);
+        $(this).remove();
+    }
+    console.log($("#hidden_tags").val());
+});
 
 // Expandable text areas resize when window size is changed
 $(window).resize(function () {
@@ -182,23 +200,6 @@ $("#edit-tags-btn").on("click", function () {
 // Saving changes to tags
 $(document).on("click", "#save-tag-btn", function () {
     $("#edit-tags").toggle();
-    $(".badge-input").each(function () {
-        // If nothing has been inputed the new tag is deleted
-        if (!$(this).val()) {
-            $(this).remove();
-            $("#tag" + getNumberFromId($(this).attr("id"))).remove();
-        } else {
-            let newTagContent = addToHiddenInput(this);
-            let newDeleteTag = createDeleteTag(
-                $(this).attr("id"),
-                $(this).val()
-            );
-            $("#hidden_tags").val(newTagContent);
-            $("#new-tag").before(newDeleteTag);
-            $(".delete-tag").each(deleteTag);
-            $(this).remove();
-        }
-    });
     // Send new tag information to the database
     sendTagData();
     // Remove element used to resize tag inputs
@@ -232,22 +233,6 @@ $(document).on("keydown", ".badge-input", (e) => {
         (!e.shiftKey && k >= 48 && k <= 57); // only 0-9 (ignore SHIFT options)
     if (!ok || (e.ctrlKey && e.altKey)) {
         e.preventDefault();
-    }
-});
-
-// Text is added to hidden tags field when tag input is unfocused
-$(document).on("blur", "#new-entry .badge-input", function () {
-    let newTags = $("#hidden_tags").val() + $(this).val();
-    $("#hidden_tags").val(newTags);
-    console.log($("#hidden_tags").val());
-});
-
-// When the "new tag" button is clicked add a comma, unless no tags have been added already
-$("#new-entry #new-tag").click(function () {
-    if ($("#hidden_tags").val() != "") {
-        let newTags = $("#hidden_tags").val() + ",";
-        $("#hidden_tags").val(newTags);
-        console.log($("#hidden_tags").val());
     }
 });
 

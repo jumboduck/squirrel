@@ -1,18 +1,25 @@
 {% extends 'layout/base.html' %}
 {% block content %}
+
+<!-- Display flash messages if any exist -->
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
 {% for category, message in messages  %}
-<div class="alert alert-{{ category }} fade show alert-dismissible" role="alert">{{ message }}<button type="button"
-        class="close" data-dismiss="alert" aria-label="Close">
+<div class="alert alert-{{ category }} fade show alert-dismissible" role="alert">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 {% endfor %}
 {% endif %}
 {% endwith %}
+
+<!-- Display entries if any exist -->
 {% if entry_count > 0 %}
 
+<!-- Title will change if the page is listing all elements,
+or if it displaying elements for a specific tag. -->
 <h1 class="page-title">
     {% if tag %}
     Reviews tagged as {{ tag }}

@@ -1,31 +1,40 @@
 {% extends 'layout/base.html' %}
 {% block content %}
+
+<!-- Display flash messages if any exist -->
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
 {% for category, message in messages  %}
-<div class="alert alert-{{ category }} fade show alert-dismissible" role="alert">{{ message }}<button type="button"
-        class="close" data-dismiss="alert" aria-label="Close">
+<div class="alert alert-{{ category }} fade show alert-dismissible" role="alert">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 {% endfor %}
 {% endif %}
 {% endwith %}
+
 <div class="entry">
     <img class="d-block ml-auto mr-auto w-25" src="{{url_for('static', filename='img/image-placeholder.png')}}">
+
+    <!-- Page title -->
     <h1 class="page-title text-center mb-5">Profile for {{ username }}</h1>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
             </div>
             <div class="col-md-6">
+                <!-- The following displays statistics about the user's account -->
                 <p><strong>Number of reviews:</strong> {{ num_entries }}</p>
-                <p><strong>Number of favorites:</strong> {{ num_fav }}
+                <p>
+                    <strong>Number of favorites:</strong> {{ num_fav }}
                     <span class="material-icons profile-fav">
                         favorite
                     </span>
                 </p>
-                <p><strong>Average rating:</strong> {{ avg_rating }}/5
+                <p>
+                    <strong>Average rating:</strong> {{ avg_rating }}/5
                     <span class="material-icons profile-rating">
                         star
                     </span>
@@ -34,11 +43,12 @@
         </div>
     </div>
 
-    <button class="btn btn-primary ml-auto mr-auto d-block mt-4" data-toggle="modal"
-        data-target="#accountManagement">Manage
-        Account</button>
+    <!-- This button opens a modal window with the account management settings -->
+    <button class="btn btn-primary ml-auto mr-auto d-block mt-4" data-toggle="modal" data-target="#accountManagement">
+        Manage Account
+    </button>
 
-
+    <!-- The following is a modal window that allows user to update his account information -->
     <div class="modal fade" id="accountManagement" tabindex="-1" role="dialog" aria-labelledby="accountManagementLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -51,10 +61,12 @@
                 </div>
                 <div class="modal-body">
 
+                    <!-- Account management form -->
                     <form method="POST">
                         {{ form.hidden_tag() }}
                         <fieldset class="form-group">
                             <div class="text-center">
+                                <!-- The following buttons toggle the corresponding fields -->
                                 <button type="button" class="btn btn-secondary mb-4 mr-auto ml-auto"
                                     id="update-username-btn" aria-controls="update-username">
                                     Update Username <span class="material-icons icon">edit</span>
@@ -68,12 +80,16 @@
                                     Update Password <span class="material-icons icon">edit</span>
                                 </button>
                             </div>
+
+                            <!-- The following field will update the username -->
                             <div class="form-group" id="update-username" aria-expanded="false"
                                 aria-labelledby="update-username-btn" aria-hidden="true">
                                 {{ form.username.label(class="form-control-label") }}
                                 {% if form.username.errors %}
+                                <!-- If username input does not validate, the following input displays -->
                                 {{ form.username(class="form-control form-control-lg is-invalid") }}
                                 <div class="invalid-feedback">
+                                    <!-- Any validation error returned for the username input displays here -->
                                     {% for error in form.email.errors %}
                                     <p>{{ error }}</p>
                                     {% endfor %}
@@ -84,12 +100,15 @@
                                 <hr class="w-50 mb-3">
                             </div>
 
+                            <!-- The following field will update the email -->
                             <div class="form-group" id="update-email" aria-expanded="false"
                                 aria-labelledby="update-email-btn" aria-hidden="true">
                                 {{ form.email.label(class="form-control-label") }}
                                 {% if form.email.errors %}
+                                <!-- If email input does not validate, the following input displays -->
                                 {{ form.email(class="form-control form-control-lg is-invalid") }}
                                 <div class="invalid-feedback">
+                                    <!-- Any validation error returned for the email input displays here -->
                                     {% for error in form.email.errors %}
                                     <p>{{ error }}</p>
                                     {% endfor %}
@@ -100,18 +119,23 @@
                                 <hr class="w-50 mb-3">
                             </div>
 
+                            <!-- The following fields will update the password
+                            Both the new password and the confirm password must be filled, and must match -->
                             <div id="update-password" aria-expanded="false" aria-labelledby="update-password-btn"
                                 aria-hidden="true">
                                 <div class="form-group">
                                     {{ form.new_password.label(class="form-control-label") }}
                                     {% if form.new_password.errors %}
+                                    <!-- If new password input does not validate, the following input displays -->
                                     {{ form.new_password(class="form-control form-control-lg is-invalid") }}
                                     <div class="invalid-feedback">
                                         {% for error in form.new_password.errors %}
+                                        <!-- Any validation error returned for the new password input displays here -->
                                         <p>{{ error }}</p>
                                         {% endfor %}
                                     </div>
                                     {% else %}
+                                    <!-- New password input -->
                                     {{ form.new_password(class="form-control form-control-lg") }}
                                     {% endif %}
                                 </div>
@@ -119,20 +143,23 @@
                                 <div class="form-group">
                                     {{ form.confirm_password.label(class="form-control-label") }}
                                     {% if form.confirm_password.errors %}
+                                    <!-- If confirm password input does not validate, the following input displays -->
                                     {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
                                     <div class="invalid-feedback">
                                         {% for error in form.confirm_password.errors %}
+                                        <!-- Any validation error returned for the confirm password input displays here -->
                                         <p>{{ error }}</p>
                                         {% endfor %}
                                     </div>
                                     {% else %}
+                                    <!-- Confirm password input -->
                                     {{ form.confirm_password(class="form-control form-control-lg") }}
                                     {% endif %}
                                 </div>
-
                                 <hr class="w-50 mb-3">
                             </div>
 
+                            <!-- For any update to the account information, the user's password is required -->
                             <div class="form-group">
                                 {{ form.password.label(class="form-control-label") }}
                                 {% if form.password.errors %}
@@ -147,6 +174,7 @@
                                 {% endif %}
                             </div>
                         </fieldset>
+                        <!-- Form submission -->
                         <div class="form-group text-right">
                             {{ form.submit(class="btn btn-primary") }}
                         </div>

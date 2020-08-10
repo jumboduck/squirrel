@@ -216,6 +216,11 @@ $(document).on("blur", ".badge-input", function () {
 $("#edit-tags-btn").on("click", toggleViewTags);
 
 /**
+ * When the "add tag" button is clicked, a new tag input is created
+ */
+$(".add-tag").on("click", addNewTag);
+
+/**
  * When the "save tags" button is clicked while editing the tags, the new
  * tag information is sent to the backend to update the database, the width
  * machines are removed, and the "delete tags" and "view tags" are toggled
@@ -253,53 +258,19 @@ $(document).on("keydown", ".badge-input", (e) => {
     }
 });
 
-$("#update-username-btn").click(function () {
-    toggleField.call(this, "#update-username");
-});
-$("#update-email-btn").click(function () {
-    toggleField.call(this, "#update-email");
-});
-$("#update-password-btn").click(function () {
-    toggleField.call(this, "#update-password");
-});
-
-// Initialize bootstrap tooltips
-$("[data-toggle=tooltip]").tooltip();
-
-$(document).ready(function () {
-    //Expand all textareas when document is ready
-    $("textarea[data-expandable]").each(expandTextArea);
-
-    // Hide the edit tags section on load
-    $("#edit-tags").hide();
-
-    // Add a new tag
-    $(".add-tag").on("click", addNewTag);
-
-    // Make delete tags deleteable
-    $(".delete-tag").each(deleteTag);
-
-    $("#update-username").hide();
-    $("#update-email").hide();
-    $("#update-password").hide();
-});
-
 /**
- * The following code shows and hides the fields to update account information
- * on the user's Profile page. It changes the appearance and content of the buttons
- * used to toggle these fields.
- * It also alters the "aria-expanded" and "aria-hidden" properties for
- * accessibility purposes.
+ * UTILITIES
+ * =========
+ * The following functions are various utilities used throughout the application.
  *
- * @param {string} field The jQuery selector of the field to toggle
+ * First are functions and event handlers to manage the dynamic reizing of textarea
+ * elements.
+ *
+ * Second are functions and event handlers that handle the account management section
+ * of the user profile.
+ *
+ * Finally some code to enable specific bootstrap functionalities.
  */
-function toggleField(field) {
-    toggleAria(field);
-    $(this).toggleClass("selected");
-    $(this).find(".icon").text() === "edit"
-        ? $(this).find(".icon").text("close")
-        : $(this).find(".icon").text("edit");
-}
 
 /**
  * This function expands textarea input fields to fit their content content automatically.
@@ -318,9 +289,59 @@ $(document)
     .on("keydown input", "textarea[data-expandable]", expandTextArea)
     .on("mousedown", "textarea[data-expandable]", expandTextArea);
 
-// Expandable text areas resize when window size is changed
+/**
+ * Expandable text areas will resize when window is resized.
+ * This ensures that text does not disappear when the window is made smaller.
+ */
 $(window).resize(function () {
     $("textarea[data-expandable]").each(expandTextArea);
+});
+
+/**
+ * The following code shows and hides the fields to update account information
+ * on the user's Profile page. It changes the appearance and icon of the buttons
+ * used to toggle these fields.
+ * It also alters the "aria-expanded" and "aria-hidden" properties for
+ * accessibility purposes.
+ *
+ * @param {string} field The jQuery selector of the field to toggle
+ */
+function toggleField(field) {
+    toggleAria(field);
+    $(this).toggleClass("selected");
+    $(this).find(".icon").text() === "edit"
+        ? $(this).find(".icon").text("close")
+        : $(this).find(".icon").text("edit");
+}
+
+/**
+ * The following event listeners toggle the various account fields
+ * on and off to be edited.
+ */
+$("#update-username-btn").click(function () {
+    toggleField.call(this, "#update-username");
+});
+$("#update-email-btn").click(function () {
+    toggleField.call(this, "#update-email");
+});
+$("#update-password-btn").click(function () {
+    toggleField.call(this, "#update-password");
+});
+
+$(document).ready(function () {
+    //Expand all textareas in entry pages when document is ready
+    $("textarea[data-expandable]").each(expandTextArea);
+
+    // Hide the edit tags on entry pages
+    $("#edit-tags").hide();
+
+    // Make delete tags deleteable
+    $(".delete-tag").each(deleteTag);
+
+    // Hide fields to update user account
+    $("#update-username").hide();
+    $("#update-email").hide();
+    $("#update-password").hide();
 });
 
 // In new entry form, changes file input text when a new file is chosen
@@ -328,3 +349,6 @@ $(".custom-file-input").change((e) => {
     let fileName = e.target.files[0].name;
     $(".custom-file-label").text(fileName);
 });
+
+// Initialize bootstrap tooltips
+$("[data-toggle=tooltip]").tooltip();

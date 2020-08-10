@@ -1,4 +1,4 @@
-const entryId = $("#hidden_id").val();
+/*const entryId = $("#hidden_id").val();
 let originalName = $(".entry #name").val();
 let originalDescription = $(".entry #description").val();
 
@@ -93,3 +93,4 @@ function newAlert(element, message, type) {
     $(element).text(message).addClass(type);
     $(element).delay(3000).slideUp();
 }
+*/

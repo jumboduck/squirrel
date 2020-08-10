@@ -135,7 +135,7 @@ function addNewTag() {
  * its aria-expanded and aria-hidden attributes are updated as well for
  * accessibility purposes.
  *
- * @param {string} field
+ * @param {string} field The jQuery selector of the element to be toggled
  */
 function toggleAria(field) {
     $(field).toggle();
@@ -227,7 +227,8 @@ $(".add-tag").on("click", addNewTag);
  */
 $(document).on("click", "#save-tag-btn", function () {
     // Send new tag information to the database
-    sendTagData();
+    let newTags = $("#hidden_tags").val();
+    sendData({ tags: newTags }, "/update_tags/", "#tags-feedback");
     // Remove element used to resize tag inputs
     $(".width-machine").each(function () {
         $(this).remove();
@@ -256,6 +257,152 @@ $(document).on("keydown", ".badge-input", (e) => {
     if (!ok || (e.ctrlKey && e.altKey)) {
         e.preventDefault();
     }
+});
+
+/**
+ * UPDATE ENTRY
+ * ============
+ * The following code holds variables, functions and event handlers to
+ * manage the updates of various fields to the database.
+ * These updates are made via AJAX requests to the backend, so that changes
+ * to entries can be made without reloading the page.
+ */
+
+/**
+ * The id of the entry is saved in a hidden field to let the application
+ * know which entry to update. The backend will verify that this entry
+ * belongs to the logged in user.
+ */
+const entryId = $("#hidden_id").val();
+
+/**
+ * The original name and description of the entry are saved so that they
+ * can be reverted to if the fields do not validate.
+ */
+let originalName = $(".entry #name").val();
+let originalDescription = $(".entry #description").val();
+
+/**
+ * This function sends data to the backend to update the database.
+ * If the request fails, it will revert name and description to their original values.
+ * If the request succeeds, the database has updated,update the timestamp, and if
+ * the request was to update the image, the image will change.
+ *
+ * Finally a message is displayed to let the user know if the update has succeeded or not.
+ *
+ * @param {Object} fieldData The data to be sent to the backend to update the database
+ * @param {string} url The url that will process the request
+ * @param {string} feedbackEl The jQuery selector of the element that will display feedback for the request
+ * @param {boolean} isImage Determines whether the request is for an image or not, as this will require a different
+ * AJAX request.
+ */
+function sendData(fieldData, url, feedbackEl, isImage = false) {
+    let ajaxRequest;
+    // Define format of ajax request, if it is to update image or not
+    if (isImage) {
+        ajaxRequest = {
+            data: fieldData,
+            type: "POST",
+            url: url + entryId,
+            contentType: false,
+            cache: false,
+            processData: false,
+        };
+    } else {
+        ajaxRequest = {
+            data: fieldData,
+            type: "POST",
+            url: url + entryId,
+        };
+    }
+    $.ajax(ajaxRequest).done((data) => {
+        if (data.status === "failure") {
+            // If update was a failure, revert Name and Description
+            $("#entry-form #name").val(originalName);
+            $("#entry-form #description").val(originalDescription);
+            $("textarea[data-expandable]").each(expandTextArea);
+        } else {
+            // If update was successful, update timestamp
+            // and original name and description, if another update
+            // if made.
+            originalName = $("#entry-form #name").val();
+            originalDescription = $("#entry-form #description").val();
+            $(".timestamp").text("Last updated on " + data.updated_on);
+            if (isImage) {
+                // If update was for an image, update the image
+                $(".entry-image").attr("src", data.new_image);
+            }
+        }
+
+        newAlert(feedbackEl, data.message, data.message_class);
+    });
+}
+
+/**
+ * This function creates an alert after a user tries to update a field, either successfully or
+ * unsuccessfully.
+ *
+ * @param {string} element The jQuery selector for the HTML element that displays the message
+ * @param {string} message The content of the message
+ * @param {string} type The CSS class of the message, it will be either "valid-update" or "invalid-update"
+ */
+function newAlert(element, message, type) {
+    $(element).removeClass("invalid-update valid-update");
+    $(element).show();
+    $(element).text(message).addClass(type);
+    $(element).delay(3000).slideUp();
+}
+
+/**
+ * Send data to the backend to update the favorite status of the entry,
+ * when the checkbox is clicked.
+ */
+$("#entry-form #is_fav").change(() => {
+    let favState;
+    $("#entry-form #is_fav").is(":checked")
+        ? (favState = true)
+        : (favState = false);
+    sendData({ is_fav: favState }, "/update_fav/");
+});
+
+/**
+ * Send data to the database to update the name of the entry,
+ * when the name field is blurred.
+ */
+$("#entry-form #name").blur(() => {
+    let newName = $("#entry-form #name").val();
+    sendData({ name: newName }, "/update_name/", "#name-feedback");
+});
+
+/**
+ * Send data to the backend to update the description of the entry,
+ * when the description field is blurred.
+ */
+$("#entry-form #description").blur(() => {
+    let newDescription = $("#entry-form #description").val();
+    sendData(
+        { description: newDescription },
+        "/update_description/",
+        "#description-feedback"
+    );
+});
+
+/**
+ * Send data to the backend to update the rating of the entry,
+ * when a new rating is chosen by the user.
+ */
+$("#entry-form input[name=rating]:not(:checked)").change(() => {
+    let newRating = $("input[name=rating]:checked").val();
+    sendData({ rating: newRating }, "/update_rating/", "#rating-feedback");
+});
+
+/**
+ * Send data to the backend to update the image of the entry,
+ * when a new image is selected by the user.
+ */
+$("#entry-form #image").change(() => {
+    let formData = new FormData($("#entry-form")[0]);
+    sendData(formData, "/update_image/", "#image-feedback", true);
 });
 
 /**

@@ -1,6 +1,7 @@
 {% extends 'layout/base.html' %}
 {% block content %}
 <div class="entry" id="new-entry">
+    <!-- Display flash messages if any exist -->
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     {% for category, message in messages  %}
@@ -12,61 +13,77 @@
     {% endfor %}
     {% endif %}
     {% endwith %}
+
+    <!-- Page Title -->
     <h1 class="page-title">Add a new Entry</h1>
 
+    <!-- New Review Form -->
     <form method="POST" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
             <div class="form-group">
+                <!-- NAME INPUT -->
                 {{ form.name.label(class="form-control-label") }}:
-
+                <!-- If name input does not validate, the following input displays -->
                 {% if form.name.errors %}
                 {{ form.name(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
+                    <!-- Any validation error returned for the name input displays here -->
                     {% for error in form.name.errors %}
                     <p>{{ error }}</p>
                     {% endfor %}
                 </div>
                 {% else %}
+                <!-- Name input -->
                 {{ form.name(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
+
+            <!-- DESCRIPTION INPUT -->
             <div class="form-group">
                 {{ form.description.label(class="form-control-label") }}:
+                <!-- If description input does not validate, the following input displays -->
                 {% if form.description.errors %}
                 {{ form.description(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
+                    <!-- Any validation error returned for the description input displays here -->
                     {% for error in form.description.errors %}
                     <p>{{ error }}</p>
                     {% endfor %}
                 </div>
+                <!-- Desription input -->
                 {% else %}
                 {{ form.description(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
+
+            <!-- RATING RADIO FIELD -->
             <div class="rating-container">
                 <div class="inline-block"><span class="entry-subtitle">Rating: </span></div>
                 <div class="star-rating d-inline-block">
                     <fieldset class="form-check form-check-inline">
+                        <!-- Display each radio buttons  -->
                         {% for subfield in form.rating %}
-
                         {{ subfield }}
                         {{ subfield.label }}
-
                         {% endfor %}
                     </fieldset>
                 </div>
             </div>
             {% if form.rating.errors %}
             <div class="invalid-feedback d-block" id="rating-feedback">
+                <!-- Any validation error returned for the rating input displays here -->
                 {% for error in form.rating.errors %}
                 <p>{{ error }}</p>
                 {% endfor %}
             </div>
             {% endif %}
 
-
+            <!-- FAVORITE -->
             <div class="new-fav">
+                <!-- Favorite checkbox is displayed as a heart.
+                The labels wraps the input so that it can be checked or unchecked
+                when clicked. -->
                 <label for="is_fav" class="fav-label">
                     <span class="new-fav-label">Add to favorites:</span>
                     {{ form.is_fav }}
@@ -75,16 +92,20 @@
                 </label>
             </div>
 
+            <!-- IMAGE SELECTOR -->
             <div class="input-group form-group">
                 <div class="custom-file">
                     {% if form.image.errors %}
+                    <!-- If image input does not validate, the following input displays -->
                     {{ form.image(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
+                        <!-- Any validation error returned for the image input displays here -->
                         {% for error in form.image.errors %}
                         <p>{{ error }}</p>
                         {% endfor %}
                     </div>
                     {% else %}
+                    <!-- Image input -->
                     {{ form.image(class="custom-file-input") }}
                     {{ form.image.label(class="custom-file-label") }}
                     {% endif %}
@@ -94,14 +115,17 @@
             <div class="form-group">
                 Tags:
                 <div>
-                    <span id="new-tag" class="badge badge-pill badge-primary light-tag add-tag"><span
-                            class="material-icons">control_point</span> new
-                        tag</span>
+                    <!-- The tags are dynamically created with javascript by the user,
+                     and fill the hidden_tags hidden field, which is used upon submission. -->
+                    <span id="new-tag" class="badge badge-pill badge-primary light-tag add-tag">
+                        <span class="material-icons">control_point</span> new tag
+                    </span>
                 </div>
             </div>
 
         </fieldset>
         <div class="form-group">
+            <!-- Form submission -->
             {{ form.submit(class="btn btn-primary") }}
         </div>
     </form>

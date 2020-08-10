@@ -28,7 +28,7 @@
                     {% if form.email.errors %}
                     {{ form.email(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
-                        <!-- Any validation error returned for the email input will be displayed here -->
+                        <!-- Any validation error returned for the email input displays here -->
                         {% for error in form.email.errors %}
                         <p>{{ error }}</p>
                         {% endfor %}
@@ -46,6 +46,7 @@
                     {% if form.password.errors %}
                     {{ form.password(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
+                        <!-- Any validation error returned for the password input displays here -->
                         {% for error in form.password.errors %}
                         <p>{{ error }}</p>
                         {% endfor %}

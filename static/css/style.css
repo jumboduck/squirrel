@@ -275,7 +275,7 @@ a:hover {
     top: -0.4rem;
 }
 
-.custom-file-input {
+label.custom-file-label {
     cursor: pointer;
 }
 

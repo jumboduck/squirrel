@@ -64,6 +64,10 @@ Thorough conducted to ensure pagination worked as intended, several errors were 
 -   Issue with tags in adding review: when field is not validated, the variables in the hidden field remain
 -   When input tag is blurred, it is removed, causing an error in the console, see: https://github.com/jquery/jquery/issues/4417
 
+#### Textarea resizing
+
+-   Textarea is fixed, needed to find a way to resize it to look natural
+
 ### Testing with Cypress
 
 ## Deployment

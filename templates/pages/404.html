@@ -5,8 +5,9 @@
         <h1 class="page-title">Page not found</h1>
         <p>It looks like you've taken a wrong turn.</p>
         <p>Click <a href="{{url_for('listing')}}">here</a> to return to your stored goods!</p>
-        <a href="{{url_for('listing')}}"><img class="error-image"
-                src="{{url_for('static', filename='img/image-placeholder.png')}}"></a>
+        <a href="{{url_for('listing')}}">
+            <img class="error-image" src="{{url_for('static', filename='img/image-placeholder.png')}}">
+        </a>
     </div>
 </div>
 {% endblock %}

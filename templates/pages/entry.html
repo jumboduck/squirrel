@@ -1,6 +1,7 @@
 {% extends 'layout/base.html' %}
 {% block content %}
 <div class="entry-container">
+    <!-- Display flash messages if any exist -->
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     {% for category, message in messages  %}
@@ -11,10 +12,13 @@
     {% endfor %}
     {% endif %}
     {% endwith %}
+
+    <!-- Content of the entry -->
     <div class="entry">
         <form method="post" id="entry-form" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-sm-9">
+
                     <!-- Favorite checkbox -->
                     <div class="favorite-container">
                         <label for="is_fav" class="fav-label">
@@ -23,19 +27,26 @@
                             <span class="sr-only">Add to favorites</span>
                         </label>
                     </div>
+
                     <!-- Review Name -->
                     {{ form.name(class="form-control review-name", **{'data-toggle':'tooltip', 'title':'click to update title'}) }}
                     <div id="name-feedback" class="update-feedback"></div>
                 </div>
-                <!-- Delete Review -->
+
+                <!-- Delete Review Link -->
                 <div class="col-sm-3 text-sm-right align-middle pt-sm-3 pl-2 pr-4 pb-2 delete-entry">
-                    <a href="{{ url_for('delete', entry_id = entry._id) }}" class="delete-link"><span
-                            class="material-icons delete-btn">delete</span>Delete</a>
+                    <a href="{{ url_for('delete', entry_id = entry._id) }}" class="delete-link">
+                        <span class="material-icons delete-btn">delete</span> Delete
+                    </a>
                 </div>
             </div>
 
             <div class="row">
-                <!-- Review Image -->
+
+                <!-- Review Image
+                The image itself is within an overlay container that changes with CSS on hover.
+                This itself is contained by the file input's label so that the file input is
+                activated when the image is clicked -->
                 <div class="col-md-6">
                     <label class="image-selector" for="image">
                         <span class="overlay-container d-block">
@@ -54,12 +65,14 @@
                     </label>
                     <div id="image-feedback" class="update-feedback"></div>
                 </div>
+
                 <div class="col-md-6">
                     <div>
                         <!-- Review Description -->
                         {{ form.description(class="form-control review-description", **{'data-toggle':'tooltip', 'data-placement':'top', 'title':'click to update description'}) }}
                         <div id="description-feedback" class="update-feedback"></div>
                     </div>
+
                     <!-- Rating -->
                     <div class="rating-container">
                         <div class="d-inline-block"><span class="entry-subtitle">Rating:</span></div>
@@ -73,11 +86,14 @@
                         </div>
                     </div>
                     <div id="rating-feedback" class="update-feedback"></div>
+
                     <!-- Tags -->
                     <div>
                         <span class="entry-subtitle">Tags:</span>
+                        <!-- The "view tags" are initially displayed -->
                         <div class="mb-2" id="view-tags-container" aria-expanded="true" aria-hidden="false">
                             <div id="view-tags" class="d-inline-block">
+                                <!-- Tags are added dynamically if any exist -->
                                 {% if entry.tags %}
                                 {% for tag in entry.tags %}
                                 <a id="tag{{ loop.index }}" class="view-tag badge badge-pill badge-primary tag"
@@ -85,6 +101,7 @@
                                 {% endfor %}
                                 {% endif %}
                             </div>
+                            <!-- The following toggles "view tags" and displays "edit tags" when clicked -->
                             <span class="badge badge-pill badge-primary tag light-tag" id="edit-tags-btn"
                                 aria-controls="view-tags-container edit-tags">
                                 edit tags
@@ -92,34 +109,47 @@
                             <div id="tags-feedback" class="update-feedback"></div>
                         </div>
 
+                        <!-- The "delete tags" are initially hidden -->
                         <div class="mb-2" id="edit-tags" aria-expanded="false" aria-hidden="true">
+                            <!-- "Delete Tags" are added dynamically if any tags exist -->
                             {% if entry.tags %}
                             {% for tag in entry.tags %}
-                            <span id="edit-tag-{{loop.index}}"
-                                class="badge badge-pill badge-primary tag delete-tag">{{tag}}
-                                <span class="material-icons">cancel</span></span>{% endfor %}
+                            <span id="edit-tag-{{loop.index}}" class="badge badge-pill badge-primary tag delete-tag">
+                                {{tag}} <span class="material-icons">cancel</span>
+                            </span>{% endfor %}
                             {% endif %}
+                            <!-- The following add a new tag input when clicked -->
                             <span id="new-tag" class="badge badge-pill badge-primary light-tag add-tag">
                                 <span class="material-icons">control_point</span> new tag
                             </span>
+
                             <div>
+                                <!-- The following toggles "view tags" and "edit tags" when clicked,
+                                and sends the new tag information to the backend -->
                                 <span id="save-tag-btn" class="badge badge-pill badge-primary tag light-tag save-tag"
                                     aria-controls="view-tags-container edit-tags">
                                     <span class="material-icons">save</span> save tags
                                 </span>
                             </div>
+
                         </div>
+                        <!-- Hidden tags and hidden id are used to make updates -->
                         {{ form.hidden_tags }}
                         {{ form.hidden_id }}
                     </div>
-                    <!-- Creation / Update Time -->
-                    <p><small class="text-muted timestamp">{% if entry.updated_on %}
+
+                    <!-- If an update time exists, display update time.
+                    If not, display creation time. -->
+                    <p>
+                        <small class="text-muted timestamp">
+                            {% if entry.updated_on %}
                             Last updated on {{ entry.updated_on.strftime("%d/%m/%Y at %H:%M:%S") }}
                             {% else %}
                             Created on {{ entry.created_on.strftime("%d/%m/%Y at %H:%M:%S") }}
                             {% endif %}
                         </small>
                     </p>
+
                 </div>
             </div>
         </form>

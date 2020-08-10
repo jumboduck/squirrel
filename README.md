@@ -32,6 +32,10 @@ It is not meant to be a social application, but a repository of likes and dislik
 
 ### Features Left to Implement
 
+-   A password recovery system, that would send an email to a user's account, needs to be implemented.
+-   The profile page should be expanded to display more information, such as the most used tags and the best rated reviews.
+-   The listing page should be expanded to allow to view all favorited items.
+
 ## Technologies Used
 
 -   HTML

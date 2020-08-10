@@ -7,7 +7,8 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poiret+One&family=Raleway:wght@400;700&Material+Icons&display=swap");
 
-/* GENERAL */
+/* GENERAL
+These style rules apply to elements throughout the website. */
 
 body {
     font-family: "Raleway", sans-serif;
@@ -96,6 +97,7 @@ a:hover {
     vertical-align: middle;
     font-size: inherit;
 }
+
 /* Login Page */
 
 .login-image {
@@ -105,7 +107,9 @@ a:hover {
     display: block;
 }
 
-/* Navigation */
+/* Header
+The following styles all elements in the header.
+This includes the logo, the navigation links and the search bar. */
 
 .logo {
     font-family: "Poiret One", sans-serif;
@@ -178,7 +182,8 @@ a:hover {
     padding: 0;
 }
 
-/* Review Cards in listing  */
+/* Review Cards in listing page  */
+
 .card-img-top {
     max-height: 15rem;
     -o-object-fit: cover;
@@ -246,7 +251,8 @@ a:hover {
     cursor: pointer;
 }
 
-/* Search Listing */
+/* Search Listing
+The following styles the results of a search */
 
 .search-entry p {
     margin: 0;
@@ -258,7 +264,7 @@ a:hover {
     object-fit: cover;
 }
 
-/* Add a New Review */
+/* New Review page styles */
 
 .new-fav {
     -webkit-box-align: center;
@@ -316,7 +322,8 @@ label.custom-file-label {
     color: #343a40;
 }
 
-/* Favorite */
+/* Favorite checkbox styling in Review Page */
+
 .favorite-container {
     position: absolute;
 }
@@ -352,7 +359,10 @@ label.custom-file-label {
     transform: scale(1.2);
 }
 
-/* Review Text */
+/* Text styling in Review Page
+This includes the review's name and description,
+and the corresponding bootstrap tooltips. */
+
 .review-name {
     margin-bottom: 0.5rem;
     font-family: "Montserrat", sans-serif;
@@ -400,7 +410,7 @@ label.custom-file-label {
     border-top-color: #535f6b;
 }
 
-/* Image and image selector */
+/* Image and image selector field in Review Page */
 
 .overlay-container {
     position: relative;
@@ -461,7 +471,8 @@ label.custom-file-label {
     z-index: 1;
 }
 
-/* Tags */
+/* Tags styling in Review Page
+This includes all "view tags", "delete tags", and buttons. */
 
 .badge-primary {
     background-color: #997f62;
@@ -559,7 +570,9 @@ a.badge-primary:focus {
     opacity: 0;
 }
 
-/* Star Rating, inspired by Adam Orchard https://codepen.io/orchard/pen/Jnwvb  */
+/* Styling for rating radio buttons on Review Page,
+inspired by Adam Orchard https://codepen.io/orchard/pen/Jnwvb */
+
 .rating-container {
     position: relative;
     -webkit-box-align: center;
@@ -626,17 +639,8 @@ a.badge-primary:focus {
     transform: scale(1.2);
 }
 
-/* Profile */
-
-.profile-rating {
-    color: #ffaa1d;
-}
-
-.profile-fav {
-    color: #ff69b4;
-}
-
-/* Update feedback */
+/* Styling for feedback messages when user updates fields
+in Review Page */
 
 #name-feedback {
     position: relative;
@@ -659,6 +663,16 @@ a.badge-primary:focus {
 
 .invalid-update {
     color: #dc3545;
+}
+
+/* Profile Page */
+
+.profile-rating {
+    color: #ffaa1d;
+}
+
+.profile-fav {
+    color: #ff69b4;
 }
 
 /* 404 page*/

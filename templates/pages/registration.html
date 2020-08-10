@@ -1,6 +1,7 @@
 {% extends 'layout/base.html' %}
 {% block content %}
 <div class="content-section login-form ml-auto mr-auto">
+    <!-- Display flash messages if any exist -->
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     {% for category, message in messages  %}
@@ -12,73 +13,99 @@
     {% endfor %}
     {% endif %}
     {% endwith %}
+
+    <!-- Page title -->
     <h1 class="page-title mb-4">Registration</h1>
+
+    <!-- Registration form  -->
     <form method="POST">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
 
+            <!-- USERNAME -->
             <div class="form-group">
                 {{ form.username.label(class="form-control-label") }}
-
+                <!-- If username input does not validate, the following input displays -->
                 {% if form.username.errors %}
                 {{ form.username(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
+                    <!-- Any validation error returned for the username input displays here -->
                     {% for error in form.username.errors %}
                     <p>{{ error }}</p>
                     {% endfor %}
                 </div>
                 {% else %}
+                <!-- Username input -->
                 {{ form.username(class="form-control form-control-lg") }}
                 {% endif %}
-
             </div>
+
+            <!-- EMAIL -->
             <div class="form-group">
                 {{ form.email.label(class="form-control-label") }}
+                <!-- If email input does not validate, the following input displays -->
                 {% if form.email.errors %}
                 {{ form.email(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
+                    <!-- Any validation error returned for the email input displays here -->
                     {% for error in form.email.errors %}
                     <p>{{ error }}</p>
                     {% endfor %}
                 </div>
                 {% else %}
+                <!-- Email Input -->
                 {{ form.email(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
+
+            <!-- PASSWORD -->
             <div class="form-group">
                 {{ form.password.label(class="form-control-label") }}
                 {% if form.password.errors %}
+                <!-- If password input does not validate, the following input displays -->
                 {{ form.password(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
                     {% for error in form.password.errors %}
+                    <!-- Any validation error returned for the password input displays here -->
                     <p>{{ error }}</p>
                     {% endfor %}
                 </div>
                 {% else %}
+                <!-- Password input -->
                 {{ form.password(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
+
+            <!-- CONFIRM PASSWORD -->
             <div class="form-group">
                 {{ form.confirm_password.label(class="form-control-label") }}
                 {% if form.confirm_password.errors %}
+                <!-- If confirm password input does not validate, the following input displays -->
                 {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
+                    <!-- Any validation error returned for the confirm password input displays here -->
                     {% for error in form.confirm_password.errors %}
                     <p>{{ error }}</p>
                     {% endfor %}
                 </div>
                 {% else %}
+                <!-- Confirm password input -->
                 {{ form.confirm_password(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
         </fieldset>
+
+        <!-- Submit form -->
         <div class="form-group text-right">
             {{ form.submit(class="btn btn-primary") }}
         </div>
     </form>
+
     <div class="border-top pt-3  text-right">
-        <small class="text-muted">Already have an account? <a href="{{url_for('login')}}">Log in
-                now.</a></small>
+        <small class="text-muted">
+            <!-- Link to login page -->
+            Already have an account? <a href="{{url_for('login')}}">Log in now.</a>
+        </small>
     </div>
 </div>
 

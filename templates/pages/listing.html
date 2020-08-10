@@ -29,96 +29,114 @@ or if it displaying elements for a specific tag. -->
 </h1>
 
 <div class="card-deck">
-
+    <!-- If entries exist, generate a card for each entry -->
     {% for entry in entries %}
     <div class="card">
-        {% if entry.image %}
+
+        <!-- Display image -->
         <a href="{{ url_for('entry', entry_id = entry._id) }}">
             <img src="{{ entry.image }}" class="card-img-top" alt="alt text">
         </a>
-        {% endif %}
+
         <div class="card-body">
             <h2 class="card-title">
+
+                <!-- If the entry is favorited, display heart -->
                 {% if entry.is_fav %}
-                <span class="material-icons fav">
-                    favorite
-                </span>
+                <span class="material-icons fav">favorite</span>
                 {% endif %}
 
+                <!-- Display name of entry -->
                 <a href="{{url_for('entry', entry_id = entry._id)}}">{{ entry.name }}</a>
             </h2>
-            {% if entry.image %}
-            <p class="card-text">{{ entry.description|truncate(75, end='…') }}</p>
-            {% else %}
-            <p class="card-text">{{ entry.description|truncate(150, end='…') }}</p>
-            {% endif %}
 
+            <!-- Display teaser of entry's description, truncated at 75 characters and
+            ending with an ellipsis -->
+            <p class="card-text">{{ entry.description|truncate(75, end='…') }}</p>
+
+            <!-- The star rating display is hidden from screen readers -->
             <p class="card-text" aria-hidden="true">Rating:
                 <span class="rating d-inline-block">
+                    <!-- Display full stars up to rating number,
+                    then display star outline -->
                     {% for i in range(5) %}
                     {% if loop.index <=  entry.rating %}
-                    <span class="material-icons">
-                        star
-                    </span>
+                    <span class="material-icons">star</span>
                     {% else %}
-                    <span class="material-icons">
-                        star_outline
-                    </span>
+                    <span class="material-icons">star_outline</span>
                     {% endif %}
                     {% endfor %}
                 </span>
             </p>
+
+            <!-- On screen readers, the rating is displayed as a number -->
             <span class="sr-only">Rating: {{ entry.rating }}/5</span>
+
+            <!-- If tags exist, generate them -->
+            {% if entry.tags %}
             <p class="card-text">
-                {% if entry.tags %}
+
                 <p class="card-text d-inline-block mb-0">Tags: </p>
                 {% for tag in entry.tags %}
                 <a href="{{url_for('listing', tag=tag)}}" class="badge badge-pill badge-primary">{{tag}}</a>
                 {% endfor %}
-                {% endif %}
-            </p>
 
+            </p>
+            {% endif %}
         </div>
+
+        <!-- Card footer -->
         <div class="card-footer">
+            <!-- If an update time exists, display update time.
+            If not, display creation time. -->
             {% if entry.updated_on %}
             Last updated on {{ entry.updated_on.strftime("%d/%m/%Y") }}
             {% else %}
             Created on {{ entry.created_on.strftime("%d/%m/%Y") }}
             {% endif %}
-            <a href="{{ url_for('delete', entry_id = entry._id) }}"><span
-                    class="material-icons delete-btn">delete</span></a>
+            <!-- Link to delete entry -->
+            <a href="{{ url_for('delete', entry_id = entry._id) }}">
+                <span class="material-icons delete-btn">delete</span>
+            </a>
         </div>
     </div>
     {% endfor %}
 </div>
 
+<!-- Pagination links -->
 <div class="row">
     <div class="col-6">
+        <!-- If a previous page url exist, create a link -->
         {% if prev_url %}
         <a href="{{ prev_url }}" class="btn btn-secondary pagination-btn">
-            <span class="material-icons">chevron_left</span>
-            Previous</a> {% endif %}
+            <span class="material-icons">chevron_left</span>Previous
+        </a>
+        {% endif %}
     </div>
+
     <div class="col-6 text-right">
+        <!-- If a next page url exist, create a link -->
         {% if next_url %}
-        <a href="{{ next_url }}" class="btn btn-secondary pagination-btn"> Next <span class="material-icons">
-                chevron_right</span>
+        <a href="{{ next_url }}" class="btn btn-secondary pagination-btn">
+            Next<span class="material-icons">chevron_right</span>
         </a>
         {% endif %}
     </div>
 </div>
+
+<!-- If no entries are present, show empty repository message -->
 {% else %}
 <div class="entry-container">
     <div class="entry text-center">
         <h1 class="page-title">Welcome to Squirrel!</h1>
         <p>Looks like you haven't stored anything yet.</p>
         <p>Click <a href="{{url_for('new_entry')}}">here</a> to add a new review!</p>
-        <a href="{{url_for('listing')}}"><img class="error-image"
-                src="{{url_for('static', filename='img/image-placeholder.png')}}"></a>
+        <a href="{{url_for('listing')}}">
+            <img class="error-image" src="{{url_for('static', filename='img/image-placeholder.png')}}">
+        </a>
     </div>
 </div>
 
 {%endif%}
-
 
 {% endblock %}

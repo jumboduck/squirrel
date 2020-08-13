@@ -120,7 +120,7 @@ function addNewTag() {
     let widthMachineId = "width" + tagNum;
 
     // Generate HTML for new tag input, new "view tag", and new "width machine"
-    let newEditTag = `<label for="${editTagId}" id="${labelId}">New tag</label><input id="${editTagId}" type="text" maxlength="20" placeholder="new tag" spellcheck="false" class="tag badge-pill badge-primary badge-input" />`;
+    let newEditTag = `<label for="${editTagId}" id="${labelId}" class="sr-only">New tag</label><input id="${editTagId}" type="text" maxlength="20" placeholder="new tag" spellcheck="false" class="tag badge-pill badge-primary badge-input" />`;
     let newTag = createTag(viewTagId);
     let newWidthMachine = `<span aria-hidden="true" id="${widthMachineId}"class="badge badge-pill badge-primary tag width-machine">invisible</span>`;
 

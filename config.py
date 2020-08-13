@@ -7,6 +7,8 @@ import re
 if path.exists("env.py"):
     import env
 
+
+# Initialization
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 app.config['MONGO_DBNAME'] = os.environ.get('MONGO_DBNAME')

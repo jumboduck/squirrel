@@ -102,6 +102,7 @@ function deleteTag() {
 
 /**
  * This function creates a new tag and its corresponding delete tag.
+ * An input field is generated, along with its label, created for
  * It also creates a corresponding width machine, which is a span containing the content
  * of the new tag, used solely for the purpose of defining the width of the tag as the
  * input is being typed into.
@@ -115,10 +116,11 @@ function addNewTag() {
     tagNum += 1;
     let editTagId = "edit-tag-" + tagNum;
     let viewTagId = "tag" + tagNum;
+    let labelId = "label" + tagNum;
     let widthMachineId = "width" + tagNum;
 
     // Generate HTML for new tag input, new "view tag", and new "width machine"
-    let newEditTag = `<input id="${editTagId}" type="text" maxlength="20" placeholder="new tag" spellcheck="false" class="tag badge-pill badge-primary badge-input" />`;
+    let newEditTag = `<label for="${editTagId}" id="${labelId}">New tag</label><input id="${editTagId}" type="text" maxlength="20" placeholder="new tag" spellcheck="false" class="tag badge-pill badge-primary badge-input" />`;
     let newTag = createTag(viewTagId);
     let newWidthMachine = `<span aria-hidden="true" id="${widthMachineId}"class="badge badge-pill badge-primary tag width-machine">invisible</span>`;
 
@@ -189,23 +191,25 @@ $(document).on("keypress", "#name, .badge-input", function (event) {
 
 /**
  * When a "tag input" is blurred, it is removed and replaced with a delete tag.
+ * Its label, used for screen readers, is also removed.
  * If the input is blurred while empty, it is simply removed.
  *
  * This event is attached to the document because the inputs are dynamically
  * generated.
  */
 $(document).on("blur", ".badge-input", function () {
+    let tagNumber = getNumberFromId($(this).attr("id"));
     if (!$(this).val()) {
-        $(this).remove();
-        $("#tag" + getNumberFromId($(this).attr("id"))).remove();
+        $("#tag" + tagNumber).remove();
     } else {
         let newTagContent = addToHiddenInput($(this).val());
         let newDeleteTag = createDeleteTag($(this).attr("id"), $(this).val());
         $("#hidden_tags").val(newTagContent);
         $("#new-tag").before(newDeleteTag);
         $(".delete-tag").each(deleteTag);
-        $(this).remove();
     }
+    $("#label" + tagNumber).remove();
+    $(this).remove();
 });
 
 /**

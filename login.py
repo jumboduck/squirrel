@@ -1,6 +1,5 @@
 
-from flask_login import LoginManager, UserMixin, login_user, login_required,\
-    logout_user, current_user
+from flask_login import LoginManager, UserMixin
 from config import app, users
 from bson.objectid import ObjectId
 

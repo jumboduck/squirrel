@@ -300,8 +300,12 @@ let originalDescription = $(".entry #description").val();
  * AJAX request.
  */
 function sendData(fieldData, url, feedbackEl, isImage = false) {
-    let ajaxRequest;
-    // Define format of ajax request, if it is to update image or not
+    let ajaxRequest = {
+        data: fieldData,
+        type: "POST",
+        url: url + entryId,
+    };
+    // Change format of ajax request if it is for an image
     if (isImage) {
         ajaxRequest = {
             data: fieldData,
@@ -310,12 +314,6 @@ function sendData(fieldData, url, feedbackEl, isImage = false) {
             contentType: false,
             cache: false,
             processData: false,
-        };
-    } else {
-        ajaxRequest = {
-            data: fieldData,
-            type: "POST",
-            url: url + entryId,
         };
     }
     $.ajax(ajaxRequest).done((data) => {

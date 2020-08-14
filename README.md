@@ -79,7 +79,7 @@ Three fonts are used throughout the site:
     > ![montserrat example](readme-files/squirrel-montserrat.png)
 
 3. **Raleway** for textual content such as paragraphs, tags, and navigation links
-    > ![raleway example](readme-files/squirrel-raleway.png) > ![raleway example with tags](readme-files/squirrel-raleway-tags.png)
+    > ![raleway example](readme-files/squirrel-raleway.png) ![raleway example with tags](readme-files/squirrel-raleway-tags.png)
 
 The marriage of these three fonts blends elegance and readability across the site.
 

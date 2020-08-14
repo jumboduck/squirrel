@@ -1,9 +1,13 @@
-# squirrel
+![squirrel logo](readme-files/squirrel-readme-logo.png)
 
 Squirrel is an application that allows users to log reviews and ratings of products, places, restaurants, movies, songs, or anything they would wish to keep track of.
 It is not meant to be a social application, but a repository of likes and dislikes for the user's future reference. Each entry can be tagged and starred to be made easily searchable, and also updated or deleted.
 
+It has been deployed to heroku and can be viewed [here](https://squirrel-logbook.herokuapp.com/).
+
 ## UX
+
+The user's experience was at the front and center during the development of this project.
 
 ### User Stories
 
@@ -17,6 +21,8 @@ It is not meant to be a social application, but a repository of likes and dislik
 -   As a user, I want to search through entries I have created, to find a specific item.
 -   As a user, I want to be able to upload images of what I review, so that I can look at them later
 -   As a user, I want to be able to read through my reviews on a mobile device, so that I can access the information in a store.
+
+### Wireframes
 
 ## Features
 

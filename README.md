@@ -62,6 +62,52 @@ These elements remained roughly the same throughout the application's developmen
 
 ### Design
 
+The application was built using bootstrap and its responsive grid system. The [Start Bootstrap Resume Template](https://github.com/StartBootstrap/startbootstrap-resume) was used for the main structure of the site, and its default styling was overriden by a [style.css](static/css/style.css) file.
+
+Fonts and colors were carefully chosen to give the application a distinctive brand and feel.
+
+#### Typography
+
+Three fonts are used throughout the site:
+
+1. **Poiret One** for the logo
+
+    > ![poiret one example](readme-files/squirrel-poiret-one.png)
+
+2. **Montserrat** for titles, this font is used exclusively in uppercase
+
+    > ![montserrat example](readme-files/squirrel-montserrat.png)
+
+3. **Raleway** for textual content such as paragraphs, tags, and navigation links
+    > ![raleway example](readme-files/squirrel-raleway.png) > ![raleway example with tags](readme-files/squirrel-raleway-tags.png)
+
+The marriage of these three fonts blends elegance and readability across the site.
+
+#### Color Scheme
+
+A simple color scheme was used to accentuate readability and usability.
+
+-   ![#535F6B](https://placehold.it/15/535F6B/000000?text=+) `#535F6B - navy blue, primary color`
+
+This color is used in the navigation, and is echoed throughout the site, in various buttons and links.
+It was initially a lighter shade of blue, but was darkened to create a stronger contrast with the text in the navigation, for accessibility and readability purposes.
+
+-   ![#A99279](https://placehold.it/15/a99279/000000?text=+) `#A99279 - light brown, secondary color`
+
+The light brown is an accent found throughout the application. It highlights links and buttons that the user can interact, such as links to entries, tag buttons, the search button, etc...
+
+-   ![#FF69B4](https://placehold.it/15/FF69B4/000000?text=+) `#FF69B4 - pink, favorite color`
+
+This color is used exclusively to color the heart representing favorited reviews. It was chosen to stick out, so that these reviews can be easily seen in a list.
+
+-   ![#FFAA1D](https://placehold.it/15/FFAA1D/000000?text=+) `#FFAA1D - yellow, rating color`
+
+Similar to the favorite color, this yellow is used exclusively for the star ratings. It was also chosen to be easily identifiable at a glance.
+
+-   ![#F5F5F5](https://placehold.it/15/F5F5F5/000000?text=+) `#F5F5F5 - off white, background color`
+
+This off white was chosen for the background color for the site as it provides good contrast with the other chosen colors, but is less aggressive than a plain white.
+
 ## Features
 
 ### Existing Features

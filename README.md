@@ -291,8 +291,9 @@ To deploy squirrel to Heroku, use the following steps:
 
 6. In your app in heroku, go to settings, reveal the config vars and enter the following variables:
 
-| HOSTNAME       | 0.0.0.0             |
+| Variable       | Value               |
 | -------------- | ------------------- |
+| HOSTNAME       | 0.0.0.0             |
 | PORT           | 5000                |
 | SECRET_KEY     | YOUR_SECRET_KEY     |
 | MONGO_URI      | YOUR_MONGO_URI      |

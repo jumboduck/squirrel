@@ -207,6 +207,7 @@ Before deploying the application, ensure the following are installed:
 -   [Python 3](https://www.python.org/)
 -   [PIP](https://pypi.org/project/pip/)
 -   [Git](https://git-scm.com/)
+-   [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
 
 The application relies on the following services, and accounts will have to be created for them:
 
@@ -214,6 +215,8 @@ The application relies on the following services, and accounts will have to be c
 -   [MongoDB](https://www.mongodb.com/)
 
 ### Local Deployment
+
+These are the steps to deploy squirrel locally.
 
 1.  From the application's [repository](https://github.com/jumboduck/squirrel/), click the "code" button and download the zip of the repository.
 
@@ -248,6 +251,59 @@ The application relies on the following services, and accounts will have to be c
 
 5.  The application can now be run locally. In your terminal, type the command `python3 run app.py`. The application will be available in your browser at the address `http://localhost:5000`.
 
+### Deployment to Heroku
+
+To deploy squirrel to Heroku, use the following steps:
+
+1. Login to your Heroku account and create a new app.
+
+2. Ensure the Procfile and requirements.txt files exist are present in your local repository.
+
+    The Procfile should contain the following line:
+
+    ```
+    web: python app.py
+    ```
+
+    To ensure requirements.txt exists and is up to date, use the following line in your terminal:
+
+    ```
+    pip3 freeze --local > requirements.txt
+    ```
+
+3. Add heroku as a remote for your git repository by getting the heroku git URL for your application in its settings, and typing the following command:
+
+    ```
+    git remote add heroku https://git.heroku.com/your-heroku-git-url
+    ```
+
+4. Push squirrel to heroku with the following command:
+
+    ```
+    git push heroku master
+    ```
+
+5. In your terminal, enter the following line to prepare the application for launch once it is deployed
+
+    ```
+    heroku ps:scale web=5
+    ```
+
+6. In your app in heroku, go to settings, reveal the config vars and enter the following variables:
+
+| HOSTNAME       | 0.0.0.0             |
+| -------------- | ------------------- |
+| PORT           | 5000                |
+| SECRET_KEY     | YOUR_SECRET_KEY     |
+| MONGO_URI      | YOUR_MONGO_URI      |
+| CLOUDINARY_URL | YOUR_CLOUDINARY_URL |
+
+Ensure to enter your own `SECRET_KEY`, `MONGO_URI`, and `CLOUDINARY_URL` variables.
+
+7. Go to the deploy tab of your application, and click "Deploy Branch" under the manual deploy section.
+
+8. squirrel is now deployed to heroku. It can be accessed by clicken the "Open App" button on the top right.
+
 ## Credits
 
 ### Content
@@ -264,7 +320,3 @@ The application relies on the following services, and accounts will have to be c
 -   [Corey Schaefer](https://www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g) for his python tutorials on youtube, especially regarding registration and login forms.
 -   [Adam Orchard](https://codepen.io/orchard/pen/Jnwvb) for the 5 star rating code.
 -   [Andy Osborne](https://github.com/Andy-Osborne) for helping with the search functionality
-
-```
-
-```

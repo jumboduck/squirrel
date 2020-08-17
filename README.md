@@ -158,6 +158,7 @@ This off white was chosen for the background color for the site as it provides g
 -   A password recovery system, that would send an email to a user's account, needs to be implemented.
 -   The profile page should be expanded to display more information, such as the most used tags and the best rated reviews.
 -   The listing page should be expanded to allow to view only favorited items.
+-   A feature to share one or several items with other people (users or not) should be implemented.
 
 ## Technologies Used
 
@@ -169,7 +170,7 @@ This off white was chosen for the background color for the site as it provides g
 -   Python
 -   Flask
 -   [The Padwan Project](https://github.com/Eventyret/Padawan)
--   [Cloudinary](https://cloudinary.com/)
+-   [Cloudinary](https://cloudinary.com/) for all image uploads
 -   [Cypress](https://www.cypress.io/) for testing throughout the development process
 -   [Material Icons](https://material.io/) for all icons on the site
 -   [CSS Autoprefixer](https://autoprefixer.github.io/)

@@ -112,19 +112,52 @@ This off white was chosen for the background color for the site as it provides g
 
 ### Existing Features
 
--   New users can register for a new account
--   Existing users can log in and out of their account
--   This application allows users to create, retrieve, edit and delete reviews connected to their personal account.
--   Reviews can be favorited.
--   Reviews can be searched by keyword, in the entries' name, description and tag fields.
--   Users can upload an image to each review with the cloudinary API.
--   Updating an entry happens seamlessly on the entry's page, without loading a separate update page.
+#### Account Registration
+
+-   New users can register for a new account, choosing a username, email, and password
+-   For the account to be created, all fields must pass validation:
+    -   Username must be between 1 and 30 characters
+    -   Email address must be recognized as an email address
+    -   Password should be at least 8 characters
+    -   Confirm password field should match the password field
+
+#### User Session
+
+-   Existing users can log into their account using their chosen email and password
+-   If the "remember me" checbox is ticked, the session will endure after the browser is closed
+-   Users can log out of their account and close the session
+
+#### Create New Entries
+
+-   Users can create new entries into their squirrel account with the "New Review" navigation link
+-   For the review to be added, the following fields can be filled and validation rules must be met:
+
+    -   The name of the review is required, must be between 1 and 30 characters, and cannot start with a space.
+    -   The description is a required field, must be between 1 and 2000 .characters, and cannot start with a space or a line break.
+    -   The rating gives the review a score between 1 and 5 and is required.
+    -   The review can be made a favorite.
+    -   An image can be chosen with a file selector. Only image will be accepted, and will be uploaded to [cloudinary](https://cloudinary.com/) via its API to be displayed on the entry's page.
+    -   Tags can be added with a tooltip created in javascript. These cannot contain special characters. The chosen tags will be added to a hidden field, separated by commas, to be added to the database.
+
+#### List and Search Entries
+
+-   The main listing page will display all entries chronologically, by most recently created/updated to oldest.
+-   It is possible to view only entries categorized with a tag by clicking on the tag link in the listing or in an entry page itself.
+-   It is possible to search by entering a search phrase in the search field in the navigation. This will return a list of entries sorted by relevance.
+
+#### View, Edit, and Delete Entries
+
+-   By clicking the image or title of an entry in a listing, the entry's page will load and display the information inputted by the user.
+-   Each field can be updated by clicking on it. The same validation rules as in the entry creation apply.
+-   The updates are done asynchronously with AJAX requests, so that the page does not need to be loaded. A message will appear confirming the success (or failure) of the update.
+-   If the image is updated, the previously used image will be removed from cloudinary.
+-   Entries can be deleted by clicking the trashcan icon in a listing or entry page.
 
 ### Features Left to Implement
 
 -   A password recovery system, that would send an email to a user's account, needs to be implemented.
 -   The profile page should be expanded to display more information, such as the most used tags and the best rated reviews.
--   The listing page should be expanded to allow to view all favorited items.
+-   The listing page should be expanded to allow to view only favorited items.
 
 ## Technologies Used
 

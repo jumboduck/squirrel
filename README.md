@@ -1,5 +1,7 @@
 ![squirrel logo](readme-files/squirrel-readme-logo.png)
 
+# squirrel
+
 Squirrel is an application that allows users to log reviews and ratings of products, places, restaurants, movies, songs, or anything they would wish to keep track of.
 It is not meant to be a social application, but a repository of likes and dislikes for the user's future reference. Each entry can be tagged and starred to be made easily searchable, and also updated or deleted.
 
@@ -112,19 +114,53 @@ This off white was chosen for the background color for the site as it provides g
 
 ### Existing Features
 
--   New users can register for a new account
--   Existing users can log in and out of their account
--   This application allows users to create, retrieve, edit and delete reviews connected to their personal account.
--   Reviews can be favorited.
--   Reviews can be searched by keyword, in the entries' name, description and tag fields.
--   Users can upload an image to each review with the cloudinary API.
--   Updating an entry happens seamlessly on the entry's page, without loading a separate update page.
+#### Account Registration
+
+-   New users can register for a new account, choosing a username, email, and password
+-   For the account to be created, all fields must pass validation:
+    -   Username must be between 1 and 30 characters
+    -   Email address must be recognized as an email address
+    -   Password should be at least 8 characters
+    -   Confirm password field should match the password field
+
+#### User Session
+
+-   Existing users can log into their account using their chosen email and password
+-   If the "remember me" checbox is ticked, the session will endure after the browser is closed
+-   Users can log out of their account and close the session
+
+#### Create New Entries
+
+-   Users can create new entries into their squirrel account with the "New Review" navigation link
+-   For the review to be added, the following fields can be filled and validation rules must be met:
+
+    -   The name of the review is required, must be between 1 and 30 characters, and cannot start with a space.
+    -   The description is a required field, must be between 1 and 2000 .characters, and cannot start with a space or a line break.
+    -   The rating gives the review a score between 1 and 5 and is required.
+    -   The review can be made a favorite.
+    -   An image can be chosen with a file selector. Only image will be accepted, and will be uploaded to [cloudinary](https://cloudinary.com/) via its API to be displayed on the entry's page.
+    -   Tags can be added with a tooltip created in javascript. These cannot contain special characters. The chosen tags will be added to a hidden field, separated by commas, to be added to the database.
+
+#### List and Search Entries
+
+-   The main listing page will display all entries chronologically, by most recently created/updated to oldest.
+-   It is possible to view only entries categorized with a tag by clicking on the tag link in the listing or in an entry page itself.
+-   It is possible to search by entering a search phrase in the search field in the navigation. This will return a list of entries sorted by relevance.
+
+#### View, Edit, and Delete Entries
+
+-   By clicking the image or title of an entry in a listing, the entry's page will load and display the information inputted by the user.
+-   Each field can be updated by clicking on it. The same validation rules as in the entry creation apply.
+-   The updates are done asynchronously with AJAX requests, so that the page does not need to be loaded. A message will appear confirming the success (or failure) of the update.
+-   If the image is updated, the previously used image will be removed from cloudinary.
+-   Entries can be deleted by clicking the trashcan icon in a listing or entry page.
 
 ### Features Left to Implement
 
 -   A password recovery system, that would send an email to a user's account, needs to be implemented.
 -   The profile page should be expanded to display more information, such as the most used tags and the best rated reviews.
--   The listing page should be expanded to allow to view all favorited items.
+-   The listing page should be expanded to allow to view only favorited items.
+-   A feature to share one or several items with other people (users or not) should be implemented.
 
 ## Technologies Used
 
@@ -136,7 +172,7 @@ This off white was chosen for the background color for the site as it provides g
 -   Python
 -   Flask
 -   [The Padwan Project](https://github.com/Eventyret/Padawan)
--   [Cloudinary](https://cloudinary.com/)
+-   [Cloudinary](https://cloudinary.com/) for all image uploads
 -   [Cypress](https://www.cypress.io/) for testing throughout the development process
 -   [Material Icons](https://material.io/) for all icons on the site
 -   [CSS Autoprefixer](https://autoprefixer.github.io/)
@@ -165,6 +201,108 @@ Thorough conducted to ensure pagination worked as intended, several errors were 
 ### Testing with Cypress
 
 ## Deployment
+
+Before deploying the application, ensure the following are installed:
+
+-   [Python 3](https://www.python.org/)
+-   [PIP](https://pypi.org/project/pip/)
+-   [Git](https://git-scm.com/)
+-   [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+
+The application relies on the following services, and accounts will have to be created for them:
+
+-   [Cloudinary](https://cloudinary.com/)
+-   [MongoDB](https://www.mongodb.com/)
+
+### Local Deployment
+
+These are the steps to deploy squirrel locally.
+
+1.  From the application's [repository](https://github.com/jumboduck/squirrel/), click the "code" button and download the zip of the repository.
+
+    Alternatively, you can clone the repository using the following line in your terminal:
+
+        git clone https://github.com/jumboduck/squirrel.git
+
+2.  Access the folder in your terminal window and install the application's required modules using the following command:
+
+        python -m pip -r requirements.txt
+
+3.  In MongoDB, create a new project called "squirrel", and in this project create a new database called "squirrel.
+
+    This database will contain two collections: `users` and `entries`.
+
+4.  Create a file containing your environmental variables called `env.py`. It will need to contain the following lines and variables:
+
+    ```
+    import os
+
+    os.environ["HOSTNAME"] = "0.0.0.0"
+    os.environ["PORT"] = "5000"
+    os.environ["SECRET_KEY"] = "YOUR_SECRET_KEY"
+    os.environ["DEV"] = "True"
+    os.environ["MONGO_URI"] = "YOUR_MONGODB_URI"
+    os.environ["CLOUDINARY_URL"]= "YOUR_CLOUDINARY_URL"
+    ```
+
+    Please note that you will need to update the `SECRET_KEY` with your own secret key, as well as the `MONGO_URI` and `CLOUDINARY_URL` variables with those provided by those applications.
+
+    If you plan on pushing this application to a public repository, ensure that `env.py` is added to your `.gitignore` file.
+
+5.  The application can now be run locally. In your terminal, type the command `python3 run app.py`. The application will be available in your browser at the address `http://localhost:5000`.
+
+### Deployment to Heroku
+
+To deploy squirrel to Heroku, use the following steps:
+
+1. Login to your Heroku account and create a new app.
+
+2. Ensure the Procfile and requirements.txt files exist are present in your local repository.
+
+    The Procfile should contain the following line:
+
+    ```
+    web: python app.py
+    ```
+
+    To ensure requirements.txt exists and is up to date, use the following line in your terminal:
+
+    ```
+    pip3 freeze --local > requirements.txt
+    ```
+
+3. Add heroku as a remote for your git repository by getting the heroku git URL for your application in its settings, and typing the following command:
+
+    ```
+    git remote add heroku https://git.heroku.com/your-heroku-git-url
+    ```
+
+4. Push squirrel to heroku with the following command:
+
+    ```
+    git push heroku master
+    ```
+
+5. In your terminal, enter the following line to prepare the application for launch once it is deployed
+
+    ```
+    heroku ps:scale web=5
+    ```
+
+6. In your app in heroku, go to settings, reveal the config vars and enter the following variables:
+
+| HOSTNAME       | 0.0.0.0             |
+| -------------- | ------------------- |
+| PORT           | 5000                |
+| SECRET_KEY     | YOUR_SECRET_KEY     |
+| MONGO_URI      | YOUR_MONGO_URI      |
+| CLOUDINARY_URL | YOUR_CLOUDINARY_URL |
+
+Ensure to enter your own `SECRET_KEY`, `MONGO_URI`, and `CLOUDINARY_URL` variables.
+
+7. Go to the deploy tab of your application, and click "Deploy Branch" under the manual deploy section.
+
+8. squirrel is now deployed to heroku. It can be accessed by clicken the "Open App" button on the top right.
 
 ## Credits
 

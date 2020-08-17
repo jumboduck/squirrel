@@ -1,5 +1,7 @@
 ![squirrel logo](readme-files/squirrel-readme-logo.png)
 
+# squirrel
+
 Squirrel is an application that allows users to log reviews and ratings of products, places, restaurants, movies, songs, or anything they would wish to keep track of.
 It is not meant to be a social application, but a repository of likes and dislikes for the user's future reference. Each entry can be tagged and starred to be made easily searchable, and also updated or deleted.
 
@@ -200,6 +202,52 @@ Thorough conducted to ensure pagination worked as intended, several errors were 
 
 ## Deployment
 
+Before deploying the application, ensure the following are installed:
+
+-   [Python 3](https://www.python.org/)
+-   [PIP](https://pypi.org/project/pip/)
+-   [Git](https://git-scm.com/)
+
+The application relies on the following services, and accounts will have to be created for them:
+
+-   [Cloudinary](https://cloudinary.com/)
+-   [MongoDB](https://www.mongodb.com/)
+
+### Local Deployment
+
+1.  From the application's [repository](https://github.com/jumboduck/squirrel/), click the "code" button and download the zip of the repository.
+
+    Alternatively, you can clone the repository using the following line in your terminal:
+
+        git clone https://github.com/jumboduck/squirrel.git
+
+2.  Access the folder in your terminal window and install the application's required modules using the following command:
+
+        python -m pip -r requirements.txt
+
+3.  In MongoDB, create a new project called "squirrel", and in this project create a new database called "squirrel.
+
+    This database will contain two collections: `users` and `entries`.
+
+4.  Create a file containing your environmental variables called `env.py`. It will need to contain the following lines and variables:
+
+    ```
+    import os
+
+    os.environ["HOSTNAME"] = "0.0.0.0"
+    os.environ["PORT"] = "5000"
+    os.environ["SECRET_KEY"] = "YOUR_SECRET_KEY"
+    os.environ["DEV"] = "True"
+    os.environ["MONGO_URI"] = "YOUR_MONGODB_URI"
+    os.environ["CLOUDINARY_URL"]= "YOUR_CLOUDINARY_URL"
+    ```
+
+    Please note that you will need to update the `SECRET_KEY` with your own secret key, as well as the `MONGO_URI` and `CLOUDINARY_URL` variables with those provided by those applications.
+
+    If you plan on pushing this application to a public repository, ensure that `env.py` is added to your `.gitignore` file.
+
+5.  The application can now be run locally. In your terminal, type the command `python3 run app.py`. The application will be available in your browser at the address `http://localhost:5000`.
+
 ## Credits
 
 ### Content
@@ -216,3 +264,7 @@ Thorough conducted to ensure pagination worked as intended, several errors were 
 -   [Corey Schaefer](https://www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g) for his python tutorials on youtube, especially regarding registration and login forms.
 -   [Adam Orchard](https://codepen.io/orchard/pen/Jnwvb) for the 5 star rating code.
 -   [Andy Osborne](https://github.com/Andy-Osborne) for helping with the search functionality
+
+```
+
+```

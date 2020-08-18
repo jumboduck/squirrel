@@ -4,26 +4,40 @@
 
 ## Manual Testing
 
-Manual testing was done throughout the development process, as new features were implemented.
+Manual testing was done throughout the development process, as new features were implemented, to ensure of they worked as intended.
 
 ### Registration Page
 
-### Pagination on Listing page
+### Login Page
 
-Thorough conducted to ensure pagination worked as intended, several errors were caught and addressed with the following tests:
+### New Review Page
 
--   The page number set in the url (/listing?page=2) was set manually to numbers beyond the range of what the listing includes and leads to a 404 page
--   The page number was manually changed to a string
+### Listing Page
 
-### Tag Management
+#### Pagination
+
+Thorough tests were conducted to ensure pagination worked as intended, several errors were caught and addressed with the following tests:
+
+-   The page number set in the url (ie: /listing?page=2) was set manually to numbers beyond the range of what the listing includes and leads to a 404 page
+-   The page number was manually changed to a random string, this now leads to the first page of the listing
+
+### Entry Page
+
+#### Tag Management
 
 -   Issue with hover CSS of tags not working
 -   Issue with tags in adding review: when field is not validated, the variables in the hidden field remain
 -   When input tag is blurred, it is removed, causing an error in the console, see: https://github.com/jquery/jquery/issues/4417
 
-### Textarea resizing
+#### Textarea Resizing
 
--   Textarea is fixed, needed to find a way to resize it to look natural
+-   A textarea's height is fixed by default. To ensure that all text was visible, a javascript function was created to ensure that the textarea field resized to its content.
+
+-   Because these fields needed to be edited in their "view", they needed to be resized as a user typed to ensure no content was hidden.
+
+-   The textarea also needed to be resized if the size of the window changed, as it could change the text's layout, and pottentially its affect visibility.
+
+### Profile
 
 ## End-to-End Testing with Cypress
 

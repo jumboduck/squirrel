@@ -2,6 +2,35 @@
 
 # squirrel
 
+- [squirrel](#squirrel)
+  - [UX](#ux)
+    - [Project Goal](#project-goal)
+    - [User Stories](#user-stories)
+    - [Wireframes](#wireframes)
+    - [Views and Data Structure](#views-and-data-structure)
+    - [Design](#design)
+      - [Typography](#typography)
+      - [Color Scheme](#color-scheme)
+  - [Features](#features)
+    - [Existing Features](#existing-features)
+      - [Account Registration](#account-registration)
+      - [User Session](#user-session)
+      - [Create New Entries](#create-new-entries)
+      - [List and Search Entries](#list-and-search-entries)
+      - [View, Edit, and Delete Entries](#view-edit-and-delete-entries)
+      - [Profile and Account Management](#profile-and-account-management)
+    - [Features Left to Implement](#features-left-to-implement)
+  - [Technologies Used](#technologies-used)
+  - [Testing](#testing)
+  - [Deployment](#deployment)
+    - [Local Deployment](#local-deployment)
+    - [Deployment to Heroku](#deployment-to-heroku)
+  - [Credits](#credits)
+    - [Media](#media)
+    - [Acknowledgements](#acknowledgements)
+
+---
+
 Squirrel is an application that allows users to log reviews and ratings of products, places, restaurants, movies, songs, or anything they would wish to keep track of.
 It is not meant to be a social application, but a repository of likes and dislikes for the user's future reference. Each entry can be tagged and starred to be made easily searchable, and also updated or deleted.
 
@@ -300,8 +329,6 @@ Ensure to enter your own `SECRET_KEY`, `MONGO_URI`, and `CLOUDINARY_URL` variabl
 8. squirrel is now deployed to heroku. It can be accessed by clicken the "Open App" button on the top right.
 
 ## Credits
-
-### Content
 
 ### Media
 

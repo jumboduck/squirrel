@@ -155,6 +155,11 @@ This off white was chosen for the background color for the site as it provides g
 -   If the image is updated, the previously used image will be removed from cloudinary.
 -   Entries can be deleted by clicking the trashcan icon in a listing or entry page.
 
+#### Profile and Account Management
+
+-   The profile page features statistics about the squirrels account: Number of reviews, number of favorited reviews, average rating.
+-   Clicking on the "Manage Account" button will make a modal window appear and give the user the possibility to update their username, email and/or password. The new information must conform to the validation rules described above. Additionally, the current password is needed to make any of these changes.
+
 ### Features Left to Implement
 
 -   A password recovery system, that would send an email to a user's account, needs to be implemented.
@@ -178,6 +183,14 @@ This off white was chosen for the background color for the site as it provides g
 -   [CSS Autoprefixer](https://autoprefixer.github.io/)
 
 ## Testing
+
+### Validation
+
+**HTML** - All pages were successfully run through the [W3C HTML Validator](https://validator.w3.org/) to ensure compliance with the standards set by the W3C/
+
+**CSS** - CSS validation with the W3C's [Jigsaw Validator](https://jigsaw.w3.org/css-validator/) returned some expected and necessary flags from vendor extensions. Other than that, the code complies to the W3C standards.
+
+**Python** - All Python code was checked with the [PEP8 online validator](http://pep8online.com/) and is PEP8 compliant.
 
 ### Manual Testing
 

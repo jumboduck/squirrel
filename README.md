@@ -184,34 +184,15 @@ This off white was chosen for the background color for the site as it provides g
 
 ## Testing
 
-### Validation
+Testing was done manually throughout the development process and was also automated using [Cypress](https://www.cypress.io/). The full rundown of the testing can be found [here](TESTING.md)
+
+Additionally, all code was validated in the following ways:
 
 **HTML** - All pages were successfully run through the [W3C HTML Validator](https://validator.w3.org/) to ensure compliance with the standards set by the W3C/
 
 **CSS** - CSS validation with the W3C's [Jigsaw Validator](https://jigsaw.w3.org/css-validator/) returned some expected and necessary flags from vendor extensions. Other than that, the code complies to the W3C standards.
 
 **Python** - All Python code was checked with the [PEP8 online validator](http://pep8online.com/) and is PEP8 compliant.
-
-### Manual Testing
-
-#### Pagination on Listing page
-
-Thorough conducted to ensure pagination worked as intended, several errors were caught and addressed with the following tests:
-
--   The page number set in the url (/listing?page=2) was set manually to numbers beyond the range of what the listing includes and leads to a 404 page
--   The page number was manually changed to a string
-
-#### Tag Management
-
--   Issue with hover CSS of tags not working
--   Issue with tags in adding review: when field is not validated, the variables in the hidden field remain
--   When input tag is blurred, it is removed, causing an error in the console, see: https://github.com/jquery/jquery/issues/4417
-
-#### Textarea resizing
-
--   Textarea is fixed, needed to find a way to resize it to look natural
-
-### Testing with Cypress
 
 ## Deployment
 

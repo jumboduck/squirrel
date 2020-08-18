@@ -1,4 +1,4 @@
-describe("Login page", () => {
+describe("Search", () => {
     it("should be possible to search through reviews", () => {
         cy.login()
             .get(".search-input")

@@ -60,6 +60,19 @@ The following tests were run on the page to add a new review:
 -   A review should not be added if no description has been typed
 -   A review should not be added if no rating was chosen
 
+### Update Review
+
+The following tests were run to ensure each entry can be updated by the user:
+
+-   It should be possible to update the title
+-   It should not be possible to leave the title blank
+-   It should be possible to update the description
+-   It should not be possible to leave the description blank
+-   It should be possible to update the image
+-   It should be possible to update the rating
+-   It should be possible to add a new tag
+-   It should be possible to delete a tag
+
 ### Delete Review
 
 It should be possible to delete a review.

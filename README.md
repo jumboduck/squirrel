@@ -155,6 +155,11 @@ This off white was chosen for the background color for the site as it provides g
 -   If the image is updated, the previously used image will be removed from cloudinary.
 -   Entries can be deleted by clicking the trashcan icon in a listing or entry page.
 
+#### Profile and Account Management
+
+-   The profile page features statistics about the squirrels account: Number of reviews, number of favorited reviews, average rating.
+-   Clicking on the "Manage Account" button will make a modal window appear and give the user the possibility to update their username, email and/or password. The new information must conform to the validation rules described above. Additionally, the current password is needed to make any of these changes.
+
 ### Features Left to Implement
 
 -   A password recovery system, that would send an email to a user's account, needs to be implemented.

@@ -19,6 +19,7 @@
       - [List and Search Entries](#list-and-search-entries)
       - [View, Edit, and Delete Entries](#view-edit-and-delete-entries)
       - [Profile and Account Management](#profile-and-account-management)
+      - [Security](#security)
     - [Features Left to Implement](#features-left-to-implement)
   - [Technologies Used](#technologies-used)
   - [Testing](#testing)
@@ -157,6 +158,7 @@ This off white was chosen for the background color for the site as it provides g
 -   Existing users can log into their account using their chosen email and password
 -   If the "remember me" checbox is ticked, the session will endure after the browser is closed
 -   Users can log out of their account and close the session
+-   If a user has tried accessing a page from the application while logged out, they will be redirected to this page when they log in
 
 #### Create New Entries
 
@@ -169,6 +171,8 @@ This off white was chosen for the background color for the site as it provides g
     -   The review can be made a favorite.
     -   An image can be chosen with a file selector. Only image will be accepted, and will be uploaded to [cloudinary](https://cloudinary.com/) via its API to be displayed on the entry's page.
     -   Tags can be added with a tooltip created in javascript. These cannot contain special characters. The chosen tags will be added to a hidden field, separated by commas, to be added to the database.
+
+-   If a review is added without an image, a default image will be set for this review
 
 #### List and Search Entries
 
@@ -188,6 +192,13 @@ This off white was chosen for the background color for the site as it provides g
 
 -   The profile page features statistics about the squirrels account: Number of reviews, number of favorited reviews, average rating.
 -   Clicking on the "Manage Account" button will make a modal window appear and give the user the possibility to update their username, email and/or password. The new information must conform to the validation rules described above. Additionally, the current password is needed to make any of these changes.
+
+#### Security
+
+Several steps were taken to ensure the security of the user's data.
+
+-   The user's password is hashed upon creation or update, using the application's secret key. This ensures the password can never been seen, even in the database.
+-   If a user has tried accessing a page while logged out, an argument is sent through the url to redirect to this page after login. For security reasons, this redirect only happens if the host redirected to is the same as the application's.
 
 ### Features Left to Implement
 

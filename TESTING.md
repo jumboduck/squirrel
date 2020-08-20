@@ -8,18 +8,66 @@ Manual testing was done throughout the development process, as new features were
 
 ### Registration Page
 
+The validation rules for the creation of an account were tested to ensure correct data was sent to the database. The following returned an error as expected:
+
+-   One of the fields missing
+-   Confirm password not matching password
+-   Username longer than 30 characters
+-   Password shorter than 8 characters
+-   Invalid email format
+-   Email already registered for an existing account
+
+If the fields validate, it was confirmed that an account is created.
+
+If a user is already logged in, accessing the registration page redirects to the listing page.
+
 ### Login Page
+
+To log into the application, an email attached to an existing user account must be entered, along with its associated password. If the email is not found in the database, or the password does not match, the login fails.
+
+If the email exists and the password matches, the log in succeeds and the user session is created.
+
+If a user is already logged in, accessing the login page redirects to the listing page.
 
 ### New Review Page
 
+The following tests have been done to ensure a review can be added with the appropriate information. All have returned the expected results and feedback:
+
+-   Trying to add a review with empty fields does not add a review
+-   A review with a title of 30 characters cannot be added
+-   A review with a description over 2000 characters cannot be added
+-   Only an image can be added from the file selector in the form
+-   A review will not be added if if the rating, title or description are empty
+
+When a review was added, it was ensured that all corresponding fields were appropriately filled in the generated entry page.
+
+Additionally the tagging tool needed testing to ensure data sent to the database was correct.
+
+-   No special characters can be added to a tag
+-   When a tag is out of focus, it is changed to a "delete tag", which allows it to be removed
+-   Tags created, then deleted with the tagging tool are effectively not added to the database
+
 ### Listing Page
+
+-   It was ensured that entries can be accessed in the listing page by clicking either the image or the title of the corresponding entry
+-   Clicking the "delete" button will remove the entry
+-   It was ensured that all information for listed entries was correct (title, image, favorite, rating, tags, description, date)
+-   As the listing organizes the entries by dated ("created on", or "updated on" if existing), it was ensured that updating an entry, thus changing its update date, pushes it to the top of the listing
+
+#### Tag Listing
+
+Clicking on a tag, either in the listing page or in an entry page will generate a page listing all entry using this tag.
+
+-   It was ensured that tag listing displayed only entries with the relevant tag
+-   It was ensured that entering a tag in the url that has not been used in an entry returns a 404 error.
 
 #### Pagination
 
 Thorough tests were conducted to ensure pagination worked as intended, several errors were caught and addressed with the following tests:
 
 -   The page number set in the url (ie: /listing?page=2) was set manually to numbers beyond the range of what the listing includes and leads to a 404 page
--   The page number was manually changed to a random string, this now leads to the first page of the listing
+-   When the page number is manually changed to a random string, this now leads to the first page of the listing
+-   It was ensured that the "previous page" and "next page" buttons exist only when entries would exist to see on the next and previous pages
 
 ### Entry Page
 
@@ -27,7 +75,7 @@ Thorough tests were conducted to ensure pagination worked as intended, several e
 
 -   Issue with hover CSS of tags not working
 -   Issue with tags in adding review: when field is not validated, the variables in the hidden field remain
--   When input tag is blurred, it is removed, causing an error in the console, see: https://github.com/jquery/jquery/issues/4417
+-   When input tag is blurred, it is removed, causing an error in the console, which is a known issue, see the [following thread on github](https://github.com/jquery/jquery/issues/4417)
 
 #### Textarea Resizing
 

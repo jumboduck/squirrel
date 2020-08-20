@@ -190,6 +190,11 @@ def listing(tag=None):
     entry_count = entries.count_documents(match_query)
     max_page = math.ceil(entry_count/limit)
 
+    # If a tag has been entered in the url but no entries are
+    # tagged with the keyword, return a 404 error.
+    if tag and entry_count == 0:
+        return render_template('pages/404.html',  title="Page Not Found")
+
     # Ensure that if an inexistant page is entered in the address bar,
     # a 404 page is returned
     if entry_count != 0 and page > max_page or page <= 0:

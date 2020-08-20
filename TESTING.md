@@ -46,6 +46,7 @@ Additionally the tagging tool needed testing to ensure data sent to the database
 -   No special characters can be added to a tag
 -   When a tag is out of focus, it is changed to a "delete tag", which allows it to be removed
 -   Tags created, then deleted with the tagging tool are effectively not added to the database
+-   An issue was found where the tags added to the hidden field remained if the form was not validated. This resulted in tags previously inputted to be added to the review without the user's knowledge. it was fixed by clearing the hidden tags field if the form did not validate
 
 ### Listing Page
 
@@ -71,21 +72,57 @@ Thorough tests were conducted to ensure pagination worked as intended, several e
 
 ### Entry Page
 
+It was ensured that all fields of the entries was displayed correctly and showed the appropriate content.
+
+Thorough testing was done to ensure that the entry's content could be updated appropriately. Because these updates are made asynchronously, each test for updates was followed by a page refresh, to ensure that the updates were made on the database side as well as on the frontend.
+
+#### Field Updates
+
+-   It was ensured that the name and description fields could only be updated when validation rules for the field were followed (cannot be blank, cannot start with a space or line break, maximum 30 characters for name and 2000 characters for description)
+-   It was ensured an entry could be successfully favorited or unfavorited
+-   It was ensured that the rating of an entry could be changed
+-   It was ensured that a new image could be uploaded
+-   It was ensured that when a new image is uploaded, the previous image is removed from cloudinary
+-   It was ensured that tags could be added or removed successfully
+-   It was ensured that for each update, the "updated on" text at the bottom of the entry is updated as well
+-   For the name, description, and image field, it was ensured that an unsuccessful update returned the appropriate feedback to the user
+
 #### Tag Management
 
--   Issue with hover CSS of tags not working
--   Issue with tags in adding review: when field is not validated, the variables in the hidden field remain
+Several issues were discovered when testing the tag management tool in entries:
+
+-   It was ensured that duplicated tags are removed
+-   A CSS bug was fixed, where the hover state of tags was not enforced
 -   When input tag is blurred, it is removed, causing an error in the console, which is a known issue, see the [following thread on github](https://github.com/jquery/jquery/issues/4417)
+-   It was ensured no special characters could be added to tags
+-   It was ensured that tags could be added and removed successfully
 
 #### Textarea Resizing
 
--   A textarea's height is fixed by default. To ensure that all text was visible, a javascript function was created to ensure that the textarea field resized to its content.
+A textarea element's height is fixed by default. To ensure that all text was visible, a javascript function was created to ensure that the textarea field resized to its content
 
--   Because these fields needed to be edited in their "view", they needed to be resized as a user typed to ensure no content was hidden.
+-   Because these fields needed to be edited in their "view", they needed to be resized as a user typed to ensure no content was hidden
 
--   The textarea also needed to be resized if the size of the window changed, as it could change the text's layout, and pottentially its affect visibility.
+-   The textarea also needed to be resized if the size of the window changed, as it could change the text's layout, and pottentially its affect visibility
 
 ### Profile
+
+#### Statistics Display
+
+-   It was ensured that the relevant information was appropriately displayed on the profile page
+-   A bug was discovered where the average rating was the accounting for reviews across the entire application, not just for the currently logged in user. It was addressed successfully
+
+#### Account Management
+
+The account management tool displays and hides three fields to update chosen by the user
+
+-   Updating only the username was tested successfully
+-   Updating the username with over 30 characters did not succeed, as expected
+-   Updated only the email was tested successfully
+-   Updating the email with a wrongly formatted address did not succeed, as expected
+-   Updated only the password was tested successfully
+-   Trying to update any of these fields with the wrong current password returned an error as expected
+-   Updating all three fields at once was tested successfully
 
 ## End-to-End Testing with Cypress
 
@@ -149,3 +186,7 @@ From the listing page, the following tests were conducted:
 ### Search function
 
 The application should successfuly display search results, when a term is sent through the search input in the navigation.
+
+## Responsive Testing
+
+An important feature of the application is to make it responsive across a variety of devices. For this reason thorough testing was conducted to ensure content remained readable and editable on various screen sizes.

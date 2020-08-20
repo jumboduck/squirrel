@@ -27,6 +27,22 @@ If the email exists and the password matches, the log in succeeds and the user s
 
 ### New Review Page
 
+The following tests have been done to ensure a review can be added with the appropriate information. All have returned the expected results and feedback:
+
+-   Trying to add a review with empty fields does not add a review
+-   A review with a title of 30 characters cannot be added
+-   A review with a description over 2000 characters cannot be added
+-   Only an image can be added from the file selector in the form
+-   A review will not be added if if the rating, title or description are empty
+
+When a review was added, it was ensured that all corresponding fields were appropriately filled in the generated entry page.
+
+Additionally the tagging tool needed testing to ensure data sent to the database was correct.
+
+-   No special characters can be added to a tag
+-   When a tag is out of focus, it is changed to a "delete tag", which allows it to be removed
+-   Tags created, then deleted with the tagging tool are effectively not added to the database
+
 ### Listing Page
 
 #### Pagination

@@ -172,6 +172,8 @@ This off white was chosen for the background color for the site as it provides g
     -   An image can be chosen with a file selector. Only image will be accepted, and will be uploaded to [cloudinary](https://cloudinary.com/) via its API to be displayed on the entry's page.
     -   Tags can be added with a tooltip created in javascript. These cannot contain special characters. The chosen tags will be added to a hidden field, separated by commas, to be added to the database.
 
+-   If a review is added without an image, a default image will be set for this review
+
 #### List and Search Entries
 
 -   The main listing page will display all entries chronologically, by most recently created/updated to oldest.

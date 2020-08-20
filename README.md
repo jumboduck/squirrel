@@ -19,6 +19,7 @@
       - [List and Search Entries](#list-and-search-entries)
       - [View, Edit, and Delete Entries](#view-edit-and-delete-entries)
       - [Profile and Account Management](#profile-and-account-management)
+      - [Security](#security)
     - [Features Left to Implement](#features-left-to-implement)
   - [Technologies Used](#technologies-used)
   - [Testing](#testing)
@@ -188,6 +189,13 @@ This off white was chosen for the background color for the site as it provides g
 
 -   The profile page features statistics about the squirrels account: Number of reviews, number of favorited reviews, average rating.
 -   Clicking on the "Manage Account" button will make a modal window appear and give the user the possibility to update their username, email and/or password. The new information must conform to the validation rules described above. Additionally, the current password is needed to make any of these changes.
+
+#### Security
+
+Several steps were taken to ensure the security of the user's data.
+
+-   The user's password is hashed upon creation or update, using the application's secret key. This ensures the password can never been seen, even in the database.
+-   If a user has tried accessing a page while logged out, an argument is sent through the url to redirect to this page after login. For security reasons, this redirect only happens if the host redirected to is the same as the application's.
 
 ### Features Left to Implement
 

@@ -158,6 +158,7 @@ This off white was chosen for the background color for the site as it provides g
 -   Existing users can log into their account using their chosen email and password
 -   If the "remember me" checbox is ticked, the session will endure after the browser is closed
 -   Users can log out of their account and close the session
+-   If a user has tried accessing a page from the application while logged out, they will be redirected to this page when they log in
 
 #### Create New Entries
 

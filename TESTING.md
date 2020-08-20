@@ -8,7 +8,22 @@ Manual testing was done throughout the development process, as new features were
 
 ### Registration Page
 
+The validation rules for the creation of an account were tested to ensure correct data was sent to the database. The following returned an error as expected:
+
+-   One of the fields missing
+-   Confirm password not matching password
+-   Username longer than 30 characters
+-   Password shorter than 8 characters
+-   Invalid email format
+-   Email already registered for an existing account
+
+If the fields validate, it was confirmed that an account is created.
+
 ### Login Page
+
+To log into the application, an email attached to an existing user account must be entered, along with its associated password. If the email is not found in the database, or the password does not match, the login fails.
+
+If the email exists and the password matches, the log in succeeds and the user session is created.
 
 ### New Review Page
 

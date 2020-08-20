@@ -99,13 +99,30 @@ Several issues were discovered when testing the tag management tool in entries:
 
 #### Textarea Resizing
 
-A textarea element's height is fixed by default. To ensure that all text was visible, a javascript function was created to ensure that the textarea field resized to its content.
+A textarea element's height is fixed by default. To ensure that all text was visible, a javascript function was created to ensure that the textarea field resized to its content
 
--   Because these fields needed to be edited in their "view", they needed to be resized as a user typed to ensure no content was hidden.
+-   Because these fields needed to be edited in their "view", they needed to be resized as a user typed to ensure no content was hidden
 
--   The textarea also needed to be resized if the size of the window changed, as it could change the text's layout, and pottentially its affect visibility.
+-   The textarea also needed to be resized if the size of the window changed, as it could change the text's layout, and pottentially its affect visibility
 
 ### Profile
+
+#### Statistics Display
+
+-   It was ensured that the relevant information was appropriately displayed on the profile page
+-   A bug was discovered where the average rating was the accounting for reviews across the entire application, not just for the currently logged in user. It was addressed successfully
+
+#### Account Management
+
+The account management tool displays and hides three fields to update chosen by the user
+
+-   Updating only the username was tested successfully
+-   Updating the username with over 30 characters did not succeed, as expected
+-   Updated only the email was tested successfully
+-   Updating the email with a wrongly formatted address did not succeed, as expected
+-   Updated only the password was tested successfully
+-   Trying to update any of these fields with the wrong current password returned an error as expected
+-   Updating all three fields at once was tested successfully
 
 ## End-to-End Testing with Cypress
 

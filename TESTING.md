@@ -75,7 +75,7 @@ Thorough tests were conducted to ensure pagination worked as intended, several e
 
 -   Issue with hover CSS of tags not working
 -   Issue with tags in adding review: when field is not validated, the variables in the hidden field remain
--   When input tag is blurred, it is removed, causing an error in the console, see: https://github.com/jquery/jquery/issues/4417
+-   When input tag is blurred, it is removed, causing an error in the console, which is a known issue, see the [following thread on github](https://github.com/jquery/jquery/issues/4417)
 
 #### Textarea Resizing
 

@@ -186,3 +186,7 @@ From the listing page, the following tests were conducted:
 ### Search function
 
 The application should successfuly display search results, when a term is sent through the search input in the navigation.
+
+## Responsive Testing
+
+An important feature of the application is to make it responsive across a variety of devices. For this reason thorough testing was conducted to ensure content remained readable and editable on various screen sizes.

@@ -27,5 +27,5 @@ Global Variables
 
 users = mongo.db.users
 entries = mongo.db.entries
-time_format  = "%d/%m/%Y at %H:%M:%S"
+time_format = "%d/%m/%Y at %H:%M:%S"
 text_regex = re.compile("^[\\S].*")

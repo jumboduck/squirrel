@@ -1,5 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request
-from forms import RegistrationForm, LoginForm, EntryForm, NewEntryForm, UpdateAccount
+from forms import RegistrationForm, LoginForm, EntryForm,\
+    NewEntryForm, UpdateAccount
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bcrypt import Bcrypt
@@ -296,7 +297,10 @@ def update_fav(entry_id):
     form = EntryForm()
     timestamp = datetime.now()
     if the_entry["user_id"] == current_user.id:
-        update_field({"is_fav": form.is_fav.data, "updated_on": timestamp}, entry_id)
+        update_field(
+            {"is_fav": form.is_fav.data,
+             "updated_on": timestamp},
+            entry_id)
         return update_success_msg("is_fav", timestamp)
     else:
         return render_template('pages/403.html',  title="Forbidden")
@@ -313,11 +317,18 @@ def update_name(entry_id):
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     timestamp = datetime.now()
     if the_entry["user_id"] == current_user.id:
-        if len(new_name) > 0 and len(new_name) <= 30 and text_regex.match(new_name):
-            update_field({"name": form.name.data, "updated_on": timestamp}, entry_id)
+        if (len(new_name) > 0 and
+                len(new_name) <= 30 and
+                text_regex.match(new_name)):
+            update_field(
+                {"name": form.name.data,
+                 "updated_on": timestamp},
+                entry_id)
             return update_success_msg("Name", timestamp)
         else:
-            return update_failure_msg("Name must be betwen 1 and 30 characters, and cannot start with a space.")
+            return update_failure_msg("Name must be betwen 1 and 30 "
+                                      "characters, and cannot start with"
+                                      " a space.")
     else:
         return render_template('pages/403.html',  title="Forbidden")
 
@@ -333,17 +344,25 @@ def update_description(entry_id):
     new_description = form.description.data
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     if the_entry["user_id"] == current_user.id:
-        if len(new_description) > 0 and len(new_description) <= 2000 and text_regex.match(new_description):
-            update_field({"description": form.description.data, "updated_on": timestamp}, entry_id)
+        if (len(new_description) > 0 and
+                len(new_description) <= 2000 and
+                text_regex.match(new_description)):
+            update_field(
+                {"description": form.description.data,
+                 "updated_on": timestamp},
+                entry_id)
             return update_success_msg("Description", timestamp)
         else:
-            return update_failure_msg("Description must be betwen 1 and 2000 characters, and cannot start with a space or line break.")
+            return update_failure_msg("Description must be betwen 1 and 2000 "
+                                      "characters, and cannot start with a "
+                                      "space or line break.")
     else:
         return render_template('pages/403.html',  title="Forbidden")
 
 
 # This route updates the rating of the entry.
-# It ensures that the data sent to the database is an integer, and not a string.
+# It ensures that the data sent to the database is an integer,
+# and not a string.
 @app.route('/update_rating/<entry_id>', methods=['POST', 'GET'])
 @login_required
 def update_rating(entry_id):
@@ -351,10 +370,14 @@ def update_rating(entry_id):
     form = EntryForm()
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     if the_entry["user_id"] == current_user.id:
-        update_field({"rating": int(form.rating.data), "updated_on": timestamp}, entry_id)
+        update_field(
+            {"rating": int(form.rating.data),
+             "updated_on": timestamp},
+            entry_id)
         return update_success_msg("Rating", timestamp)
     else:
         return render_template('pages/403.html',  title="Forbidden")
+
 
 # This route updates the tags of the entry.
 @app.route('/update_tags/<entry_id>', methods=['POST', 'GET'])
@@ -386,11 +409,13 @@ def update_tags(entry_id):
             for tag in lowercase_tags:
                 if tag not in final_tags:
                     final_tags.append(tag)
-            update_field({"tags": final_tags, "updated_on": timestamp}, entry_id)
+            update_field(
+                {"tags": final_tags,
+                 "updated_on": timestamp},
+                entry_id)
             return update_success_msg("Tags", timestamp)
     else:
         return render_template('pages/403.html',  title="Forbidden")
-
 
 
 # This route updates the image of the entry.
@@ -415,7 +440,11 @@ def update_image(entry_id):
     cloudinary.uploader.destroy(the_entry["image_id"])
     # Image fields are updated in the database
     if the_entry["user_id"] == current_user.id:
-        update_field({"image": image_url, "image_id": new_image_id, "updated_on": timestamp}, entry_id)
+        update_field(
+            {"image": image_url,
+             "image_id": new_image_id,
+             "updated_on": timestamp},
+            entry_id)
 
         return update_success_msg("Image", timestamp, image_url)
     else:
@@ -550,9 +579,8 @@ def profile():
                 "_id": None,
                 "result": {"$avg": "$rating"}
            }
-        }
+         }
     ])
-
 
     # The average is rounded to the second decimal.
     # If no entries have been created, the average sent to the html
@@ -560,8 +588,7 @@ def profile():
     if num_entries == 0:
         rounded_avg = 0
     else:
-        rounded_avg = round(list(avg_rating)[0]['result'],2)
-
+        rounded_avg = round(list(avg_rating)[0]['result'], 2)
 
     # The following manages updates of the account information.
     # Data from each field is sent to update the user document in mongodb.
@@ -569,10 +596,10 @@ def profile():
     # sent instead.
     if form.is_submitted():
         if form.validate() and bcrypt.check_password_hash(
-            current_user.password,
-            form.password.data.encode('utf-8')):
+                                current_user.password,
+                                form.password.data.encode('utf-8')):
 
-            if form.username.data:     
+            if form.username.data:
                 new_username = form.username.data
             else:
                 new_username = current_user.username
@@ -588,16 +615,17 @@ def profile():
                                         ).decode('utf-8')
             else:
                 new_password = current_user.password
-            
+
             users.update_one(
-            {"_id": current_user.id},
-            {"$set":
-                {
-                    "username": new_username,
-                    "email": new_email,
-                    "password": new_password
-                }
-            })
+                {"_id": current_user.id},
+                {"$set":
+                    {
+                        "username": new_username,
+                        "email": new_email,
+                        "password": new_password
+                    }
+                 }
+            )
             flash("Account information updated successfully", "success")
             # A redirect is used to reload the page, to ensure that the newly
             # updated information is displayed
@@ -615,7 +643,6 @@ def profile():
         email=current_user.email,
         form=form
     )
-
 
 
 """

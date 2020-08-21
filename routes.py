@@ -18,6 +18,16 @@ import socket
 
 
 """
+# About Route
+# ===========
+# The following route simply takes users to a page describing the application.
+"""
+
+@app.route('/about', methods=['GET'])
+def about():
+    return render_template('pages/about.html', title="About squirrel")
+
+"""
 # Login Route
 # ===========
 #

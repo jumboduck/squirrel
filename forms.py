@@ -7,6 +7,8 @@ from flask_wtf.file import FileField, FileAllowed, FileRequired
 from config import text_regex
 
 
+# The following class creates the a new user registration form
+# and defines validation rules for each of its fields
 class RegistrationForm(FlaskForm):
     username = StringField('Username',
                            validators=[
@@ -25,6 +27,8 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Create an Account')
 
 
+# The following class creates the form to log into the application
+# and defines validation rules for each of its fields
 class LoginForm(FlaskForm):
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
@@ -34,6 +38,8 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 
+# The following class creates the form that will hold the content
+# of each entry. Its validation rules are defined here.
 class EntryForm(FlaskForm):
     name = TextAreaField('Name',
                          render_kw={"rows": 1,
@@ -71,6 +77,8 @@ class EntryForm(FlaskForm):
     hidden_id = HiddenField('Hidden Id')
 
 
+# The following class creates the form that allows users to add
+# a new review and defines validation rules for each of its fields
 class NewEntryForm(FlaskForm):
     name = TextAreaField('Name',
                          render_kw={"rows": 1, "spellcheck": "false", "maxlength": 30},
@@ -102,6 +110,8 @@ class NewEntryForm(FlaskForm):
     submit = SubmitField('Add Review')
 
 
+# The following class creates the form to update the user's account
+# information and defines validation rules for each of its fields
 class UpdateAccount(FlaskForm):
     username = StringField('Username',
                            validators=[Length(min=1, max=30), Optional()])

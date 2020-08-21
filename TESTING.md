@@ -190,3 +190,10 @@ The application should successfuly display search results, when a term is sent t
 ## Responsive Testing
 
 An important feature of the application is to make it responsive across a variety of devices. For this reason thorough testing was conducted to ensure content remained readable and editable on various screen sizes.
+
+The navigation, layout and functionalities were tested across various screen sizes with chrome developer tools and with the [Responsive Viewer](https://chrome.google.com/webstore/detail/responsive-viewer/inmopeiepgfljkpkidclfgbgbmfcennb) Chrome extension.
+
+Additionally it was tested on Chrome, Safari and Firefox on Mac OS.
+The same tests were done on an iPhone XR on Chrome and Safari, and on an iPad with Retina display on Chrome and Safari.
+
+A CSS issue was discovered and fixed on displays above 2000px wide, where the width of the tiles made the delete button overlap the date.

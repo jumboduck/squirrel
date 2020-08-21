@@ -1,0 +1,23 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+<div class="entry-container">
+    <div class="text-center w-75 ml-auto mr-auto">
+
+
+        <h1 class="page-title">Welcome to squirrel</h1>
+
+        <p>Squirrel is a repository of things you reviewed.</p>
+        <p>You can keep track of and rate products, places, restaurants, movies, artists, or really anything else you
+            would like to remember of.</p>
+        <p>It allows you to organize, search and update any of the reviews you created so that you can remember at a
+            glance what you thought of something.</p>
+
+        <!-- If the user is not logged in, generate a paragraph to register or log in -->
+        {% if not current_user.is_authenticated %}
+        <p>Click <a href="{{url_for('register')}}">here to create an account</a> or <a href="{{url_for('login')}}">log
+                in to an existing account</a>!</p>
+        {% endif %}
+        <img class="error-image" src="{{url_for('static', filename='img/image-placeholder.png')}}">
+    </div>
+</div>
+{% endblock %}

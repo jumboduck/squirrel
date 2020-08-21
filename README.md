@@ -354,3 +354,4 @@ Ensure to enter your own `SECRET_KEY`, `MONGO_URI`, and `CLOUDINARY_URL` variabl
 -   [Corey Schaefer](https://www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g) for his python tutorials on youtube, especially regarding registration and login forms
 -   [Adam Orchard](https://codepen.io/orchard/pen/Jnwvb) for the 5 star rating code.
 -   [Andy Osborne](https://github.com/Andy-Osborne) for helping with the search functionality
+-   [KittySparkles](https://github.com/KittySparkles) for their support, encouragement and rigorous feedback throughout the project

@@ -17,7 +17,6 @@ login_manager.login_message_category = 'info'
 login_manager.init_app(app)
 
 
-
 class User(UserMixin):
     def __init__(self, user):
         self.user = user

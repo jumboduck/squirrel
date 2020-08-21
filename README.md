@@ -15,6 +15,7 @@
     - [Existing Features](#existing-features)
       - [Account Registration](#account-registration)
       - [User Session](#user-session)
+      - [About Page](#about-page)
       - [Create New Entries](#create-new-entries)
       - [List and Search Entries](#list-and-search-entries)
       - [View, Edit, and Delete Entries](#view-edit-and-delete-entries)
@@ -159,6 +160,11 @@ This off white was chosen for the background color for the site as it provides g
 -   If the "remember me" checbox is ticked, the session will endure after the browser is closed
 -   Users can log out of their account and close the session
 -   If a user has tried accessing a page from the application while logged out, they will be redirected to this page when they log in
+
+#### About Page
+
+The about page gives users an idea of the purpose of the application.
+If the user is not logged in, an additional paragraph is generated with links to log in and register a new account.
 
 #### Create New Entries
 

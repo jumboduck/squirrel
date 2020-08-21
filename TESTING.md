@@ -29,6 +29,10 @@ If the email exists and the password matches, the log in succeeds and the user s
 
 If a user is already logged in, accessing the login page redirects to the listing page.
 
+### About Page
+
+The about page has been accessed while logged in and logged out to ensure to ensure that the paragraph about creating an account displays when the user is logged out.
+
 ### New Review Page
 
 The following tests have been done to ensure a review can be added with the appropriate information. All have returned the expected results and feedback:

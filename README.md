@@ -355,3 +355,4 @@ Ensure to enter your own `SECRET_KEY`, `MONGO_URI`, and `CLOUDINARY_URL` variabl
 -   [Adam Orchard](https://codepen.io/orchard/pen/Jnwvb) for the 5 star rating code.
 -   [Andy Osborne](https://github.com/Andy-Osborne) for helping with the search functionality
 -   [KittySparkles](https://github.com/KittySparkles) for their support, encouragement and rigorous feedback throughout the project
+-   Many thanks to the whole Code Institute community for their help and support

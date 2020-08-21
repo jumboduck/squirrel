@@ -348,8 +348,9 @@ Ensure to enter your own `SECRET_KEY`, `MONGO_URI`, and `CLOUDINARY_URL` variabl
 ### Acknowledgements
 
 -   Inspiration for this project came from conversations with my friend Cameron.
+-   [Felipe Alarcon](https://github.com/fandressouza) for his helpful feedback and advice, and constant availability as a mentor
 -   [Simen Daehlin](https://github.com/Eventyret) - [The Padwan Project](https://github.com/Eventyret/Padawan)
 -   [Start Bootstrap Resume Template](https://github.com/StartBootstrap/startbootstrap-resume)
--   [Corey Schaefer](https://www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g) for his python tutorials on youtube, especially regarding registration and login forms.
+-   [Corey Schaefer](https://www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g) for his python tutorials on youtube, especially regarding registration and login forms
 -   [Adam Orchard](https://codepen.io/orchard/pen/Jnwvb) for the 5 star rating code.
 -   [Andy Osborne](https://github.com/Andy-Osborne) for helping with the search functionality

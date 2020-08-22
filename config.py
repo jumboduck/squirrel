@@ -2,6 +2,7 @@ from flask import Flask
 from os import path
 from flask_pymongo import PyMongo
 from flask_bcrypt import Bcrypt
+from flask_mail import Mail
 import os
 import re
 if path.exists("env.py"):
@@ -14,10 +15,17 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 app.config['MONGO_DBNAME'] = os.environ.get('MONGO_DBNAME')
 app.config['MONGO_URI'] = os.environ.get('MONGO_URI')
 app.config['CLOUDINARY_URL'] = os.environ.get('CLOUDINARY_URL')
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_PORT'] = 465
 
 
 mongo = PyMongo(app)
 bcrypt = Bcrypt(app)
+mail = Mail(app)
 
 
 """

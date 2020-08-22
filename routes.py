@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request
 from forms import RegistrationForm, LoginForm, EntryForm,\
-    NewEntryForm, UpdateAccount
+    NewEntryForm, UpdateAccount, SendFeedback
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bcrypt import Bcrypt
@@ -708,6 +708,21 @@ def search(search_term):
         entries=result,
         search_term=search_term
     )
+
+
+"""
+# Feedback Route
+# ==============
+# This route displays the feedback form for users to report bugs
+# or other feedback.
+"""
+
+@app.route('/feedback', methods=['GET', 'POST'])
+def feedback():
+    form = SendFeedback()
+    return render_template('pages/feedback.html',
+                           form=form,
+                           title="Feedback")
 
 
 # This route handles 404 errors

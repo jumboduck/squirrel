@@ -719,6 +719,7 @@ def search(search_term):
 """
 
 @app.route('/feedback', methods=['GET', 'POST'])
+@login_required
 def feedback():
     form = SendFeedback()
     if form.validate_on_submit():

@@ -203,6 +203,8 @@ If the user is not logged in, an additional paragraph is generated with links to
 #### Send Feedback
 
 A form was created to allow logged in users to send feedback about new features they would like to see implemented or bugs encountered in the application.
+Currently the application is configured to send an email from a gmail address dedicated to the application, to this same email address.
+The content of the email is the information provided by the user, along with the username and email address.
 
 #### Security
 

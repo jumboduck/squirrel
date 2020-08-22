@@ -29,6 +29,10 @@ If the email exists and the password matches, the log in succeeds and the user s
 
 If a user is already logged in, accessing the login page redirects to the listing page.
 
+### About Page
+
+The about page has been accessed while logged in and logged out to ensure to ensure that the paragraph about creating an account displays when the user is logged out.
+
 ### New Review Page
 
 The following tests have been done to ensure a review can be added with the appropriate information. All have returned the expected results and feedback:
@@ -123,6 +127,10 @@ The account management tool displays and hides three fields to update chosen by 
 -   Updated only the password was tested successfully
 -   Trying to update any of these fields with the wrong current password returned an error as expected
 -   Updating all three fields at once was tested successfully
+
+### Feedback Page
+
+It was ensured that the form successfully sent an email to chosen email address.
 
 ## End-to-End Testing with Cypress
 

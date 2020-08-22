@@ -1,15 +1,16 @@
 from flask import render_template, url_for, flash, redirect, request
 from forms import RegistrationForm, LoginForm, EntryForm,\
-    NewEntryForm, UpdateAccount
+    NewEntryForm, UpdateAccount, SendFeedback
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bcrypt import Bcrypt
 from flask_login import login_user, login_required, logout_user, current_user
 from is_safe_url import is_safe_url
 from datetime import datetime
-from config import app, users, bcrypt, entries, text_regex
+from config import app, users, bcrypt, entries, text_regex, mail
 from update import update_field, update_success_msg, update_failure_msg
 from login import User
+from flask_mail import Message
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
@@ -708,6 +709,30 @@ def search(search_term):
         entries=result,
         search_term=search_term
     )
+
+
+"""
+# Feedback Route
+# ==============
+# This route displays the feedback form for users to report bugs
+# or other feedback.
+"""
+
+@app.route('/feedback', methods=['GET', 'POST'])
+@login_required
+def feedback():
+    form = SendFeedback()
+    if form.validate_on_submit():
+        msg = Message(subject=f"Squirrel Feedback from {current_user.username}",
+                      body=f"Feedback from: {current_user.username } at {current_user.email}\n{form.message.data}",
+                      sender=app.config.get("MAIL_USERNAME"),
+                      recipients=[app.config.get("MAIL_USERNAME")])
+        mail.send(msg)
+        flash("Thank you for your feedback!", "success")
+        return redirect(url_for('listing'))
+    return render_template('pages/feedback.html',
+                           form=form,
+                           title="Feedback")
 
 
 # This route handles 404 errors

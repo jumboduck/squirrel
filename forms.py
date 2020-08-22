@@ -124,3 +124,12 @@ class UpdateAccount(FlaskForm):
     password = PasswordField('Current Password',
                              validators=[DataRequired()])
     submit = SubmitField('Save Changes')
+
+
+# The following class creates the form to send feedback
+# and defines validation rules for each of its fields
+class SendFeedback(FlaskForm):
+    message = TextAreaField('Anything to report? Send us a message!',
+                            render_kw={"rows": 5, "spellcheck": "false", "maxlength": 5000},
+                            validators=[DataRequired(), Length(min=1, max=5000)])
+    submit = SubmitField('Send Feedback')

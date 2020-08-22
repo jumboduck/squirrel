@@ -17,10 +17,9 @@ app.config['MONGO_URI'] = os.environ.get('MONGO_URI')
 app.config['CLOUDINARY_URL'] = os.environ.get('CLOUDINARY_URL')
 app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_PORT'] = 465
+app.config['MAIL_SERVER'] = os.environ['MAIL_SERVER'] 
+app.config['MAIL_USE_SSL'] = os.environ['MAIL_USE_SSL']
+app.config['MAIL_PORT'] = os.environ['MAIL_PORT'] 
 
 
 mongo = PyMongo(app)

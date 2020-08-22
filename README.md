@@ -20,6 +20,7 @@
       - [List and Search Entries](#list-and-search-entries)
       - [View, Edit, and Delete Entries](#view-edit-and-delete-entries)
       - [Profile and Account Management](#profile-and-account-management)
+      - [Send Feedback](#send-feedback)
       - [Security](#security)
     - [Features Left to Implement](#features-left-to-implement)
   - [Technologies Used](#technologies-used)
@@ -199,6 +200,10 @@ If the user is not logged in, an additional paragraph is generated with links to
 -   The profile page features statistics about the squirrels account: Number of reviews, number of favorited reviews, average rating.
 -   Clicking on the "Manage Account" button will make a modal window appear and give the user the possibility to update their username, email and/or password. The new information must conform to the validation rules described above. Additionally, the current password is needed to make any of these changes.
 
+#### Send Feedback
+
+A form was created to allow logged in users to send feedback about new features they would like to see implemented or bugs encountered in the application.
+
 #### Security
 
 Several steps were taken to ensure the security of the user's data.
@@ -338,12 +343,18 @@ To deploy squirrel to Heroku, use the following steps:
 | SECRET_KEY     | YOUR_SECRET_KEY     |
 | MONGO_URI      | YOUR_MONGO_URI      |
 | CLOUDINARY_URL | YOUR_CLOUDINARY_URL |
+| MAIL_USERNAME  | YOUR_MAIL_USERNAME  |
+| MAIL_PASSWORD  | YOUR_MAIL_PASSWORD  |
+| MAIL_SERVER    | smtp.gmail.com      |
+| MAIL_USE_SSL   | True                |
+| MAIL_PORT      | 465                 |
 
-Ensure to enter your own `SECRET_KEY`, `MONGO_URI`, and `CLOUDINARY_URL` variables.
+Ensure to enter your own `SECRET_KEY`, `MONGO_URI`, `CLOUDINARY_URL`, `MAIL_PASSWORD`, `MAIL_PASSWORD` variables.
+Please note that the application is currently set to use a gmail account for the feedback email. If using another type of service, you will need to replace the values of the variables `MAIL_SERVER` and `MAIL_PORT` accordingly, and potentially replace `MAIL_USE_SSL` with `MAIL_USE_TSL`.
 
-7. Go to the deploy tab of your application, and click "Deploy Branch" under the manual deploy section.
+1. Go to the deploy tab of your application, and click "Deploy Branch" under the manual deploy section.
 
-8. squirrel is now deployed to heroku. It can be accessed by clicken the "Open App" button on the top right.
+2. squirrel is now deployed to heroku. It can be accessed by clicken the "Open App" button on the top right.
 
 ## Credits
 

@@ -128,6 +128,10 @@ The account management tool displays and hides three fields to update chosen by 
 -   Trying to update any of these fields with the wrong current password returned an error as expected
 -   Updating all three fields at once was tested successfully
 
+### Feedback Page
+
+It was ensured that the form successfully sent an email to chosen email address.
+
 ## End-to-End Testing with Cypress
 
 Automated testing was conducted with [Cypress](https://www.cypress.io/).

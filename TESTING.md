@@ -52,6 +52,8 @@ Additionally the tagging tool needed testing to ensure data sent to the database
 -   Tags created, then deleted with the tagging tool are effectively not added to the database
 -   An issue was found where the tags added to the hidden field remained if the form was not validated. This resulted in tags previously inputted to be added to the review without the user's knowledge. it was fixed by clearing the hidden tags field if the form did not validate
 
+When a review was created from a mobile device, it was ensured that the user could choose between using the device's camera and its photo library.
+
 ### Listing Page
 
 -   It was ensured that entries can be accessed in the listing page by clicking either the image or the title of the corresponding entry
@@ -79,6 +81,8 @@ Thorough tests were conducted to ensure pagination worked as intended, several e
 It was ensured that all fields of the entries was displayed correctly and showed the appropriate content.
 
 Thorough testing was done to ensure that the entry's content could be updated appropriately. Because these updates are made asynchronously, each test for updates was followed by a page refresh, to ensure that the updates were made on the database side as well as on the frontend.
+
+As with the review creation, when a review was updated from a mobile device, it was ensured that the user could choose between using the device's camera and its photo library.
 
 #### Field Updates
 

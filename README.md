@@ -24,6 +24,7 @@
       - [Security](#security)
     - [Features Left to Implement](#features-left-to-implement)
   - [Technologies Used](#technologies-used)
+  - [Tools Used](#tools-used)
   - [Testing](#testing)
   - [Deployment](#deployment)
     - [Local Deployment](#local-deployment)
@@ -238,6 +239,15 @@ Several steps were taken to ensure the security of the user's data.
 -   [Cypress](https://www.cypress.io/) for testing throughout the development process
 -   [Material Icons](https://material.io/) for all icons on the site
 -   [CSS Autoprefixer](https://autoprefixer.github.io/)
+
+## Tools Used
+
+-   Adobe Photoshop, for any image editing - mainly the logo
+-   Balsamiq to create the wireframes
+-   [Excalidraw](https://excalidraw.com/) for sketches regarding data models and structure
+-   [Git](https://git-scm.com/) for version control
+-   [Heroku](https://heroku.com/) to deploy the application
+-   VS Code
 
 ## Testing
 

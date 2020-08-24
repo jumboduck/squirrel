@@ -74,14 +74,14 @@ or if it displaying elements for a specific tag. -->
 
             <!-- If tags exist, generate them -->
             {% if entry.tags %}
-            <p class="card-text">
+            <div class="card-text">
 
                 <p class="card-text d-inline-block mb-0">Tags: </p>
                 {% for tag in entry.tags %}
                 <a href="{{url_for('listing', tag=tag)}}" class="badge badge-pill badge-primary">{{tag}}</a>
                 {% endfor %}
 
-            </p>
+            </div>
             {% endif %}
         </div>
 

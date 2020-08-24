@@ -16,7 +16,8 @@
 {% endwith %}
 
 <div class="entry">
-    <img class="d-block ml-auto mr-auto w-25" src="{{url_for('static', filename='img/image-placeholder.png')}}">
+    <img alt="squirrel logo" class="d-block ml-auto mr-auto w-25"
+        src="{{url_for('static', filename='img/image-placeholder.png')}}">
 
     <!-- Page title -->
     <h1 class="page-title text-center mb-5">Profile for {{ username }}</h1>
@@ -81,7 +82,7 @@
 
                             <!-- The following field will update the username -->
                             <div class="form-group" id="update-username" aria-expanded="false"
-                                aria-labelledby="update-username-btn" aria-hidden="true">
+                                aria-labelledby="update-username-btn" aria-hidden="true" role="region">
                                 {{ form.username.label(class="form-control-label") }}
                                 {% if form.username.errors %}
                                 <!-- If username input does not validate, the following input displays -->
@@ -100,7 +101,7 @@
 
                             <!-- The following field will update the email -->
                             <div class="form-group" id="update-email" aria-expanded="false"
-                                aria-labelledby="update-email-btn" aria-hidden="true">
+                                aria-labelledby="update-email-btn" aria-hidden="true" role="region">
                                 {{ form.email.label(class="form-control-label") }}
                                 {% if form.email.errors %}
                                 <!-- If email input does not validate, the following input displays -->
@@ -120,7 +121,7 @@
                             <!-- The following fields will update the password
                             Both the new password and the confirm password must be filled, and must match -->
                             <div id="update-password" aria-expanded="false" aria-labelledby="update-password-btn"
-                                aria-hidden="true">
+                                aria-hidden="true" role="region">
                                 <div class="form-group">
                                     {{ form.new_password.label(class="form-control-label") }}
                                     {% if form.new_password.errors %}

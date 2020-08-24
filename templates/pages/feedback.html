@@ -22,27 +22,27 @@
         <form method="POST">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
-                <div class="form-group">
-                    {{ form.message.label(class="form-control-label") }}
-                    <!-- If message input does not validate, the following input displays -->
-                    {% if form.message.errors %}
-                    {{ form.message(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        <!-- Any validation error returned for the message input displays here -->
-                        {% for error in form.message.errors %}
-                        <p>{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    <!-- Message input -->
-                    {{ form.message(class="form-control form-control-lg") }}
-                    {% endif %}
 
+                {{ form.message.label(class="form-control-label") }}
+                <!-- If message input does not validate, the following input displays -->
+                {% if form.message.errors %}
+                {{ form.message(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    <!-- Any validation error returned for the message input displays here -->
+                    {% for error in form.message.errors %}
+                    <p>{{ error }}</p>
+                    {% endfor %}
                 </div>
-                <div class="form-group text-right">
-                    <!-- Form submission -->
-                    {{ form.submit(class="btn btn-primary") }}
-                </div>
+                {% else %}
+                <!-- Message input -->
+                {{ form.message(class="form-control form-control-lg") }}
+                {% endif %}
+
+            </fieldset>
+            <div class="form-group text-right">
+                <!-- Form submission -->
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
         </form>
     </div>
 </div>

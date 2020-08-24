@@ -92,7 +92,8 @@
                     <div>
                         <span class="entry-subtitle">Tags:</span>
                         <!-- The "view tags" are initially displayed -->
-                        <div class="mb-2" id="view-tags-container" aria-expanded="true" aria-hidden="false">
+                        <div class="mb-2" id="view-tags-container" aria-expanded="true" aria-hidden="false"
+                            role="region">
                             <div id="view-tags" class="d-inline-block">
                                 <!-- Tags are added dynamically if any exist -->
                                 {% if entry.tags %}
@@ -111,7 +112,7 @@
                         </div>
 
                         <!-- The "delete tags" are initially hidden -->
-                        <div class="mb-2" id="edit-tags" aria-expanded="false" aria-hidden="true">
+                        <div class="mb-2" id="edit-tags" aria-expanded="false" aria-hidden="true" role="region">
                             <!-- "Delete Tags" are added dynamically if any tags exist -->
                             {% if entry.tags %}
                             {% for tag in entry.tags %}

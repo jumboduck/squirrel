@@ -177,6 +177,7 @@ If the user is not logged in, an additional paragraph is generated with links to
     -   The rating gives the review a score between 1 and 5 and is required.
     -   The review can be made a favorite.
     -   An image can be chosen with a file selector. Only image will be accepted, and will be uploaded to [cloudinary](https://cloudinary.com/) via its API to be displayed on the entry's page.
+    -   On a mobile device, the user has the option between using the device's camera or a photo from their library.
     -   Tags can be added with a tooltip created in javascript. These cannot contain special characters. The chosen tags will be added to a hidden field, separated by commas, to be added to the database.
 
 -   If a review is added without an image, a default image will be set for this review
@@ -192,6 +193,7 @@ If the user is not logged in, an additional paragraph is generated with links to
 -   By clicking the image or title of an entry in a listing, the entry's page will load and display the information inputted by the user.
 -   Each field can be updated by clicking on it. The same validation rules as in the entry creation apply.
 -   The updates are done asynchronously with AJAX requests, so that the page does not need to be loaded. A message will appear confirming the success (or failure) of the update.
+-   As with the creation of a new review, updating the image from a mobile device gives the user the option between using the device's camera or a photo from their library.
 -   If the image is updated, the previously used image will be removed from cloudinary.
 -   Entries can be deleted by clicking the trashcan icon in a listing or entry page.
 

@@ -173,7 +173,7 @@ If the user is not logged in, an additional paragraph is generated with links to
 -   For the review to be added, the following fields can be filled and validation rules must be met:
 
     -   The name of the review is required, must be between 1 and 30 characters, and cannot start with a space.
-    -   The description is a required field, must be between 1 and 2000 .characters, and cannot start with a space or a line break.
+    -   The description is a required field, must be between 1 and 2000 characters, and cannot start with a space or a line break.
     -   The rating gives the review a score between 1 and 5 and is required.
     -   The review can be made a favorite.
     -   An image can be chosen with a file selector. Only image will be accepted, and will be uploaded to [cloudinary](https://cloudinary.com/) via its API to be displayed on the entry's page.
@@ -197,7 +197,7 @@ If the user is not logged in, an additional paragraph is generated with links to
 
 #### Profile and Account Management
 
--   The profile page features statistics about the squirrels account: Number of reviews, number of favorited reviews, average rating.
+-   The profile page features statistics about the squirrel's account: number of reviews, number of favorited reviews, average rating.
 -   Clicking on the "Manage Account" button will make a modal window appear and give the user the possibility to update their username, email and/or password. The new information must conform to the validation rules described above. Additionally, the current password is needed to make any of these changes.
 
 #### Send Feedback
@@ -219,6 +219,8 @@ Several steps were taken to ensure the security of the user's data.
 -   The profile page should be expanded to display more information, such as the most used tags and the best rated reviews.
 -   The listing page should be expanded to allow to view only favorited items.
 -   A feature to share one or several items with other people (users or not) should be implemented.
+-   A load bar will be added when new images are uploaded in an entry.
+-   The option to remove an image and return the the default image should be implemented.
 
 ## Technologies Used
 
@@ -237,11 +239,11 @@ Several steps were taken to ensure the security of the user's data.
 
 ## Testing
 
-Testing was done manually throughout the development process and was also automated using [Cypress](https://www.cypress.io/). The full rundown of the testing can be found [here](TESTING.md)
+Testing was done manually throughout the development process and was also automated using [Cypress](https://www.cypress.io/). The full rundown of the testing can be found [here](TESTING.md).
 
 Additionally, all code was validated in the following ways:
 
-**HTML** - All pages were successfully run through the [W3C HTML Validator](https://validator.w3.org/) to ensure compliance with the standards set by the W3C/
+**HTML** - All pages were successfully run through the [W3C HTML Validator](https://validator.w3.org/) to ensure compliance with the standards set by the W3C.
 
 **CSS** - CSS validation with the W3C's [Jigsaw Validator](https://jigsaw.w3.org/css-validator/) returned some expected and necessary flags from vendor extensions. Other than that, the code complies to the W3C standards.
 
@@ -279,7 +281,7 @@ These are the steps to deploy squirrel locally.
 
     This database will contain two collections: `users` and `entries`.
 
-4.  Create a file containing your environmental variables called `env.py`. It will need to contain the following lines and variables:
+4.  Create a file containing your environmental variables called `env.py` at the root level of the application. It will need to contain the following lines and variables:
 
     ```
     import os

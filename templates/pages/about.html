@@ -14,7 +14,10 @@
 
         <!-- If the user is not logged in, generate a paragraph to register or log in -->
         {% if not current_user.is_authenticated %}
-        <p>Click <a href="{{url_for('register')}}">here to create an account</a> or <a href="{{url_for('login')}}">log
+
+        <p>You can get a feel for Squirrel <a href="{{url_for('playground')}}">here</a></p>
+        <p> You can also create an account<a href="{{url_for('register')}}">here</a> or <a
+                href="{{url_for('login')}}">log
                 in to an existing account</a>!</p>
         {% endif %}
         <img alt="squirrel logo" class="error-image" src="{{url_for('static', filename='img/image-placeholder.png')}}">

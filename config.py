@@ -3,6 +3,7 @@ from os import path
 from flask_pymongo import PyMongo
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail
+from bson.objectid import ObjectId
 import os
 import re
 if path.exists("env.py"):
@@ -36,3 +37,4 @@ users = mongo.db.users
 entries = mongo.db.entries
 time_format = "%d/%m/%Y at %H:%M:%S"
 text_regex = re.compile("^[\\S].*")
+playground_id = ObjectId('5f81b103c984b7e86dc415ad') 

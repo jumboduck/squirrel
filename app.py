@@ -1,5 +1,6 @@
 from config import app
 import routes
+import playground
 import os
 
 if __name__ == '__main__':

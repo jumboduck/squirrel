@@ -98,8 +98,13 @@
                                 <!-- Tags are added dynamically if any exist -->
                                 {% if entry.tags %}
                                 {% for tag in entry.tags %}
+                                {% if playground %}
+                                <a id="tag{{ loop.index }}" class="view-tag badge badge-pill badge-primary tag"
+                                    href="{{ url_for('playground', tag = tag) }}">{{ tag }}</a>
+                                {% else %}
                                 <a id="tag{{ loop.index }}" class="view-tag badge badge-pill badge-primary tag"
                                     href="{{ url_for('listing', tag = tag) }}">{{ tag }}</a>
+                                {% endif %}
                                 {% endfor %}
                                 {% endif %}
                             </div>
@@ -155,6 +160,13 @@
                 </div>
             </div>
         </form>
+        <div class="d-none">
+            {% if playground %}
+            <span id="url-builder">{{url_for('playground')}}</span>
+            {% else %}
+            <span id="url-builder">{{url_for('listing')}}</span>
+            {% endif %}
+        </div>
     </div>
 </div>
 {% endblock %}

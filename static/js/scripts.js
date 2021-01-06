@@ -31,6 +31,11 @@
 let tagNum = $(".view-tag").length;
 
 /**
+ * The urlBase variable checks if the page is in the listing or the playground
+ */
+let urlBase = $("#url-builder").text();
+
+/**
  * This function takes the id of a tag, and extracts the number at the end.
  *
  * @param {string} id The id of tag
@@ -66,7 +71,7 @@ function addToHiddenInput(tag) {
  * @returns {string} The HTML for the newly created tag
  */
 function createTag(id, word = "New Tag") {
-    return `<a id="${id}"class="view-tag badge badge-pill badge-primary tag" href="/listing/${word}">${word}</a>`;
+    return `<a id="${id}" class="view-tag badge badge-pill badge-primary tag" href="${urlBase}${word}">${word}</a>`;
 }
 
 /**
@@ -171,7 +176,7 @@ $(document).on("keydown input", ".badge-input", function () {
     // Update name of "view tag"
     $(viewId).text($(this).val());
     // Update url of "view tag"
-    $(viewId).attr("href", "../listing/" + $(this).val());
+    $(viewId).attr("href", urlBase + $(this).val());
     // Update width machine and width of "view tag"
     $(widthId).text($(this).val());
     $(this).width($(widthId).width());

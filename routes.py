@@ -7,7 +7,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import login_user, login_required, logout_user, current_user
 from is_safe_url import is_safe_url
 from datetime import datetime
-from config import app, users, bcrypt, entries, text_regex, mail
+from config import app, users, bcrypt, entries, text_regex, mail, playground_id
 from update import update_field, update_success_msg, update_failure_msg
 from login import User
 from flask_mail import Message
@@ -174,8 +174,8 @@ def logout():
 """
 
 
-@app.route('/listing')
-@app.route('/listing/<tag>')
+@app.route('/listing/')
+@app.route('/listing/<tag>/')
 @login_required
 def listing(tag=None):
 
@@ -264,9 +264,10 @@ def listing(tag=None):
 """
 
 
-@app.route('/entry/<entry_id>')
+@app.route('/entry/<entry_id>/')
 @login_required
 def entry(entry_id):
+    print(current_user.id)
     form = EntryForm()
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     if the_entry["user_id"] == current_user.id:
@@ -302,12 +303,11 @@ def entry(entry_id):
 
 # This route updates the is_fav status of the entry.
 @app.route('/update_fav/<entry_id>', methods=['POST', 'GET'])
-@login_required
 def update_fav(entry_id):
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     form = EntryForm()
     timestamp = datetime.now()
-    if the_entry["user_id"] == current_user.id:
+    if the_entry["user_id"] == playground_id or the_entry["user_id"] == current_user.id:
         update_field(
             {"is_fav": form.is_fav.data,
              "updated_on": timestamp},
@@ -321,13 +321,12 @@ def update_fav(entry_id):
 # The database is only is updated if the submitted string is between 0 and 30
 # characters long.
 @app.route('/update_name/<entry_id>', methods=['POST', 'GET'])
-@login_required
 def update_name(entry_id):
     form = EntryForm()
     new_name = form.name.data
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
     timestamp = datetime.now()
-    if the_entry["user_id"] == current_user.id:
+    if the_entry["user_id"] == playground_id or the_entry["user_id"] == current_user.id:
         if (len(new_name) > 0 and
                 len(new_name) <= 30 and
                 text_regex.match(new_name)):
@@ -348,13 +347,12 @@ def update_name(entry_id):
 # The database is only is updated if the submitted string is between 0 and 2000
 # characters long.
 @app.route('/update_description/<entry_id>', methods=['POST', 'GET'])
-@login_required
 def update_description(entry_id):
     timestamp = datetime.now()
     form = EntryForm()
     new_description = form.description.data
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
-    if the_entry["user_id"] == current_user.id:
+    if the_entry["user_id"] == playground_id or the_entry["user_id"] == current_user.id:
         if (len(new_description) > 0 and
                 len(new_description) <= 2000 and
                 text_regex.match(new_description)):
@@ -375,12 +373,11 @@ def update_description(entry_id):
 # It ensures that the data sent to the database is an integer,
 # and not a string.
 @app.route('/update_rating/<entry_id>', methods=['POST', 'GET'])
-@login_required
 def update_rating(entry_id):
     timestamp = datetime.now()
     form = EntryForm()
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
-    if the_entry["user_id"] == current_user.id:
+    if the_entry["user_id"] == playground_id or the_entry["user_id"] == current_user.id:
         update_field(
             {"rating": int(form.rating.data),
              "updated_on": timestamp},
@@ -392,12 +389,11 @@ def update_rating(entry_id):
 
 # This route updates the tags of the entry.
 @app.route('/update_tags/<entry_id>', methods=['POST', 'GET'])
-@login_required
 def update_tags(entry_id):
     timestamp = datetime.now()
     form = EntryForm()
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
-    if the_entry["user_id"] == current_user.id:
+    if the_entry["user_id"] == playground_id or the_entry["user_id"] == current_user.id:
         # If the tag list sent to python is empty, remove field from db
         if len(form.tags.data) == 0:
             entries.update_one(
@@ -433,7 +429,6 @@ def update_tags(entry_id):
 # It retrieves the new image's url and its public id from cloudinary to store
 # in the database.
 @app.route('/update_image/<entry_id>', methods=['POST', 'GET'])
-@login_required
 def update_image(entry_id):
     timestamp = datetime.now()
     form = EntryForm()
@@ -450,7 +445,7 @@ def update_image(entry_id):
     # unused images
     cloudinary.uploader.destroy(the_entry["image_id"])
     # Image fields are updated in the database
-    if the_entry["user_id"] == current_user.id:
+    if the_entry["user_id"] == playground_id or the_entry["user_id"] == current_user.id:
         update_field(
             {"image": image_url,
              "image_id": new_image_id,
@@ -471,7 +466,7 @@ def update_image(entry_id):
 """
 
 
-@app.route('/add', methods=['GET', 'POST'])
+@app.route('/add/', methods=['GET', 'POST'])
 @login_required
 def new_entry():
     form = NewEntryForm()
@@ -548,7 +543,7 @@ def new_entry():
 """
 
 
-@app.route('/delete/<entry_id>')
+@app.route('/delete/<entry_id>/')
 @login_required
 def delete(entry_id):
     the_entry = entries.find_one({"_id": ObjectId(entry_id)})
@@ -679,7 +674,7 @@ def get_search():
 """
 
 
-@app.route('/search/<search_term>', methods=["POST", "GET"])
+@app.route('/search/<search_term>/', methods=["POST", "GET"])
 @login_required
 def search(search_term):
     entries.create_index([
@@ -718,7 +713,7 @@ def search(search_term):
 # or other feedback.
 """
 
-@app.route('/feedback', methods=['GET', 'POST'])
+@app.route('/feedback/', methods=['GET', 'POST'])
 @login_required
 def feedback():
     form = SendFeedback()

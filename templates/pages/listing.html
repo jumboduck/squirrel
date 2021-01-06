@@ -34,9 +34,14 @@ or if it displaying elements for a specific tag. -->
     <div class="card">
 
         <!-- Display image -->
+        {% if playground %}
+        <a href="{{ url_for('playground_entry', entry_id = entry._id) }}"><img src="{{ entry.image }}"
+                class="card-img-top" alt="{{ entry.name }}"></a>
+        {% else %}
         <a href="{{ url_for('entry', entry_id = entry._id) }}">
-            <img src="{{ entry.image }}" class="card-img-top" alt="alt text">
+            <img src="{{ entry.image }}" class="card-img-top" alt="{{ entry.name }}">
         </a>
+        {% endif %}
 
         <div class="card-body">
             <h2 class="card-title">
@@ -47,7 +52,12 @@ or if it displaying elements for a specific tag. -->
                 {% endif %}
 
                 <!-- Display name of entry -->
+                {% if playground %}
+                <a href="{{url_for('playground_entry', entry_id = entry._id)}}">{{ entry.name }}</a>
+                {% else %}
                 <a href="{{url_for('entry', entry_id = entry._id)}}">{{ entry.name }}</a>
+                {% endif %}
+
             </h2>
 
             <!-- Display teaser of entry's description, truncated at 75 characters and
@@ -78,7 +88,11 @@ or if it displaying elements for a specific tag. -->
 
                 <p class="card-text d-inline-block mb-0">Tags: </p>
                 {% for tag in entry.tags %}
+                {% if playground %}
+                <a href="{{url_for('playground', tag=tag)}}" class="badge badge-pill badge-primary">{{tag}}</a>
+                {% else %}
                 <a href="{{url_for('listing', tag=tag)}}" class="badge badge-pill badge-primary">{{tag}}</a>
+                {% endif %}
                 {% endfor %}
 
             </div>
@@ -95,9 +109,11 @@ or if it displaying elements for a specific tag. -->
             Created on {{ entry.created_on.strftime("%d/%m/%Y") }}
             {% endif %}
             <!-- Link to delete entry -->
+            {% if not playground %}
             <a href="{{ url_for('delete', entry_id = entry._id) }}">
                 <span class="material-icons delete-btn">delete</span>
             </a>
+            {% endif %}
         </div>
     </div>
     {% endfor %}

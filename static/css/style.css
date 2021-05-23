@@ -1,6 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poiret+One&family=Raleway&Material+Icons&display=swap");
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
 
-/* GENERAL */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poiret+One&family=Raleway:wght@400;700&Material+Icons&display=swap");
+
+/* GENERAL
+These style rules apply to elements throughout the website. */
 
 body {
     font-family: "Raleway", sans-serif;
@@ -30,6 +38,8 @@ h6,
 
 h1.page-title {
     font-size: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 h2.card-title {
@@ -54,10 +64,33 @@ a:hover {
     border-color: #a99279;
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:focus {
     color: #fff;
     background-color: #a99279;
     border-color: #a99279;
+}
+
+.pagination-btn {
+    width: 6rem;
+}
+
+.btn-secondary {
+    color: #fff;
+    background-color: #535f6b;
+    border-color: #535f6b;
+    font-size: 0.8rem;
+    padding: 0.2rem 0.5rem;
+}
+
+.btn-secondary:hover,
+.btn-secondary.selected {
+    color: #535f6b;
+    background-color: transparent;
+    border-color: #535f6b;
+    font-size: 0.8rem;
+    padding: 0.2rem 0.5rem;
 }
 
 .material-icons {
@@ -65,7 +98,18 @@ a:hover {
     font-size: inherit;
 }
 
-/* Navigation */
+/* Login Page */
+
+.login-image {
+    width: 12rem;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+}
+
+/* Header
+The following styles all elements in the header.
+This includes the logo, the navigation links and the search bar. */
 
 .logo {
     font-family: "Poiret One", sans-serif;
@@ -77,6 +121,7 @@ a:hover {
 .logo-image {
     margin: 0 auto;
     height: 2.5rem;
+    -webkit-filter: invert(1);
     filter: invert(1);
 }
 
@@ -87,12 +132,66 @@ a:hover {
 .login-info {
     font-size: 0.8rem;
     color: #fff;
+    margin-bottom: 1rem;
+}
+
+.logout-info {
+    font-size: 0.8rem;
+    color: #fff;
     margin-top: 1rem;
 }
 
-/* Review Cards in listing  */
+.search-container {
+    height: 2.5rem;
+}
+
+.search-input {
+    width: 80%;
+    margin: 0;
+    height: 100%;
+    border: 0;
+    border-radius: 0.5rem 0 0 0.5rem;
+    padding: 0.5rem;
+}
+
+.search-button {
+    width: 20%;
+    font-size: 1.5rem;
+    margin: 0;
+    height: 100%;
+    border: 0;
+    border-radius: 0 0.5rem 0.5rem 0;
+    color: #fff;
+    background-color: #a99279;
+    -webkit-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.search-button:hover {
+    background-color: #997f62;
+}
+
+#sideNav .navbar-nav .nav-item .nav-link {
+    font-weight: 400;
+}
+
+.nav-hr {
+    width: 50%;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 0;
+}
+
+.footer-text {
+    font-size: 0.7rem;
+    margin-bottom: 1rem;
+}
+
+/* Review Cards in listing page  */
+
 .card-img-top {
     max-height: 15rem;
+    -o-object-fit: cover;
     object-fit: cover;
 }
 
@@ -102,20 +201,24 @@ a:hover {
 }
 
 .card-deck {
+    display: -ms-grid;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-gap: 0.5rem;
 }
 
 .card-deck .card {
     margin-bottom: 1rem;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
     transition: 0.3s;
 }
 
 .card:hover {
+    -webkit-transform: scale(1.05);
+    -ms-transform: scale(1.05);
     transform: scale(1.05);
     -webkit-box-shadow: 0px 14px 20px -14px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 14px 20px -14px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 14px 20px -14px rgba(0, 0, 0, 0.75);
     z-index: 2;
 }
@@ -130,11 +233,16 @@ a:hover {
     right: 1rem;
     cursor: pointer;
     font-size: 1.5rem;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
     transition: 0.3s;
+    color: #6c757d;
 }
 
 .card .delete-btn:hover {
     color: #343a40;
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
     transform: scale(1.2);
 }
 
@@ -146,6 +254,45 @@ a:hover {
     font-size: 2rem;
     vertical-align: sub;
     cursor: pointer;
+}
+
+/* Search Listing
+The following styles the results of a search */
+
+.search-entry p {
+    margin: 0;
+}
+
+.search-entry img {
+    max-height: 10rem;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+/* New Review page styles */
+
+.new-fav {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+}
+
+.new-fav-label {
+    position: relative;
+    top: -0.4rem;
+}
+
+label.custom-file-label {
+    cursor: pointer;
+}
+
+.custom-file-label::after,
+.custom-file-input:lang(en) ~ .custom-file-label::after {
+    content: "Choose Image";
 }
 
 /* Entry Review Page */
@@ -161,19 +308,32 @@ a:hover {
 .entry .delete-btn {
     font-size: 1.5rem;
     padding-bottom: 0.2rem;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
     transition: 0.3s;
 }
 
 .delete-entry a:hover .delete-btn {
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
     transform: scale(1.2);
 }
 
-/* Favorite */
+.delete-link {
+    color: #6c757d;
+}
+
+.delete-link:hover {
+    color: #343a40;
+}
+
+/* Favorite checkbox styling in Review Page */
+
 .favorite-container {
     position: absolute;
 }
 
-.entry #is_fav {
+#is_fav {
     position: absolute;
     top: 0;
     right: 0;
@@ -199,10 +359,15 @@ a:hover {
 }
 
 #is_fav + .heart-icon:active::before {
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
     transform: scale(1.2);
 }
 
-/* Review Text */
+/* Text styling in Review Page
+This includes the review's name and description,
+and the corresponding bootstrap tooltips. */
+
 .review-name {
     margin-bottom: 0.5rem;
     font-family: "Montserrat", sans-serif;
@@ -228,17 +393,29 @@ a:hover {
 .entry textarea[data-expandable] {
     cursor: pointer;
     resize: none;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
 }
 
 .entry textarea[data-expandable]:hover {
     color: #997f62;
+    background-color: #e9e9e9;
 }
 
 .entry textarea[data-expandable]:focus {
     cursor: text;
 }
 
-/* Image and image selector */
+.tooltip-inner {
+    background-color: #535f6b;
+}
+
+.tooltip .arrow:before {
+    border-top-color: #535f6b;
+}
+
+/* Image and image selector field in Review Page */
 
 .overlay-container {
     position: relative;
@@ -260,6 +437,8 @@ a:hover {
     height: 100%;
     width: 100%;
     opacity: 0;
+    -webkit-transition: 0.5s ease;
+    -o-transition: 0.5s ease;
     transition: 0.5s ease;
     background-color: #000;
     cursor: pointer;
@@ -276,6 +455,8 @@ a:hover {
     position: absolute;
     top: 50%;
     left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     text-align: center;
     width: 90%;
@@ -295,22 +476,21 @@ a:hover {
     z-index: 1;
 }
 
-/* Tags */
-
-.badge {
-    transition: 0.3s;
-}
-
-.badge:hover {
-    transform: scale(1.1);
-}
+/* Tags styling in Review Page
+This includes all "view tags", "delete tags", and buttons. */
 
 .badge-primary {
-    background-color: #a99279;
+    background-color: #997f62;
+    border: 1px solid #997f62;
+    font-weight: 400;
 }
 
-a.badge-primary:hover {
-    background-color: #997f62;
+a.badge-primary:hover,
+a.badge-primary:active,
+a.badge-primary:focus {
+    background-color: transparent;
+    border: 1px solid #997f62;
+    color: #997f62;
 }
 
 .entry .tag {
@@ -322,10 +502,6 @@ a.badge-primary:hover {
 
 .entry .delete-tag {
     padding-right: 0.4rem;
-    border: 0;
-}
-
-.view-tag {
     border: 0;
 }
 
@@ -375,6 +551,22 @@ a.badge-primary:hover {
     width: 80px;
 }
 
+.badge-input::-webkit-input-placeholder {
+    color: #ccc;
+}
+
+.badge-input::-moz-placeholder {
+    color: #ccc;
+}
+
+.badge-input:-ms-input-placeholder {
+    color: #ccc;
+}
+
+.badge-input::-ms-input-placeholder {
+    color: #ccc;
+}
+
 .badge-input::placeholder {
     color: #ccc;
 }
@@ -383,10 +575,17 @@ a.badge-primary:hover {
     opacity: 0;
 }
 
-/* Star Rating, inspired by Adam Orchard https://codepen.io/orchard/pen/Jnwvb  */
+/* Styling for rating radio buttons on Review Page,
+inspired by Adam Orchard https://codepen.io/orchard/pen/Jnwvb */
+
 .rating-container {
     position: relative;
-    top: -1rem;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
 }
 
 .star-rating {
@@ -418,7 +617,6 @@ a.badge-primary:hover {
     font-size: 200%;
     color: #ffaa1d;
     position: relative;
-    top: 1rem;
     margin-bottom: 0;
 }
 .star-rating > fieldset:not(:checked) > label:before {
@@ -436,15 +634,28 @@ a.badge-primary:hover {
     content: "star";
 }
 .star-rating > fieldset > label:active {
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+}
+.star-rating > fieldset > label:hover {
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
     transform: scale(1.2);
 }
 
-/* Update feedback */
+/* Styling for feedback messages when user updates fields
+in Review Page */
 
 #name-feedback {
     position: relative;
     top: -0.8rem;
     left: 3rem;
+}
+
+#rating-feedback {
+    position: relative;
+    top: -0.6rem;
 }
 
 .update-feedback {
@@ -457,6 +668,16 @@ a.badge-primary:hover {
 
 .invalid-update {
     color: #dc3545;
+}
+
+/* Profile Page */
+
+.profile-rating {
+    color: #ffaa1d;
+}
+
+.profile-fav {
+    color: #ff69b4;
 }
 
 /* 404 page*/
@@ -476,5 +697,9 @@ a.badge-primary:hover {
 
     .entry {
         padding: 10% 0;
+    }
+
+    .login-form {
+        width: 50%;
     }
 }
